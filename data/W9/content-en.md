@@ -24,5 +24,4 @@ Traditional leaders (Bukun) once managed harmony and external relations. However
 Culture is not fixed. It changes over time and across generations. Each of us is part of this change. When we understand how social rules work, we begin to have choices. We can choose to keep traditions, change them, or create new meanings.
 Before we end this class, what is your opinion? 
 
-<img width="432" height="106" alt="image" src="https://github.com/user-attachments/assets/6ea7f15a-4a9c-410a-b179-ada2b521dd32" />
 

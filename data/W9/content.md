@@ -1,23 +1,11 @@
 # Week 9 ｜傳統、變遷與性別認同 (Tradition, Change, and Gendered Identity)
 
-## 學習目標
-•	分析 文化性別規範如何在 Gaya 框架下運作。
-•	辨識 文化重新詮釋（Reinterpretation）與抵抗的時刻。
-•	檢視 正當性如何跨越世代產生位移。
-•	運用 結構理論分析個人的家庭規範。
-
-
-## 動態平衡 (Dynamic Balance)
+## Dynamic Balance動態平衡
 
 社會規範有時讓人感到沈重，如同「牢籠」一般；但當規範完全消失，人又會感到失去標準。本週我們樂觀地看見，人與制度之間其實存在著「動態平衡」。
 
 - 傳統不只是過去遺留的碎片，而是活生生的標準。我們可以透過參與，去「重新詮釋」那些規範，讓它在現代生活中依然保有意義。
 - 太魯閣族（Truku）的認同從血親家族，逐漸在環境變遷中發展為整體的群體意識。這顯示了「結構」是會隨著人的移動與需求而演變的。
-
-## 來自Alinggo田野踏查的真實故事
-男子愛上女子，他會不斷向女方的父親敬酒，直到對方「酒醉」。這被視為一種在規則邊緣獲得祝福的「策略」。
-
-  - 你覺得這位男子是在「反抗規則」還是在「玩轉規則」？當你面對一條讓你感到沈重的家規時，你是否也曾像這位男子一樣，用一種聰明且充滿愛意的方式，為自己爭取一點自由的空間？
 
 ### 文本閱讀與討論
 
@@ -27,17 +15,11 @@
 
   - 想想家中的長輩。當他們的「經驗」在現代科技世界裡不再被視為「唯一的權威」時，這帶給你的是一種解脫感，還是一絲對文化斷裂的落寞？我們如何在尊重傳統權威的同時，也長出自己的聲音？
 
-## 全學期架構總複習 (15-Week Structural Review)
-
-我們正處於本學期轉化的關鍵點：
-
-- Week 1–4：概念建立與批判性思考（從命名到媒體分析）。
-- Week 5–9：認同、多樣性與結構（從傾向、家庭到本週的文化變遷）。
-- Week 10–13：暴力、數位傷害與反思（從騷擾到數位性別暴力）。
-- Week 14：教育倡議設計（掌握桌遊引導）。
-- Week 15：整合、慶祝與責任感。
 
 ## 結語（Closing Reflection）
 
-15 週的課程中，我們已從理解基本概念，走向覺察，再從看見結構走向責任與反思。我們並非帶著與剛進教室時同樣的自己離開，現在的我們可能更擁有了倫理意識與結構性反思與表達個人想法的能力。
+Culture is not fixed. It changes over time and across generations. Each of us is part of this change. When we understand how social rules work, we begin to have choices. We can choose to keep traditions, change them, or create new meanings.
+Before we end this class, what is your opinion? 
+
+
 

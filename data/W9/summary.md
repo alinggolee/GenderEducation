@@ -1,16 +1,18 @@
-## 課程目標
+## Learning Goals
 
-在本課結束時，學生將能夠：
+By the end of this lesson, students will be able to:
 
-- 分析 文化性別規範如何在 Gaya 框架下運作。
-- 辨識 文化重新詮釋（Reinterpretation）與抵抗的時刻。
-- 檢視 正當性如何跨越世代產生位移。
-- 運用 結構理論分析個人的家庭規範。
+Analyze how cultural gender norms operate(運作) within the framework(框架) of Gaya.
+Identify moments of cultural reinterpretation(重新詮釋) and individual resistance(抵抗).
+Examine how legitimacy(正當性) and authority shift across generations.
+Apply structural theory to analyze personal family and community norms.
 
 ## 課程內容
 
-在傳統中尋找光——動態平衡與自我的誕生 (Finding the Light in Tradition: Dynamic Balance and the Birth of Self)
+Finding the Light in Tradition: Dynamic Balance(動態平衡) and the Birth of Self
+在傳統中尋找光——動態平衡與自我的誕生 
 
 ## ESP
 
-描述變遷與主體性的語言 (The Language of Change and Agency)
+The Language of Change and Agency
+描述變遷與主體性的語言 

@@ -5,7 +5,6 @@
 
 Social rules can sometimes feel like a "cage"; however, when rules fade, people may experience a loss of standards. Today, we explore the "dynamic balance" between individuals and systems.
 
-Social rules can sometimes feel like a "cage"; however, when rules fade (消失、淡化), people may experience a loss of standards. Today, we explore the "dynamic balance" between individuals and systems.
 
 ## Living Traditions 
 Tradition is not a static relic. It is a living standard that we can "reinterpret" to fit modern values. We are not just managed by structure; we help it evolve.

@@ -3,9 +3,7 @@
 
 ## The Dynamic Balance of Agency
 
-Social rules can sometimes feel like a "cage" (牢籠); however, when rules fade, people may experience a loss of standards. Today, we explore the "dynamic balance" between individuals and systems.
-
-Social rules (社會規範) can sometimes feel like a "cage"; however, when rules fade (消失、淡化), people may experience a loss of standards. Today, we explore the "dynamic balance" between individuals and systems.
+Social rules (社會規範) can sometimes feel like a "cage"(牢籠); however, when rules fade (消失、淡化), people may experience a loss of standards. Today, we explore the "dynamic balance" between individuals and systems.
 
 ## Living Traditions (活的傳統)
 Tradition (傳統) is not a static (靜止的) relic (遺物). It is a living standard that we can "reinterpret" (重新詮釋) to fit (符合) modern values. We are not just managed by structure (結構); we help it evolve (演變、發展).

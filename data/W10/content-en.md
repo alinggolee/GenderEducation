@@ -26,4 +26,5 @@ Using the classic video Tea Consent to understand enthusiastic consent.
 ## Closing Reflection
 
 Sexual harassment is not about misunderstanding. It is about boundaries crossing within unequal systems.
+At the end of the class, please go to Alinggo’s Padlet and write a short reflection about today’s discussion on listening and expressing ideas with respect for ethics.
 

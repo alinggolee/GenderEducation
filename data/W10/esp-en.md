@@ -4,20 +4,29 @@
 
 Students will be able to:
 
-- Use key terms such as consent, boundary, harassment, and power imbalance correctly.
-- Describe an incident using the three-part frame: physical, emotional, and power.
-- Explain basic institutional responses (reporting, support, investigation, protection).
+Use key terms such as consent, boundary, harassment, and power imbalance correctly.
+Describe an incident using three parts: physical, emotional, and power.
+Explain basic institutional responses, such as reporting, support, investigation, and protection.
+
 ## Key Vocabulary & Professional Usage
 
-- Power Imbalance (n.): A situation where one person has more authority or influence than another.
-- Accountability (n.): Being responsible for one's actions and their consequences.
-  - Ex: "We must demand higher accountability from our institutions."
-- Consent (n.): Permission for something to happen or agreement to do something.
+Power Imbalance:
+A situation where one person has more power or influence than another.
+Accountability:
+Being responsible for your actions and results.
+Ex: We must ask institutions to take more accountability.
+Consent:
+Permission or agreement for something to happen.
+
 ## TEEMI Speaking Prep (Review & Practice)
 
-Ready to talk to TEEMI? Use these B1-B2 level "Analysis Frames" to summarize your Week 10 learning:
+Ready to talk to TEEMI? Use these simple frames:
 
-- Making a Claim: "I believe that institutional responsibility is the key to preventing future harm."
-- Describing a Case: "In this scenario, the power imbalance made it impossible for the individual to give true consent."
-- Proposing Action: "By shifting from self-blame to power analysis, we can build a safer culture for everyone."
+Making a Claim
+I believe institutional responsibility is important to prevent harm.
+Describing a Case
+In this case, the power imbalance made real consent difficult.
+Proposing Action
+If we focus on power, not self-blame, we can build a safer culture.
+
 [Launch TEEMI Safety & Power Lab]

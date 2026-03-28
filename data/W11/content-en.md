@@ -11,6 +11,17 @@ While harassment represents a visible use of power, body discipline operates thr
 - Insecurity is profitable. Industries such as beauty products, cosmetic surgery, and fitness supplements benefit when people feel their natural bodies are "not enough" .
 
 ## Themes & Critical Discussions
+Many industries try to make people feel not good enough.
+They want women to think their bodies are not perfect.
+Some women want bigger breasts.
+Some want them to be firmer.
+Some even believe different bra colors can bring good luck.
+
+Have you heard of BBL (Brazilian Butt Lift)?
+
+Do you think being a plastic surgeon is a waste of national resources?
+
+## Themes & Critical Discussions
 
 ::video[https://www.youtube.com/embed/xAgawjzimjc]
 

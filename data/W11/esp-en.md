@@ -31,14 +31,11 @@ Discourse Scaffolding: Analyzing Media Messages（語言鷹架：分析媒體訊
 - "The media reinforces body surveillance by constantly focusing on perfection."
 Final Mission: Connect to TEEMI（口說任務：連結 TEEMI 練習）
 
-為了準備課後的 TEEMI 口說練習，請嘗試回答以下主題，這將幫助你提升專業英語表達力：
+**小報告句型：**
 
-TEEMI 練習任務：
-
-### 主題： 選擇一個媒體案例（如廣告或電影角色），描述它所傳達的審美訊息。
-
-### 要求： 使用至少三個本週學習的關鍵詞（如 Self-regulation, Hierarchy, Representation）。
-
-### 目標： 向 TEEMI 說明，為什麼這種審美觀是一種「性別規訓」？你建議可以用什麼樣的多元呈現來取代它？
+我認為這些產業讓女性感到沒有安全感，因為……
+在我看來，所謂的美的標準是……
+我有／沒有聽過 BBL（巴西提臀手術），我覺得……
+我同意／不同意，因為……
 
 [啟動 TEEMI 身體認同口說練習室]

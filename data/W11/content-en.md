@@ -31,8 +31,11 @@ The short film #LikeAGirl helps us understand how people think about the phrase 
 In this two-minute video, we can explore the following questions:
 
 1.Why does the phrase “like a girl” often have a negative meaning in society?
+
 2.How does this affect teenagers’ self-image?
+
 3.How do people’s ideas about beauty influence their self-identity?
+
 4.How can people let go of social pressure and become the person they truly want to be?
 
 ::video[https://www.youtube.com/embed/VNaF716Ul1E]

@@ -19,6 +19,12 @@
 ::video[https://www.youtube.com/embed/xAgawjzimjc]
 
 ::video[https://www.youtube.com/embed/qtDMyGjYlMg]
+《像女孩一樣》（#LikeAGirl）這部片，幫助我們看見人們對「像女孩一樣」有什麼樣的理解與想像。兩分鐘短片，提供我們分析： 
+1.為什麼「像女孩」在社會語言中常帶有負面含義? 
+2.這如何影響青少年的自我形象? 
+3.人的審美觀如何影響自我認同？ 
+4.人如何可能放下社會眼光，只有做「自己喜歡的自己」？
+
 
 ::video[https://www.youtube.com/embed/VNaF716Ul1E]
 

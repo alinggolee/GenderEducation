@@ -26,6 +26,7 @@ Do you think being a plastic surgeon is a waste of national resources?
 ::video[https://www.youtube.com/embed/xAgawjzimjc]
 
 ::video[https://www.youtube.com/embed/qtDMyGjYlMg]
+
 The short film #LikeAGirl helps us understand how people think about the phrase “like a girl.”
 In this two-minute video, we can explore the following questions:
 

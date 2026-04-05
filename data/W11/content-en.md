@@ -42,12 +42,16 @@ In this two-minute video, we can explore the following questions:
 
 [《凱特溫絲蕾：追尋本真》](https://ptsplus2023.pse.is/7czfvb)
 
-We will explore these concepts through diverse media narratives:
+- Media Malice (The Titanic Case):
+We will talk about how the media criticized Kate Winslet’s body and made people believe women must be thin to be valued.
 
-- The #LikeAGirl Campaign: How language shapes self-regulation and identity .
-- Ashley Graham’s Body Positivity: Analyzing if empowerment is sometimes used as a branding tool .
-- Media Malice (The Titanic Case): Discussing how the media attacked Kate Winslet’s weight, reinforcing the idea that women must be thin to be "worthy" .
-- The Mask You Live In: Exploring the emotional cost of "Hegemonic Masculinity" and the pressure on men to suppress vulnerability .
+1. People care about a movie star's body image, especially women's. Why?
+
+2. When Kate Winslet fights for herself, how many difficulties does she have? (People's gender stereotypes)
+
+3. Do you think body image has a generation gap?
+
+4. Are you for or against beauty enhancement?
 
 ## Deep Inquiry Questions:
 

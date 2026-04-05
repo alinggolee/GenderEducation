@@ -30,13 +30,16 @@
 ::video[https://www.youtube.com/embed/VNaF716Ul1E]
 
 [《凱特溫絲蕾：追尋本真》](https://ptsplus2023.pse.is/7czfvb)
+- 媒體的惡意（Titanic – Rose）： 討論大眾媒體如何透過細微的負面描寫來規訓女性的體態 。
+人們為什麼會如此在意電影明星的外貌與身體形象，尤其是女性？
+當 Kate Winslet 為自己發聲時，她面臨了哪些困難？（例如：性別刻板印象）
+你認為「身體形象」是否存在世代差異？為什麼？
+你支持還是反對外貌提升（美容／整形）？
+
 
 我們將透過多個具代表性的案例，分析審美標準如何塑造我們的自我認同：
-
-- 《像女孩一樣》（#LikeAGirl）： 分析為什麼「像女孩」在社會語言中常帶有負面含義，以及這如何影響青少年的自我形象 。
 - 黑人女性的身體經驗（Black Girls Documentary）： 探討在多元交織性（Intersectionality）下，不同族群如何面對審美觀的抗爭 。
 - 大尺碼名模的挑戰（Ashley Graham TED Talk）： 反思媒體如何定義「美」，以及如何打破單一的身體規範 。
-- 媒體的惡意（Titanic – Rose）： 討論大眾媒體如何透過細微的負面描寫來規訓女性的體態 。
 
 ## Critical Inquiry Questions（深度思考問題）：
 

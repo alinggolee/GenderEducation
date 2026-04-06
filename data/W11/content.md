@@ -30,11 +30,22 @@
 ::video[https://www.youtube.com/embed/VNaF716Ul1E]
 
 [《凱特溫絲蕾：追尋本真》](https://ptsplus2023.pse.is/7czfvb)
-- 媒體的惡意（Titanic – Rose）： 討論大眾媒體如何透過細微的負面描寫來規訓女性的體態 。
-人們為什麼會如此在意電影明星的外貌與身體形象，尤其是女性？
-當 Kate Winslet 為自己發聲時，她面臨了哪些困難？（例如：性別刻板印象）
-你認為「身體形象」是否存在世代差異？為什麼？
-你支持還是反對外貌提升（美容／整形）？
+Media Malice (The Titanic Case)媒體惡意（鐵達尼號案例）
+
+1.We will talk about how the media criticized Kate Winslet’s body and made people believe women must be thin to be valued.
+我們將討論媒體如何批評凱特溫絲蕾的身材，並讓人們相信女性必須瘦才有價值。
+
+2.People care about a movie star's body image, especially women's. Why?
+人們很在意電影明星的身材，尤其是女性。為什麼？
+
+3.When Kate Winslet speaks up for herself, what difficulties does she face? (gender stereotypes)
+當凱特溫絲蕾為自己發聲時，她面臨哪些困難？（性別刻板印象）
+
+4.Do you think body image is different across generations? Why or why not?
+你認為不同世代對身體形象的看法有差異嗎？為什麼或為什麼沒有？
+
+5.Are you for or against beauty enhancement? Why?
+你支持還是反對美容（整形／外貌改變）？為什麼？
 
 
 我們將透過多個具代表性的案例，分析審美標準如何塑造我們的自我認同：
@@ -43,13 +54,24 @@
 
 ## Critical Inquiry Questions（深度思考問題）：
 
-### 「身體監控」如何像一個「隱形的籠子」？ 我們每天花多少時間在思考自己的外觀是否符合他人的期待？
+1. The "Invisible Cage"「看不見的牢籠」
 
-### 誰是審美標準的受益者？ 當我們感到焦慮時，誰在背後獲得了商業利益？
+How much time do we spend every day checking or worrying about our appearance to meet social expectations?
+我們每天花多少時間在檢視或擔心自己的外表，以符合社會期待？
+2. The Profit of Shame「羞恥的利益」
+Who makes money when people feel unhappy about their bodies?
+當人們對自己的身體感到不滿時，是誰在賺錢？
+3. Self-Surveillance「自我監控」
+In the age of social media and filters, how do we watch ourselves and also become watched by others?
+在社群媒體與濾鏡的時代，我們如何一邊監看自己，同時也被他人觀看？
 
-### 媒體如何強化這種階層？ 如果媒體中只有一種「完美的身體」，這對大眾的自尊心會產生什麼影響？
-
-### 我們如何抵制這種規訓？ 我們能提出哪些不包含暴力、充滿包容性的身體敘事？
+TEEMI speaking scaffolds 
+I think we spend… because…
+我認為我們花…因為…
+In my opinion, companies benefit because…
+我認為企業會受益，因為…
+We become both the watcher and the watched when…
+當…時，我們同時成為觀看者與被觀看者
 
 ## Closing Reflection
 

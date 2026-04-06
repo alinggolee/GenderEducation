@@ -55,12 +55,13 @@ Media Malice (The Titanic Case)媒體惡意（鐵達尼號案例）
 ## Critical Inquiry Questions（深度思考問題）：
 
 1. The "Invisible Cage"「看不見的牢籠」
-
 How much time do we spend every day checking or worrying about our appearance to meet social expectations?
 我們每天花多少時間在檢視或擔心自己的外表，以符合社會期待？
+
 2. The Profit of Shame「羞恥的利益」
 Who makes money when people feel unhappy about their bodies?
 當人們對自己的身體感到不滿時，是誰在賺錢？
+
 3. Self-Surveillance「自我監控」
 In the age of social media and filters, how do we watch ourselves and also become watched by others?
 在社群媒體與濾鏡的時代，我們如何一邊監看自己，同時也被他人觀看？

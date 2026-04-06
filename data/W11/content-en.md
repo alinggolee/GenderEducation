@@ -65,4 +65,4 @@ We will talk about how the media criticized Kate Winslet’s body and made peopl
 
 ## Closing Reflection
 
-Harassment uses force; beauty uses mirrors . While harassment silences through fear, beauty standards silence through constant comparison . Power is not always loud. Sometimes it whispers: 'You are not enough' . When we recognize that whisper, we reclaim our agency.
+Harassment uses force; beauty uses mirrors. At the same time, harassment silences through fear, beauty standards silence through constant comparison . Power is not always loud. Sometimes it whispers: 'You are not enough' . When we recognize that whisper, we reclaim our agency.

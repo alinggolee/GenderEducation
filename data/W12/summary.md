@@ -16,8 +16,10 @@ Evaluate how we prevent digital violence, especially the role of algorithms and 
 
 ## 課程內容
 
-從網路互動到演算法放大 (From Online Interaction to Algorithmic Amplification)
+Understanding Digital Gender-Based Violence
+理解數位性別暴力
 
 ## ESP
 
-分析數位體系的專業語言 (The Language of Digital Systems)
+Analyzing Digital Harm through Professional Language
+以專業語言分析數位傷害

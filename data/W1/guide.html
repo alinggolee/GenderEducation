@@ -1,1 +1,856 @@
-<!DOCTYPE html><html lang='zh-TW'><head><meta charset='UTF-8'><title>�ǲ߫���</title></head><body><h1>�Ĥ@�g �ǲ߫���</h1><p>���e�ݸ�...</p></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W1 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --card: #FFFFFF;
+    --accent: #C05746;
+    --accent-light: #F2DDD8;
+    --ink: #2C2420;
+    --muted: #8A7E76;
+    --border: #E8E0D8;
+    --green: #4A7C59;
+    --green-light: #E4F0E8;
+    --blue: #3E6B89;
+    --blue-light: #DCE9F0;
+    --yellow: #B8860B;
+    --yellow-light: #FDF4DC;
+    --shadow: 0 2px 12px rgba(44,36,32,0.08);
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 28px 24px 20px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+
+  header .subtitle {
+    font-size: 0.85rem;
+    color: #B8AFA6;
+    font-weight: 300;
+  }
+
+  /* Tab Nav */
+  .tabs {
+    display: flex;
+    gap: 0;
+    background: var(--card);
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 14px 8px;
+    border: none;
+    background: transparent;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .tab-btn:hover:not(.active) {
+    color: var(--ink);
+    background: #F5F0EA;
+  }
+
+  /* Content area */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.8rem;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .badge-teacher { background: var(--accent-light); color: var(--accent); }
+  .badge-student { background: var(--blue-light); color: var(--blue); }
+  .badge-tip { background: var(--yellow-light); color: var(--yellow); }
+  .badge-vocab { background: var(--green-light); color: var(--green); }
+
+  /* Script lines */
+  .script-line {
+    padding: 14px 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .script-line.teacher {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+  }
+
+  .script-line.student {
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue);
+  }
+
+  .script-line.tip {
+    background: var(--yellow-light);
+    border-left: 4px solid var(--yellow);
+  }
+
+  .script-line .role {
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .script-line.teacher .role { color: var(--accent); }
+  .script-line.student .role { color: var(--blue); }
+  .script-line.tip .role { color: var(--yellow); }
+
+  .script-line p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .script-line .chinese {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* Vocab drill */
+  .vocab-item {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  .vocab-item:last-child { border-bottom: none; }
+
+  .vocab-word {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+
+  .vocab-pos {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-left: 6px;
+  }
+
+  .vocab-def {
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+
+  .vocab-example {
+    margin-top: 6px;
+    padding: 8px 12px;
+    background: #F5F0EA;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  .vocab-example em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  .reveal-btn {
+    margin-top: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .reveal-btn:hover {
+    background: var(--accent-light);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .hidden-content {
+    display: none;
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: var(--green-light);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--green);
+  }
+
+  .hidden-content.show { display: block; }
+
+  /* Scenario cards */
+  .scenario-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .scenario-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(192,87,70,0.12);
+  }
+
+  .scenario-card.expanded {
+    border-color: var(--accent);
+  }
+
+  .scenario-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .scenario-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+
+  .scenario-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .scenario-body {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .scenario-card.expanded .scenario-body { display: block; }
+
+  /* Checklist */
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .checklist-item:last-child { border-bottom: none; }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 14px;
+    color: transparent;
+  }
+
+  .check-box.checked {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .checklist-text {
+    font-size: 0.92rem;
+  }
+
+  .checklist-text.checked-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  /* Progress */
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin: 12px 0 20px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* Utility */
+  .section-intro {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .timer-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+  }
+
+  .timer-bar .time {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-left: auto;
+  }
+
+  .frame-box {
+    background: #F5F0EA;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 10px 0;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--blue);
+  }
+
+  .frame-box code {
+    background: var(--blue-light);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    color: var(--blue);
+    font-size: 0.88rem;
+  }
+
+  .note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .tab-btn { font-size: 0.68rem; padding: 12px 4px; }
+    header h1 { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 1 Teaching Practice</h1>
+  <div class="subtitle">Gender Education Introduction &middot; Alinggo S.L. Lee</div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('checklist')">Checklist</button>
+</div>
+
+<div class="content">
+
+  <!-- ============ TAB 1: WARM-UP ============ -->
+  <div id="warmup" class="panel active">
+
+    <p class="section-intro">Start here. These exercises warm up the vocabulary and sentence frames Alinggo will need before simulating a full class. Martin plays the role of a confused but curious international student.</p>
+
+    <div class="card">
+      <h2>Vocabulary Quick-Fire</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">Tap each word to reveal the definition and example sentence. Practice saying the example aloud naturally — don't just read it, <em>teach</em> it.</p>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Stereotype <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> A fixed idea that many people have about a group — often oversimplified or inaccurate.</div>
+          <div class="vocab-example">Try saying: <em>"The idea that 'boys are strong and girls are gentle' is a common stereotype."</em></div>
+          <div class="chinese">刻板印象 — 對某一群體的固定、概括化的看法</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Socialization <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> The process of learning to behave in ways that are considered acceptable by society.</div>
+          <div class="vocab-example">Try saying: <em>"Socialization starts early — through the toys parents buy for us and the stories they read to us."</em></div>
+          <div class="chinese">社會化 — 學習社會認可行為的過程</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Representation <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> How something (a person, group, or idea) is shown, described, or portrayed.</div>
+          <div class="vocab-example">Try saying: <em>"Today we're going to analyze the representation of girls in children's picture books."</em></div>
+          <div class="chinese">再現 / 表徵 — 某事物如何被呈現或描繪</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Gender Expression <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> How you present yourself outwardly — through clothing, behavior, hairstyle, voice, etc.</div>
+          <div class="vocab-example">Try saying: <em>"Gender expression is about how you present yourself — it can be different from your gender identity."</em></div>
+          <div class="chinese">性別表達 — 透過外在行為和穿著展現自我的方式</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">SOGIESC <span class="vocab-pos">(acronym)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show breakdown</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Stands for:</strong> Sexual Orientation, Gender Identity, Gender Expression, Sex Characteristics</div>
+          <div class="vocab-example">Practice: <em>"SOGIESC is a framework that helps us discuss diversity clearly and respectfully. Each of these four aspects is distinct and independent."</em></div>
+          <div class="chinese">性傾向、性別認同、性別表達、性徵 — 四個不同且獨立的面向</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Sentence Frame Drill</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">These are the TEEMI "Professional Frames" from the curriculum. Practice completing each one aloud. Martin can give a topic prompt, and Alinggo responds using the frame.</p>
+
+      <div class="frame-box">
+        <strong>Frame 1 — Describing an observation:</strong><br>
+        <code>"One pattern we noticed in children's literature is that..."</code><br>
+        <div class="note">Example completion: "...boys are usually the heroes, while girls wait to be rescued."</div>
+      </div>
+
+      <div class="frame-box">
+        <strong>Frame 2 — Explaining the impact:</strong><br>
+        <code>"This matters because it reinforces the idea that..."</code><br>
+        <div class="note">Example completion: "...girls should be passive, and boys should take charge."</div>
+      </div>
+
+      <div class="frame-box">
+        <strong>Frame 3 — Summarizing the theory:</strong><br>
+        <code>"Therefore, it is evidence of how gender norms are..."</code><br>
+        <div class="note">Example completion: "...taught from a very young age through everyday media."</div>
+      </div>
+
+      <div class="divider"></div>
+      <p style="font-size:0.85rem;color:var(--muted);">💡 <strong>Practice idea:</strong> Martin names a topic (e.g., "Disney princesses," "toy aisle colors," "school uniforms") → Alinggo uses all 3 frames in sequence to build a mini-analysis. Repeat 3–4 times with different topics.</p>
+    </div>
+  </div>
+
+  <!-- ============ TAB 2: TEACH IT ============ -->
+  <div id="teach" class="panel">
+
+    <p class="section-intro">This is the main event. Alinggo teaches the W1 lesson as if Martin is an international student in her class. The script below gives structure — but she should speak naturally, not read word-for-word. Chinese support notes are included for when she might want to switch to L1 (≤25%).</p>
+
+    <div class="timer-bar">
+      <span>⏱ Suggested total time</span>
+      <span class="time">25 min</span>
+    </div>
+
+    <!-- SEGMENT 1 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 1 — Opening</span>
+      <h2>Welcome & Today's Topic</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~3 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo (Teacher)</div>
+        <p>"Good morning / afternoon, everyone. Welcome to Week 1 of our Gender Education course. Today we're going to explore a very simple but important question: <strong>Where do our ideas about gender come from?</strong>"</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Before we start — I want to be clear. This class is not about judgment. It's about <strong>seeing patterns</strong>. And when we can see patterns, we can understand the structure behind them."</p>
+        <div class="chinese">今天不是要批判任何人，而是要學會「看見」那些我們平常沒注意到的模式。</div>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Teaching tip</div>
+        <p>Make eye contact. Pause after "seeing patterns." This is the thesis of the entire week — let it land.</p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 2 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 2 — Core Concept</span>
+      <h2>Introducing SOGIESC</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~7 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"To discuss diversity clearly and respectfully, we use a framework called <strong>SOGIESC</strong>. Let me break it down for you."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"There are four parts, and the important thing to remember is: <strong>they are all separate from each other.</strong>"</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo — explain each one</div>
+        <p>
+          "First — <strong>Sexual Orientation</strong>. This is about who you are attracted to."<br><br>
+          "Second — <strong>Gender Identity</strong>. This is your internal sense of being male, female, or another gender. It's how you feel inside."<br><br>
+          "Third — <strong>Gender Expression</strong>. This is how you show yourself to the world — through your clothes, your behavior, your appearance."<br><br>
+          "And fourth — <strong>Sex Characteristics</strong>. These are your physical traits — like chromosomes and hormones."
+        </p>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Comprehension check</div>
+        <p>After explaining all four, ask: "Can someone give me an example of <em>gender expression</em>?" or "Which one of these four is about what's on the inside — how you feel?" This forces the student to process, not just listen.</p>
+      </div>
+
+      <div class="script-line student">
+        <div class="role">Martin (Student) — challenge prompt</div>
+        <p>Ask a "confused student" question like: "Wait — isn't gender expression the same as gender identity?" to give Alinggo practice clarifying the distinction.</p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 3 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 3 — Discussion</span>
+      <h2>Invisible Lessons in Stories</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Now let's think about something personal. I want you to think of a story from your childhood — a book, a movie, a fairy tale. <strong>Who was the hero? Who needed to be rescued? Who was brave? Who was gentle?</strong>"</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"These stories seem innocent, right? But they carry <em>invisible lessons</em> about gender. If we always see boys as heroes and girls as people who need help — what does that teach us?"</p>
+        <div class="chinese">這些故事看似無害，但其中隱含的性別訊息會不知不覺地影響我們。</div>
+      </div>
+
+      <div class="script-line student">
+        <div class="role">Martin (Student) — response prompts</div>
+        <p>Try responding as a student would:<br>
+        • "Hmm, I remember reading... and the girl was always waiting for the prince."<br>
+        • "In my culture, boys are taught to be strong and not cry."<br>
+        • Challenge: "But isn't it just a story? Does it really affect us?"</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo — using the sentence frames</div>
+        <p>This is where to deploy the TEEMI frames naturally:<br><br>
+        "<strong>One pattern we noticed</strong> in children's literature is that boys tend to be active characters while girls are passive."<br><br>
+        "<strong>This matters because it reinforces the idea</strong> that leadership and adventure belong to boys."<br><br>
+        "<strong>Therefore, it is evidence of how gender norms</strong> are taught from a young age — quietly, through stories."</p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 4 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 4 — Closing</span>
+      <h2>Wrap-Up & Reflection</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"So — what did we learn today? Gender messages begin quietly. Through stories. Through colors. Through toys. Through the names we are given."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Remember: this week is not about judgment. It's about <strong>seeing</strong>. When we see patterns, we begin to see structure. And when we see structure — <strong>we can change it</strong>."</p>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Closing tip</div>
+        <p>End with a question for next week: "Between now and next class, I want you to notice one gender message in your daily life. It could be an ad, a toy, a conversation. Bring it to class next week." This gives the lesson a forward hook.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB 3: ROLE-PLAY ============ -->
+  <div id="roleplay" class="panel">
+
+    <p class="section-intro">These are tricky classroom moments Alinggo might face with international students. Martin plays the student; Alinggo must respond in English as the teacher. Tap a scenario to expand it.</p>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 1</div>
+      <div class="scenario-title">The Skeptical Student</div>
+      <div class="scenario-desc">A student pushes back on the relevance of the topic.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"I don't understand why we need this class. I already treat everyone equally. Why do we need to study gender?"</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Alinggo should: (1) validate the student's feeling, (2) reframe the purpose — it's not about blame, it's about awareness. Try: <em>"That's a great point, and I appreciate you saying that. This class isn't about changing who you are — it's about understanding the patterns around us that we might not notice."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 2</div>
+      <div class="scenario-title">The Vocabulary Confusion</div>
+      <div class="scenario-desc">A student mixes up gender identity and gender expression.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"So if a boy wears a skirt, that means he identifies as a girl?"</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>This is a common misconception. Alinggo should calmly separate the two concepts: <em>"Not necessarily. Wearing a skirt is about gender expression — how you present yourself. Gender identity is how you feel inside. A boy who wears a skirt might still identify as a boy. These are two different things — that's exactly why the SOGIESC framework is useful."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 3</div>
+      <div class="scenario-title">The Cultural Pushback</div>
+      <div class="scenario-desc">A student says "In my country, this is different."</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"In my country, these gender roles are just normal. Men work, women take care of the family. It's our culture. Are you saying our culture is wrong?"</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>The hardest one. Alinggo should: (1) respect the culture, (2) separate observation from judgment, (3) redirect to patterns. Try: <em>"Thank you for sharing that. Every culture has its own values, and we respect that. In this class, we're not saying any culture is wrong. We're learning to notice patterns — and to ask questions about where those patterns come from. That's a skill we can all use."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 4</div>
+      <div class="scenario-title">Explaining a Key Term Simply</div>
+      <div class="scenario-desc">A student asks "What does 'socialization' mean? I don't understand."</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"Sorry, I don't know this word — 'socialization'? Can you explain it more simply?"</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Alinggo should use a concrete everyday example instead of a textbook definition. Try: <em>"Sure! Think about it this way: when you were a child, someone probably told you 'boys don't cry' or gave you a blue toy instead of a pink one. That's socialization — it's how we learn what society thinks is 'normal' for boys and girls. We learn these rules without even realizing it."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 5</div>
+      <div class="scenario-title">Live Discussion Facilitation</div>
+      <div class="scenario-desc">A student gives a one-word answer. Keep the discussion going.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>Alinggo asks: "Can you think of a gender stereotype from a childhood story?" Martin answers: "Cinderella."</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Alinggo should use follow-up questions to draw out more: <em>"Cinderella, great example! So — what message does Cinderella give us about girls? What does she need to do before her life gets better?"</em> ... and then: <em>"And what about the prince? What's his role in the story? Does he have any personality, or is he just 'the rescuer'?"</em> Practice drawing a full 2-minute discussion from a one-word answer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB 4: CHECKLIST ============ -->
+  <div id="checklist" class="panel">
+
+    <p class="section-intro">Use this during the session to track what you've covered. Tap each item when done.</p>
+
+    <div class="card">
+      <h2>Session Progress</h2>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div id="progressText" style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Vocabulary quick-fire: all 5 terms practiced aloud</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Sentence frame drill: at least 3 different topic completions</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 1: Delivered the opening — "where do our ideas come from?"</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 2: Explained all 4 parts of SOGIESC clearly</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 2: Handled a comprehension check question</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 3: Led the "invisible lessons" discussion</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 3: Used all 3 TEEMI sentence frames naturally</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 4: Delivered the closing reflection</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Role-play: Completed at least 2 scenarios</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Role-play: Handled a "difficult student" moment in English</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Session Notes</h2>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">Jot down words or phrases Alinggo struggled with, or areas to revisit next time.</p>
+      <textarea id="notes" placeholder="Type notes here during the session..." style="width:100%;min-height:140px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:0.92rem;resize:vertical;background:var(--bg);"></textarea>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleReveal(btn) {
+  const content = btn.nextElementSibling;
+  if (content.classList.contains('show')) {
+    content.classList.remove('show');
+    btn.textContent = 'Show definition + example';
+  } else {
+    content.classList.add('show');
+    btn.textContent = 'Hide';
+  }
+}
+
+function toggleScenario(card) {
+  card.classList.toggle('expanded');
+}
+
+function toggleCheck(item) {
+  const box = item.querySelector('.check-box');
+  const text = item.querySelector('.checklist-text');
+  box.classList.toggle('checked');
+  text.classList.toggle('checked-text');
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = document.querySelectorAll('.checklist-item').length;
+  const done = document.querySelectorAll('.check-box.checked').length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = done + ' of ' + total + ' completed';
+}
+</script>
+
+</body>
+</html>

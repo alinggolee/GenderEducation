@@ -1,167 +1,167 @@
 {
-    "siteTitle":  "Gender Education / Alinggo S.L. Lee",
-    "lessons":  [
-                    {
-                        "id":  "W1",
-                        "title":  "Gender Education Introduction",
-                        "cover":  "data/W1/W 01 01.jpg",
-                        "objectiveImage":  "data/W1/W 01 02.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W1/W1 Gender Education Introduction.pdf"
-                    },
-                    {
-                        "id":  "W2",
-                        "title":  "Gender Concepts \u0026 Naming",
-                        "cover":  "data/W2/w 02 01naming2.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W2/W2 Gender Concepts \u0026 Naming.pdf"
-                    },
-                    {
-                        "id":  "W3",
-                        "title":  "Gender expression",
-                        "cover":  "data/W3/w 03 01 g expression.jpg",
-                        "objectiveImage":  "data/W3/w 03 02.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W3/W3 Gender expression.pdf"
-                    },
-                    {
-                        "id":  "W4",
-                        "title":  "Media, gender and critical thinking",
-                        "cover":  "data/W4/w 04-01.jpg",
-                        "objectiveImage":  "data/W4/w 04 02.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W4/W4 Media, gender and critical thinking.pdf"
-                    },
-                    {
-                        "id":  "W5",
-                        "title":  "Sexual Orientation",
-                        "cover":  "data/W5/w 05-01.jpg",
-                        "objectiveImage":  "data/W5/w 05-01love.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W5/W5 Sexual Orientation.pdf"
-                    },
-                    {
-                        "id":  "W6",
-                        "title":  "Diversity, Gender, and Parenting",
-                        "cover":  "data/W6/w 06-01.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W6/W6 Diversity, Gender, and Parenting.pdf"
-                    },
-                    {
-                        "id":  "W7",
-                        "title":  "GBP, Trans Experience and Privilege",
-                        "cover":  "data/W7/w 07.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W7/W7 GBP, Trans Experience and Privilege.pdf"
-                    },
-                    {
-                        "id":  "W8",
-                        "title":  "Diversity and Structural Inequality(Taruku)",
-                        "cover":  "data/W8/w 08-01.jpg",
-                        "objectiveImage":  "data/W8/w 08.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W8/W8 Diversity and Structural Inequality(Taruku).pdf"
-                    },
-                    {
-                        "id":  "W9",
-                        "title":  "Tradition, Change, and Gendered Identity",
-                        "cover":  "data/W9/w 09-01.jpg",
-                        "objectiveImage":  "data/W9/w 09-3.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W9/W9 Tradition, Change, and Gendered Identity.pdf"
-                    },
-                    {
-                        "id":  "W10",
-                        "title":  "Sexual harassment",
-                        "cover":  "data/W10/w 10 01?�性騷.jpg",
-                        "objectiveImage":  "data/W10/w10-3.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W10/W10 Sexual harassment.pdf"
-                    },
-                    {
-                        "id":  "W11",
-                        "title":  "Body \u0026 Beauty Standards",
-                        "cover":  "data/W11/w 11-01.jpg",
-                        "objectiveImage":  "data/W11/w11-4.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W11/W11 Body \u0026 Beauty Standards.pdf"
-                    },
-                    {
-                        "id":  "W12",
-                        "title":  "Understanding Digital Gender-Based Violence",
-                        "cover":  "data/W12/w 12-14.jpg",
-                        "objectiveImage":  "data/W12/w12-14-3.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W12/W12 Understanding Digital Gender-Based Violence.pdf"
-                    },
-                    {
-                        "id":  "W13",
-                        "title":  "Digital Gender-Based Violence: Critical Reflection",
-                        "cover":  "data/W13/w13-01 05.jpg",
-                        "objectiveImage":  "data/W13/w13-15 01.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W13/W13 Digital Gender-Based Violence Critical Reflection.pdf"
-                    },
-                    {
-                        "id":  "W14",
-                        "title":  "Advocacy \u0026 Educational Design: Ready for an Adventure(Community Outreach Version)",
-                        "cover":  "data/W14/w14.JPG",
-                        "objectiveImage":  "data/W14/w14 02.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W14/W14 Advocacy \u0026 Educational Design Ready for an Adventure(Community Outreach Version).pdf"
-                    },
-                    {
-                        "id":  "W15",
-                        "title":  "Final Structural Integration",
-                        "cover":  "data/W15/w 15-01.jpg",
-                        "objectiveImage":  "data/W15/�?5.jpg",
-                        "sections":  [
-                                         "content",
-                                         "esp"
-                                     ],
-                        "presentation":  "data/W15/W15  Final Structural Integration.pdf"
-                    }
-                ]
+    "siteTitle": "Gender Education / Alinggo S.L. Lee",
+    "lessons": [
+        {
+            "id": "W1",
+            "title": "Gender Education Introduction",
+            "cover": "data/W1/W 01 01.jpg",
+            "objectiveImage": "data/W1/W 01 02.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W1/W1 Gender Education Introduction.pdf"
+        },
+        {
+            "id": "W2",
+            "title": "Gender Concepts & Naming",
+            "cover": "data/W2/w 02 01naming2.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W2/W2 Gender Concepts & Naming.pdf"
+        },
+        {
+            "id": "W3",
+            "title": "Gender expression",
+            "cover": "data/W3/w 03 01 g expression.jpg",
+            "objectiveImage": "data/W3/w 03 02.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W3/W3 Gender expression.pdf"
+        },
+        {
+            "id": "W4",
+            "title": "Media, gender and critical thinking",
+            "cover": "data/W4/w 04-01.jpg",
+            "objectiveImage": "data/W4/w 04 02.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W4/W4 Media, gender and critical thinking.pdf"
+        },
+        {
+            "id": "W5",
+            "title": "Sexual Orientation",
+            "cover": "data/W5/w 05-01.jpg",
+            "objectiveImage": "data/W5/w 05-01love.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W5/W5 Sexual Orientation.pdf"
+        },
+        {
+            "id": "W6",
+            "title": "Diversity, Gender, and Parenting",
+            "cover": "data/W6/w 06-01.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W6/W6 Diversity, Gender, and Parenting.pdf"
+        },
+        {
+            "id": "W7",
+            "title": "GBP, Trans Experience and Privilege",
+            "cover": "data/W7/w 07.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W7/W7 GBP, Trans Experience and Privilege.pdf"
+        },
+        {
+            "id": "W8",
+            "title": "Diversity and Structural Inequality(Taruku)",
+            "cover": "data/W8/w 08-01.jpg",
+            "objectiveImage": "data/W8/w 08.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W8/W8 Diversity and Structural Inequality(Taruku).pdf"
+        },
+        {
+            "id": "W9",
+            "title": "Tradition, Change, and Gendered Identity",
+            "cover": "data/W9/w 09-01.jpg",
+            "objectiveImage": "data/W9/w 09-3.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W9/W9 Tradition, Change, and Gendered Identity.pdf"
+        },
+        {
+            "id": "W10",
+            "title": "Sexual harassment",
+            "cover": "data/W10/w 10 01反性騷.jpg",
+            "objectiveImage": "data/W10/w10-3.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W10/W10 Sexual harassment.pdf"
+        },
+        {
+            "id": "W11",
+            "title": "Body & Beauty Standards",
+            "cover": "data/W11/w 11-01.jpg",
+            "objectiveImage": "data/W11/w11-4.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W11/W11 Body & Beauty Standards.pdf"
+        },
+        {
+            "id": "W12",
+            "title": "Understanding Digital Gender-Based Violence",
+            "cover": "data/W12/w 12-14.jpg",
+            "objectiveImage": "data/W12/w12-14-3.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W12/W12 Understanding Digital Gender-Based Violence.pdf"
+        },
+        {
+            "id": "W13",
+            "title": "Digital Gender-Based Violence: Critical Reflection",
+            "cover": "data/W13/w13-01 05.jpg",
+            "objectiveImage": "data/W13/w13-15 01.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W13/W13 Digital Gender-Based Violence Critical Reflection.pdf"
+        },
+        {
+            "id": "W14",
+            "title": "Advocacy & Educational Design: Ready for an Adventure(Community Outreach Version)",
+            "cover": "data/W14/w14.JPG",
+            "objectiveImage": "data/W14/w14 02.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W14/W14 Advocacy & Educational Design Ready for an Adventure(Community Outreach Version).pdf"
+        },
+        {
+            "id": "W15",
+            "title": "Final Structural Integration",
+            "cover": "data/W15/w 15-01.jpg",
+            "objectiveImage": "data/W15/Ｗ15.jpg",
+            "sections": [
+                "content",
+                "esp"
+            ],
+            "presentation": "data/W15/W15  Final Structural Integration.pdf"
+        }
+    ]
 }

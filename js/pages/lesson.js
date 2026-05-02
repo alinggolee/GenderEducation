@@ -75,6 +75,10 @@ export async function renderLesson(container, lesson) {
           <div class="section-block-body" id="summary-objective">
             <div class="loading"></div>
           </div>
+          <div class="objective-buttons">
+            ${lesson.presentation ? `<a href="${lesson.presentation}" target="_blank" rel="noopener" class="objective-btn">簡報下載</a>` : ''}
+            <a href="data/${lesson.id}/guide.html" target="_blank" rel="noopener" class="objective-btn">學習指引</a>
+          </div>
         </div>
       </div>
       <div class="lesson-bottom-row">

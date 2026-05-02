@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W4–W6 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2; --card: #FFFFFF; --accent: #C05746; --accent-light: #F2DDD8;
+    --ink: #2C2420; --muted: #8A7E76; --border: #E8E0D8;
+    --green: #4A7C59; --green-light: #E4F0E8;
+    --blue: #3E6B89; --blue-light: #DCE9F0;
+    --yellow: #B8860B; --yellow-light: #FDF4DC;
+    --purple: #6B5B8A; --purple-light: #EDE8F4;
+    --teal: #3D7A7A; --teal-light: #DDF0EF;
+    --shadow: 0 2px 12px rgba(44,36,32,0.08); --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Source Sans 3',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; min-height:100vh; }
+  header { background:var(--ink); color:var(--bg); padding:28px 24px 20px; text-align:center; }
+  header h1 { font-family:'DM Serif Display',serif; font-size:1.6rem; font-weight:400; letter-spacing:.02em; margin-bottom:4px; }
+  header .subtitle { font-size:.85rem; color:#B8AFA6; font-weight:300; }
+  .week-selector { display:flex; background:var(--card); border-bottom:2px solid var(--border); }
+  .week-btn { flex:1; padding:14px 6px; border:none; background:transparent; font-family:'Source Sans 3',sans-serif; font-size:.82rem; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:4px solid transparent; transition:all .2s; }
+  .week-btn.active-w4 { color:var(--blue); border-bottom-color:var(--blue); background:var(--blue-light); }
+  .week-btn.active-w5 { color:var(--purple); border-bottom-color:var(--purple); background:var(--purple-light); }
+  .week-btn.active-w6 { color:var(--teal); border-bottom-color:var(--teal); background:var(--teal-light); }
+  .week-btn:hover:not([class*="active"]) { color:var(--ink); background:#F5F0EA; }
+  .tabs { display:flex; background:var(--card); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+  .tab-btn { flex:1; padding:12px 8px; border:none; background:transparent; font-family:'Source Sans 3',sans-serif; font-size:.76rem; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; transition:all .2s; text-transform:uppercase; letter-spacing:.08em; }
+  .tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); background:var(--accent-light); }
+  .tab-btn:hover:not(.active) { color:var(--ink); background:#F5F0EA; }
+  .content { max-width:720px; margin:0 auto; padding:24px 16px 80px; }
+  .week-content { display:none; }
+  .week-content.active { display:block; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:20px; border:1px solid var(--border); }
+  .card h2 { font-family:'DM Serif Display',serif; font-size:1.25rem; font-weight:400; margin-bottom:12px; }
+  .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+  .badge-teacher { background:var(--accent-light); color:var(--accent); }
+  .badge-student { background:var(--blue-light); color:var(--blue); }
+  .badge-tip { background:var(--yellow-light); color:var(--yellow); }
+  .script-line { padding:14px 16px; margin:10px 0; border-radius:8px; }
+  .script-line.teacher { background:var(--accent-light); border-left:4px solid var(--accent); }
+  .script-line.student { background:var(--blue-light); border-left:4px solid var(--blue); }
+  .script-line.tip { background:var(--yellow-light); border-left:4px solid var(--yellow); }
+  .script-line .role { font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+  .script-line.teacher .role { color:var(--accent); }
+  .script-line.student .role { color:var(--blue); }
+  .script-line.tip .role { color:var(--yellow); }
+  .script-line p { font-size:.95rem; line-height:1.55; }
+  .script-line .chinese { font-size:.82rem; color:var(--muted); margin-top:4px; font-style:italic; }
+  .vocab-item { border-bottom:1px solid var(--border); padding:16px 0; }
+  .vocab-item:last-child { border-bottom:none; }
+  .vocab-word { font-family:'DM Serif Display',serif; font-size:1.15rem; }
+  .vocab-pos { font-size:.78rem; color:var(--muted); font-style:italic; margin-left:6px; }
+  .vocab-example { margin-top:6px; padding:8px 12px; background:#F5F0EA; border-radius:6px; font-size:.88rem; color:var(--muted); }
+  .vocab-example em { color:var(--accent); font-style:normal; font-weight:600; }
+  .reveal-btn { margin-top:8px; padding:6px 14px; border:1px solid var(--border); background:var(--card); border-radius:6px; font-size:.8rem; cursor:pointer; color:var(--muted); font-family:'Source Sans 3',sans-serif; transition:all .15s; }
+  .reveal-btn:hover { background:var(--accent-light); color:var(--accent); border-color:var(--accent); }
+  .hidden-content { display:none; margin-top:10px; padding:12px 16px; background:var(--green-light); border-radius:8px; font-size:.9rem; border-left:3px solid var(--green); }
+  .hidden-content.show { display:block; }
+  .scenario-card { background:var(--card); border:2px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:16px; cursor:pointer; transition:all .2s; }
+  .scenario-card:hover { border-color:var(--accent); box-shadow:0 4px 16px rgba(192,87,70,.12); }
+  .scenario-card.expanded { border-color:var(--accent); }
+  .scenario-num { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin-bottom:6px; }
+  .scenario-title { font-family:'DM Serif Display',serif; font-size:1.05rem; margin-bottom:6px; }
+  .scenario-desc { font-size:.88rem; color:var(--muted); margin-bottom:8px; }
+  .scenario-body { display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+  .scenario-card.expanded .scenario-body { display:block; }
+  .checklist-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); cursor:pointer; }
+  .checklist-item:last-child { border-bottom:none; }
+  .check-box { width:22px; height:22px; border:2px solid var(--border); border-radius:5px; cursor:pointer; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:all .15s; font-size:14px; color:transparent; }
+  .check-box.checked { background:var(--green); border-color:var(--green); color:white; }
+  .checklist-text { font-size:.92rem; }
+  .checklist-text.checked-text { text-decoration:line-through; color:var(--muted); }
+  .progress-bar { height:6px; background:var(--border); border-radius:3px; margin:12px 0 20px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--green); border-radius:3px; transition:width .4s ease; }
+  .section-intro { font-size:.92rem; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+  .divider { height:1px; background:var(--border); margin:20px 0; }
+  .timer-bar { display:flex; align-items:center; gap:10px; padding:12px 16px; background:var(--ink); color:var(--bg); border-radius:8px; margin-bottom:20px; font-size:.85rem; }
+  .timer-bar .time { font-family:'DM Serif Display',serif; font-size:1.3rem; margin-left:auto; }
+  .frame-box { background:#F5F0EA; border-radius:8px; padding:14px 16px; margin:10px 0; font-size:.92rem; border-left:3px solid var(--blue); }
+  .frame-box code { background:var(--blue-light); padding:2px 6px; border-radius:3px; font-family:'Source Sans 3',sans-serif; font-weight:600; color:var(--blue); font-size:.88rem; }
+  .note { font-size:.82rem; color:var(--muted); font-style:italic; margin-top:8px; }
+  @media(max-width:480px) { .tab-btn{font-size:.66rem;padding:11px 3px;} header h1{font-size:1.3rem;} .week-btn{font-size:.74rem;padding:12px 4px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Weeks 4–6 Teaching Practice</h1>
+  <div class="subtitle">Gender Education &middot; Alinggo S.L. Lee</div>
+</header>
+
+<div class="week-selector">
+  <button class="week-btn active-w4" id="weekBtn4" onclick="switchWeek('w4')">W4 Media</button>
+  <button class="week-btn" id="weekBtn5" onclick="switchWeek('w5')">W5 Orientation</button>
+  <button class="week-btn" id="weekBtn6" onclick="switchWeek('w6')">W6 Parenting</button>
+</div>
+
+<!-- ================================================================ -->
+<!-- WEEK 4: MEDIA, GENDER & CRITICAL THINKING -->
+<!-- ================================================================ -->
+<div id="week-w4" class="week-content active">
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('w4','warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('w4','teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('w4','roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('w4','checklist')">Checklist</button>
+</div>
+<div class="content">
+
+<!-- W4 WARM-UP -->
+<div id="w4-warmup" class="panel active">
+  <p class="section-intro">Week 4 is about <strong>media literacy as a tool, not a weapon</strong>. The key shift: it's not about "canceling" content — it's about seeing invisible structures.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px;">Tap to reveal. Practice explaining each term with a concrete media example.</p>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Media Amplification <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> How media makes a specific idea, reaction, or stereotype louder and bigger than it would be naturally.</div>
+        <div class="vocab-example">Try saying: <em>"The media amplification of this joke reinforced an old gender stereotype — it turned a small moment into a viral message."</em></div>
+        <div class="chinese">媒體放大效應 — 媒體如何將特定觀念或刻板印象放大，使其影響力遠超原本。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Structural Bias <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> Unfairness that is built into the way a system or media works — not one person's prejudice, but the system's default.</div>
+        <div class="vocab-example">Try saying: <em>"To fix this, we need to address the structural bias in the storytelling — not just one character, but the pattern across many stories."</em></div>
+        <div class="chinese">結構性偏見 — 內建在系統或媒體運作方式中的不公平，不是個人偏見，而是系統的預設值。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Critical Framework <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> A set of structured steps used to think deeply about content — like Describe → Analyze → Vision → Action.</div>
+        <div class="vocab-example">Try saying: <em>"We applied the four-step critical framework to the viral video: first we described what we saw, then we analyzed the power structure behind it."</em></div>
+        <div class="chinese">批判性架構 — 用來深入思考內容的結構化步驟，例如「描述→分析→願景→行動」。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Regulation <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The ways norms are kept in place — through repetition, approval, ridicule, correction, and media.</div>
+        <div class="vocab-example">Try saying: <em>"Gender norms are regulated not by laws, but by social mechanisms — laughter, silence, and repetition."</em></div>
+        <div class="chinese">規訓 — 透過重複、讚許、嘲笑、糾正和媒體來維持社會規範。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Agency <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The power to make your own choices and act independently — the opposite of being controlled by invisible norms.</div>
+        <div class="vocab-example">Try saying: <em>"Once you can see the structure, you gain agency over your choices — you're no longer just following a script."</em></div>
+        <div class="chinese">能動性 — 能夠自主做決定的力量。看見結構後，你就能掌握自己的選擇。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px;">Martin names a media example (a TV commercial, a viral meme, a movie scene) → Alinggo responds using these analysis frames.</p>
+
+    <div class="frame-box">
+      <strong>Frame 1 — Observation:</strong><br>
+      <code>"I described the clip, and I noticed a pattern of _____ toward..."</code><br>
+      <div class="note">Example: "...ridicule toward men who show emotional vulnerability."</div>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 2 — Structural Link:</strong><br>
+      <code>"This represents structural bias because the media is amplifying only..."</code><br>
+      <div class="note">Example: "...one perspective — that strength means hiding your feelings."</div>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 3 — Vision:</strong><br>
+      <code>"My vision for change is to promote more inclusive representation through..."</code><br>
+      <div class="note">Example: "...education and diverse storytelling in children's media."</div>
+    </div>
+    <div class="divider"></div>
+    <p style="font-size:.85rem;color:var(--muted);">💡 <strong>Drill idea:</strong> Martin describes a 30-second media clip (real or made up). Alinggo applies all 3 frames in under 90 seconds. Then Martin asks: "But who holds the power in that clip?" to push deeper.</p>
+  </div>
+</div>
+
+<!-- W4 TEACH IT -->
+<div id="w4-teach" class="panel">
+  <p class="section-intro">Alinggo delivers W4: <strong>Media, Gender & Critical Thinking</strong>. The lesson moves from mechanisms → the "Prince Charming" code → the four-step framework → closing.</p>
+
+  <div class="timer-bar"><span>⏱ Suggested total time</span><span class="time">30 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Opening</span>
+    <h2>How Norms Stay Alive</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+
+    <div class="script-line teacher">
+      <div class="role">Alinggo (Teacher)</div>
+      <p>"Welcome to Week 4. So far we've looked at names and expression. Today we ask a bigger question: <strong>How are gender norms maintained?</strong> They don't survive by accident. They are actively kept in place."</p>
+    </div>
+    <div class="script-line teacher">
+      <div class="role">Alinggo</div>
+      <p>"There are five key mechanisms: <strong>repetition, approval, ridicule, correction, and media amplification.</strong> Think of them as the 'immune system' of gender norms — they attack anything that doesn't fit."</p>
+      <div class="chinese">五個維持性別規範的機制：重複、認可、嘲笑、糾正、媒體放大。它們就像規範的「免疫系統」。</div>
+    </div>
+    <div class="script-line tip">
+      <div class="role">💡 Teaching tip</div>
+      <p>Write the five mechanisms on the board (or say them slowly with fingers). Ask: "Can anyone give me an example of 'ridicule' being used to enforce a gender norm?" This activates prior weeks' learning.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — Discussion</span>
+    <h2>The "Prince Charming" Code</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+
+    <div class="script-line teacher">
+      <div class="role">Alinggo</div>
+      <p>"Let's talk about a pattern we all know. In movies, in fairy tales, in advertisements — men are often the <strong>'saviors'</strong> and women are the ones <strong>waiting to be rescued</strong>. Why?"</p>
+    </div>
+    <div class="script-line teacher">
+      <div class="role">Alinggo</div>
+      <p>"These narratives act like <strong>social code</strong> — they program our expectations for love and life. And the most powerful part? We don't even notice it happening. That's what makes it structural."</p>
+    </div>
+    <div class="script-line teacher">
+      <div class="role">Alinggo</div>
+      <p>"Here's a thought experiment: think of a media moment — a scene in a movie, a joke in a show — that made you laugh or feel angry. Now <strong>remove the ridicule or judgment</strong> from that scene. Does the story still work? If not — why does society need humor or silence to 'fix' people who don't fit in?"</p>
+      <div class="chinese">想一個讓你笑或生氣的媒體場景。把嘲笑或批判拿掉——故事還成立嗎？為什麼社會需要用幽默或沉默來「矯正」不合群的人？</div>
+    </div>
+    <div class="script-line student">
+      <div class="role">Martin (Student) — prompts</div>
+      <p>• "In action movies, the woman is always the prize at the end. But isn't that just entertainment?"<br>• "What about movies where the woman is the hero, like Mulan?"<br>• Challenge: "Aren't you reading too much into it?"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — Applied Framework</span>
+    <h2>The Four-Step: Describe → Analyze → Vision → Action</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+
+    <div class="script-line teacher">
+      <div class="role">Alinggo</div>
+      <p>"Now I want to give you a <strong>tool</strong> you can use — not just in this class, but every time you see something online that makes you uncomfortable. It's called the Four-Step Framework."</p>
+    </div>
+    <div class="script-line teacher">
+      <div class="role">Alinggo — walk through each step</div>
+      <p>"<strong>Step 1 — Describe:</strong> What do you literally see? No judgment yet. Just describe.<br><br>
+      <strong>Step 2 — Analyze:</strong> What patterns are at work? Who holds the power? What norm is being reinforced?<br><br>
+      <strong>Step 3 — Vision:</strong> What would a more inclusive version look like?<br><br>
+      <strong>Step 4 — Action:</strong> What can you actually do? Share, create, educate, or simply choose not to amplify."</p>
+    </div>
+    <div class="script-line tip">
+      <div class="role">💡 Practice activity</div>
+      <p>Pick a real trending video or meme (or describe one). Walk through the 4 steps together. Martin plays a student who wants to "join the crowd" and share it — Alinggo guides him to "step back" first.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>See the Structure, Reclaim the Power</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+
+    <div class="script-line teacher">
+      <div class="role">Alinggo</div>
+      <p>"So remember: gender norms are maintained through <strong>repetition, social reaction, and silence</strong>. Media literacy is not a weapon for blame — it is a <strong>tool for vision</strong>."</p>
+    </div>
+    <div class="script-line teacher">
+      <div class="role">Alinggo</div>
+      <p>"When we see the structure, we reclaim our power to decide <strong>who we want to be in the world.</strong>"</p>
+    </div>
+    <div class="script-line tip">
+      <div class="role">💡 Closing tip</div>
+      <p>Emphasize "tool for vision, not weapon for blame." This framing prevents defensive reactions and keeps the class constructive. Pause after the final sentence.</p>
+    </div>
+  </div>
+</div>
+
+<!-- W4 ROLE-PLAY -->
+<div id="w4-roleplay" class="panel">
+  <p class="section-intro">Media literacy discussions can get heated. These scenarios practice staying analytical, not accusatory.</p>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 1</div>
+    <div class="scenario-title">"You're Reading Too Much Into It"</div>
+    <div class="scenario-desc">A student dismisses media analysis as overthinking.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"It's just a movie. You're reading too much into it. Can't we just enjoy things?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Validate, then reframe: <em>"You're absolutely right that we should enjoy media! And this isn't about ruining fun. It's about adding a layer of awareness. You can enjoy a movie AND notice who the hero always is. Those two things aren't in conflict. Think of it like this: a chef can enjoy eating food, but they also notice the ingredients. That awareness doesn't ruin the meal — it makes it richer."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 2</div>
+    <div class="scenario-title">"But What About Male Victims?"</div>
+    <div class="scenario-desc">A student feels the discussion is one-sided.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"We keep talking about women being stereotyped. But men are also stereotyped as violent or emotionless. Why don't we talk about that?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Agree and expand: <em>"That's a really important point, and you're right — structural bias affects everyone. The 'Prince Charming' code hurts men too. It tells them they must always be strong, always be the provider, never show vulnerability. That's also a form of media amplification. So yes — this analysis applies to all genders. Good observation."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 3</div>
+    <div class="scenario-title">Guiding the Four-Step Live</div>
+    <div class="scenario-desc">Practice walking a student through the framework in real time.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"I saw a video where a boy cried at school and all the comments were like 'man up.' Can we analyze that?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Walk through it live:<br><em>"Great example. Let's use our framework. Step 1 — Describe: What happened? A boy cried, and the comments told him to 'man up.' Step 2 — Analyze: What norm is being enforced? That boys shouldn't show sadness. What mechanism? Ridicule and correction. Step 3 — Vision: What would a supportive response look like? Step 4 — Action: What could you comment instead?"</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 4</div>
+    <div class="scenario-title">"Isn't This Just Cancel Culture?"</div>
+    <div class="scenario-desc">A student equates media literacy with censorship.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"So are you saying we should cancel all these movies and shows? Isn't this just cancel culture?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Draw the distinction clearly: <em>"No — and that's a crucial distinction. Media literacy is NOT about canceling content. It's about seeing the invisible structures inside the content. You can still watch and enjoy anything you want. But now you watch with awareness. The goal is agency — your power to choose — not censorship."</em></p></div>
+    </div>
+  </div>
+</div>
+
+<!-- W4 CHECKLIST -->
+<div id="w4-checklist" class="panel">
+  <p class="section-intro">Track W4 progress.</p>
+  <div class="card">
+    <h2>Week 4 Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="w4-progressFill" style="width:0%"></div></div>
+    <div id="w4-progressText" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Vocabulary: all 5 terms practiced aloud</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Sentence frames: 3+ media examples analyzed</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Segment 1: Explained the 5 mechanisms of regulation</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Led the "Prince Charming Code" discussion</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Handled "remove the ridicule" thought experiment</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Walked through all 4 steps of the framework</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Applied the framework to a real/hypothetical example</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Segment 4: Delivered closing — "tool for vision, not weapon for blame"</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w4')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Distinguished media literacy from cancel culture</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="Notes on W4 session..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- WEEK 5: SEXUAL ORIENTATION -->
+<!-- ================================================================ -->
+<div id="week-w5" class="week-content">
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('w5','warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('w5','teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('w5','roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('w5','checklist')">Checklist</button>
+</div>
+<div class="content">
+
+<!-- W5 WARM-UP -->
+<div id="w5-warmup" class="panel active">
+  <p class="section-intro">Week 5 is the most sensitive topic so far: <strong>sexual orientation as a social construct, not just a label</strong>. The teaching tone should be academic and respectful — informed, never preachy.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Heteronormativity <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The assumption that heterosexuality is the only normal mode of sexual orientation — the invisible "default setting" of society.</div>
+        <div class="vocab-example">Try saying: <em>"The traditional wedding industry is often built on heteronormativity — it assumes the couple is one man and one woman."</em></div>
+        <div class="chinese">異性戀常規 — 認為異性戀是唯一「正常」性取向的社會預設。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Split Attraction Model <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> A framework that separates romantic attraction from sexual attraction — they don't always point the same direction.</div>
+        <div class="vocab-example">Try saying: <em>"The split attraction model helps us understand that someone can be biromantic but asexual — attracted romantically to multiple genders, but not sexually."</em></div>
+        <div class="chinese">分裂吸引力模型 — 將浪漫吸引與性吸引區分開來，兩者不一定一致。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Marginalization <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The treatment of a person or group as insignificant or peripheral — pushed to the edges of society.</div>
+        <div class="vocab-example">Try saying: <em>"Historical records often lead to the marginalization of LGBTQ+ stories — they are erased or ignored."</em></div>
+        <div class="chinese">邊緣化 — 將某人或某群體視為不重要或邊緣的對待方式。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Erasure <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The systematic removal or denial of a group's existence, history, or significance.</div>
+        <div class="vocab-example">Try saying: <em>"Bisexual erasure happens when people say you 'must be' either gay or straight — denying bisexuality as a real identity."</em></div>
+        <div class="chinese">抹除 — 系統性地否認或移除某群體的存在、歷史或重要性。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Conceptual Clarity <span class="vocab-pos">(n. phrase)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The ability to distinguish clearly between related but distinct concepts — essential for academic discourse.</div>
+        <div class="vocab-example">Try saying: <em>"Conceptual clarity is vital here: who you are — your identity — and who you love — your orientation — are distinct and independent."</em></div>
+        <div class="chinese">概念清晰度 — 清楚區分相關但不同概念的能力。身分≠取向。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px;">Martin gives a scenario (a dating app profile, a wedding ad, a coming-out scene in a drama) → Alinggo responds using these frames.</p>
+
+    <div class="frame-box">
+      <strong>Frame 1 — Identifying a Bias:</strong><br>
+      <code>"This reinforces heteronormativity by assuming the default couple is..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 2 — Applying a Model:</strong><br>
+      <code>"Using the split attraction model, we can see that this character experiences _____ attraction but not..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 3 — Reflecting on Change:</strong><br>
+      <code>"One assumption I used to have about orientation was _____, but now I recognize..."</code>
+    </div>
+  </div>
+</div>
+
+<!-- W5 TEACH IT -->
+<div id="w5-teach" class="panel">
+  <p class="section-intro">W5: <strong>Sexual Orientation — Beyond Identity Labels</strong>. Academic tone throughout. The lesson moves from theory → the Split Attraction Model → discussion via film/music → closing.</p>
+
+  <div class="timer-bar"><span>⏱ Suggested total time</span><span class="time">30 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Opening</span>
+    <h2>More Than a Label</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Welcome to Week 5. This topic requires extra care, so let me set the frame. In academic discourse, sexual orientation is more than just a label. It is a <strong>complex social construct</strong> — shaped by culture, language, and power."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Today we're going to separate two things that many people combine: <strong>identity</strong> — who you are — and <strong>orientation</strong> — who you are attracted to. These are distinct and independent."</p>
+      <div class="chinese">今天我們要區分兩件常被混為一談的事：身分（你是誰）和性傾向（你被誰吸引）。這是兩個獨立的變數。</div></div>
+    <div class="script-line tip"><div class="role">💡 Teaching tip</div>
+      <p>Establish ground rules: "In this class, we use academic language. We describe, we analyze, we reflect. We don't judge. Everyone's experience is valid data." This creates safety for the discussion ahead.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — Core Concepts</span>
+    <h2>Heteronormativity & the Split Attraction Model</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"First concept: <strong>Heteronormativity</strong>. This is the social belief that heterosexuality is the default — the 'normal' state. It's so deeply embedded that we often don't even notice it. Think about forms that ask for 'husband' and 'wife' instead of 'partner.' That's heteronormativity in action."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Second concept: the <strong>Split Attraction Model</strong>. This framework says that romantic attraction and sexual attraction are separate. You can be aromantic but sexual. You can be biromantic but asexual. The point is: attraction is not a single switch — it has multiple dimensions."</p></div>
+    <div class="script-line student"><div class="role">Martin (Student)</div>
+      <p>Ask: "Wait — you can be romantically attracted to someone but not sexually? How does that work?" Let Alinggo explain with a concrete example.</p></div>
+    <div class="script-line tip"><div class="role">💡 Comprehension check</div>
+      <p>"Can someone give me an example of heteronormativity in daily life? Think about advertisements, school policies, or family gatherings."</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — Discussion via Media</span>
+    <h2>The Landscape of Desire & Unlabeled Youth</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Let's think about dating apps. When you scroll through profiles, are you looking for a <strong>label</strong> — 'straight,' 'gay,' 'bi' — or a <strong>human connection</strong>? If we removed all the bio tags, how would you describe being 'drawn' to someone?"</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"And here's the deeper question: is that feeling purely yours? Or is it guided by what society calls an <strong>'ideal type'</strong>?"</p>
+      <div class="chinese">那種被吸引的感覺真的完全是你自己的嗎？還是被社會所謂的「理想型」引導的？</div></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Have you ever felt that society is in a hurry to <strong>categorize</strong> your feelings? If we chose to remain 'unlabeled' for a while, would that feel like a scary lack of direction — or like a total, beautiful freedom?"</p></div>
+    <div class="script-line student"><div class="role">Martin (Student) — prompts</div>
+      <p>• "I think labels are useful — they help people find community."<br>• "What if someone doesn't want a label at all? Is that OK?"<br>• Challenge: "In my culture, you're either straight or you're not. This 'spectrum' idea feels very Western."</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>Desire Exists Within Society</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Sexual orientation is not merely a personal preference. It is socially <strong>interpreted, regulated, and politicized</strong>. Understanding attraction academically allows us to <strong>reduce harm and erasure</strong>."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Remember this: <strong>Desire exists within society. To understand desire, we must first understand power.</strong>"</p></div>
+    <div class="script-line tip"><div class="role">💡 Closing tip</div>
+      <p>The final line is the thesis. Say it like a conclusion to a lecture — measured, clear, with weight. This is not a slogan; it's an analytical statement.</p></div>
+  </div>
+</div>
+
+<!-- W5 ROLE-PLAY -->
+<div id="w5-roleplay" class="panel">
+  <p class="section-intro">These scenarios practice navigating the most sensitive questions with academic precision and human warmth.</p>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 1</div>
+    <div class="scenario-title">"Is This Class Trying to Make Us Gay?"</div>
+    <div class="scenario-desc">A student is suspicious of the topic's agenda.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Why are we studying this? Are you trying to change our orientation or something?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Stay calm, stay academic: <em>"No — and that's an important thing to address. This class doesn't tell you what to feel or who to love. It gives you vocabulary and frameworks to understand the world around you. Just like studying history doesn't make you a historian — studying orientation doesn't change yours. It builds understanding."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 2</div>
+    <div class="scenario-title">"This Is a Western Concept"</div>
+    <div class="scenario-desc">A student challenges the cultural applicability.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"All these terms — asexual, biromantic — they sound like Western labels. In my culture we don't use these words."</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"That's a valid observation. The labels are indeed from Western academic frameworks. But the experiences they describe — feeling attraction in different ways, or not feeling it at all — those exist in every culture. The question isn't whether these labels are universal, but whether having language for these experiences helps people feel less alone. What do you think?"</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 3</div>
+    <div class="scenario-title">Explaining the Split Attraction Model Simply</div>
+    <div class="scenario-desc">A student is genuinely confused.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"I really don't understand how you can be romantically attracted but not sexually attracted. Can you give a simple example?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"Sure. Think about it this way: have you ever had a very close friend who you loved spending time with, sharing secrets with, and felt emotionally bonded to — but you never felt physically attracted to them? That's a separation between emotional and physical connection. The split attraction model extends that to romantic and sexual feelings. Some people experience strong romantic feelings — wanting dates, cuddles, partnership — without feeling sexual attraction. And vice versa."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 4</div>
+    <div class="scenario-title">A Student Shares Something Personal</div>
+    <div class="scenario-desc">Someone comes out or shares a personal struggle in class.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Actually... I've been questioning my own orientation recently. I never had a word for what I feel until today."</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Honor it, don't spotlight it: <em>"Thank you for trusting us with that. And I'm glad the vocabulary is helpful. That's exactly why we study these concepts — not to label people, but to give people the language to understand their own experiences. You don't need to have all the answers right now. This is a process."</em> Then naturally move on — don't make the student a spectacle.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- W5 CHECKLIST -->
+<div id="w5-checklist" class="panel">
+  <p class="section-intro">Track W5 progress.</p>
+  <div class="card">
+    <h2>Week 5 Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="w5-progressFill" style="width:0%"></div></div>
+    <div id="w5-progressText" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Vocabulary: all 5 terms practiced aloud</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Sentence frames: 3+ scenarios analyzed</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 1: Set the academic tone and ground rules</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Explained heteronormativity with daily-life examples</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Explained the Split Attraction Model clearly</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Led the "labels vs. connection" dating app discussion</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Explored "unlabeled" as freedom vs. anxiety</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 4: Delivered closing — "desire exists within society"</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Handled a "Western concept" cultural challenge</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="Notes on W5 session..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- WEEK 6: DIVERSITY, GENDER & PARENTING -->
+<!-- ================================================================ -->
+<div id="week-w6" class="week-content">
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('w6','warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('w6','teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('w6','roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('w6','checklist')">Checklist</button>
+</div>
+<div class="content">
+
+<!-- W6 WARM-UP -->
+<div id="w6-warmup" class="panel active">
+  <p class="section-intro">Week 6 tackles <strong>parenting as social regulation</strong> — how family structures are judged, and how the "Cycle of Oppression" works from stereotype → prejudice → discrimination → oppression → internalized oppression.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Gender Policing <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> When society criticizes or punishes people for not following traditional gender roles — especially visible in parenting.</div>
+        <div class="vocab-example">Try saying: <em>"Society sometimes practices gender policing by criticizing parents who don't follow traditional gender roles — like a father who stays home."</em></div>
+        <div class="chinese">性別管控 — 當社會批評或懲罰不遵循傳統性別角色的人，特別是在親職領域。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Moral Panic <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> Widespread fear — often irrational — that something threatens society's values. Often targets non-traditional families.</div>
+        <div class="vocab-example">Try saying: <em>"The idea that 'children of same-sex parents will be confused' is a form of moral panic — it sounds logical but has no evidence."</em></div>
+        <div class="chinese">道德恐慌 — 廣泛但通常不理性的恐懼，認為某事威脅到社會價值觀。常針對非傳統家庭。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Protective Factors <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> Resources and conditions that help shield individuals or families from harm — like community support, education, or inclusive policies.</div>
+        <div class="vocab-example">Try saying: <em>"Community support can act as an important protective factor for marginalized families."</em></div>
+        <div class="chinese">保護因子 — 幫助個人或家庭抵禦傷害的資源和條件，如社區支持、教育或包容性政策。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Internalized Oppression <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> When a person from a marginalized group starts believing the negative messages society tells about them — turning outside pressure inward.</div>
+        <div class="vocab-example">Try saying: <em>"Internalized oppression is when someone begins to believe they are 'wrong' for being who they are — not because of evidence, but because society repeated it enough."</em></div>
+        <div class="chinese">內化壓迫 — 當被邊緣化的人開始相信社會對他們的負面訊息，把外在壓力轉向內在。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Family Silence <span class="vocab-pos">(n. phrase)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The unspoken agreement within families to avoid discussing certain topics — especially gender, sexuality, or trauma.</div>
+        <div class="vocab-example">Try saying: <em>"Family silence about gender and sexuality doesn't make the issues disappear — it just makes them harder to process."</em></div>
+        <div class="chinese">家庭沉默 — 家庭中對某些話題（尤其是性別、性向或創傷）的不成文迴避協議。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <div class="frame-box">
+      <strong>Frame 1 — Identifying Expectations:</strong><br>
+      <code>"The stereotype that _____ creates prejudice toward families who..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 2 — Analyzing the Cycle:</strong><br>
+      <code>"This is an example of how stereotypes lead to discrimination because..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 3 — Proposing Support:</strong><br>
+      <code>"One protective factor we could implement in schools is..."</code>
+    </div>
+  </div>
+</div>
+
+<!-- W6 TEACH IT -->
+<div id="w6-teach" class="panel">
+  <p class="section-intro">W6: <strong>Diversity, Gender & Parenting</strong>. This week uses two documentaries as anchors: <em>Small Talk</em> (日常對話) and <em>Love Together</em> (同愛一家). The lesson moves from parenting as regulation → the Cycle of Oppression → cross-cultural examples → closing.</p>
+
+  <div class="timer-bar"><span>⏱ Suggested total time</span><span class="time">35 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Opening</span>
+    <h2>Parenting Is Not Just Personal</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Parenting is often seen as a personal choice. But in fact, it is strongly influenced by society, social systems, and cultural expectations. Today we ask: <strong>who gets to define what a 'good family' looks like?</strong>"</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Society usually has an idea of what a 'normal family' looks like. There are also unwritten gender rules — for example, the belief that 'good parents' should raise 'normal' children. These social expectations can sometimes be <strong>stronger than the law</strong>."</p>
+      <div class="chinese">社會對「正常家庭」有既定想像。這些社會期待有時比法律更有力量。</div></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — The Cycle of Oppression</span>
+    <h2>Stereotype → Prejudice → Discrimination</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Let me introduce a framework: the <strong>Cycle of Oppression</strong>. It works like this: a <strong>stereotype</strong> creates a <strong>prejudice</strong>, which leads to <strong>discrimination</strong>, which becomes <strong>oppression</strong>, which the oppressed person may <strong>internalize</strong>. And then the cycle continues."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Let's apply this to parenting. The stereotype might be: 'mothers should follow traditional roles.' The prejudice: 'a lesbian mother can't raise a healthy child.' The discrimination: denying custody or social support. The oppression: systemic exclusion. And internalized oppression: the mother herself starts believing she's not good enough."</p></div>
+    <div class="script-line tip"><div class="role">💡 Activity</div>
+      <p>Ask Martin (as student) to map the cycle for a different stereotype — e.g., "stay-at-home fathers are lazy" or "single mothers are irresponsible." Walk through each stage together.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — Documentary Discussion</span>
+    <h2>Small Talk & The Silent Judgment</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~12 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"In the documentary <em>Small Talk</em>, director Huang Hui-chen explores her relationship with her mother — a woman who has lived as a lesbian in a society of silence. The daughter eventually asks her mother: <strong>'Do you love me?'</strong>"</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo — discussion prompts</div>
+      <p>"Why do some families avoid talking about gender or sexuality? How does silence affect family relationships? And if you were the director — how would you try to understand your mother?"</p>
+      <div class="chinese">為什麼有些家庭迴避談論性別或性向？沉默如何影響家庭關係？如果你是導演，你會如何理解你的母親？</div></div>
+    <div class="script-line teacher"><div class="role">Alinggo — cross-cultural bridge</div>
+      <p>"Now let's look at parenting across cultures. In some traditional societies, girls must return home before sunset — not for safety, but because staying out late puts her at 'risk' of being seen as immoral. And in the digital age, parents worry not about children being outside, but about children never going outside at all. Gender and generation intersect."</p></div>
+    <div class="script-line student"><div class="role">Martin (Student) — prompts</div>
+      <p>• "In my family, we never talked about these things. Does that make my parents bad?"<br>• "What's the difference between protecting your child and controlling them?"<br>• "When you become a parent, would YOU ask your daughter to return home before sunset?"</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>From Judgment to Support</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Parenting is a social practice. When diversity is treated as a problem, families carry the heavy burden of judgment. Our role is to shift the perspective — <strong>from judgment to support, and from structure to action</strong>."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Think of one 'small win' — one action we can implement in our schools today to support diverse families. That's your homework for next week."</p></div>
+  </div>
+</div>
+
+<!-- W6 ROLE-PLAY -->
+<div id="w6-roleplay" class="panel">
+  <p class="section-intro">Parenting is deeply personal. These scenarios practice empathy under pressure.</p>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 1</div>
+    <div class="scenario-title">"But the Child Will Be Confused!"</div>
+    <div class="scenario-desc">A student repeats a common moral panic argument.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Studies show that children need a mother AND a father. A same-sex couple can't provide that."</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Don't argue with feelings — respond with evidence and framework: <em>"That's a common concern, and I understand where it comes from. But let's apply our critical framework. First — what does 'studies show' actually mean? Who conducted those studies, and who did they study? Second — the overwhelming consensus in developmental psychology is that children thrive based on the quality of parenting, not the gender of the parents. What children need is love, stability, and safety. Those aren't gendered."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 2</div>
+    <div class="scenario-title">"My Parents Are Traditional — Am I Wrong?"</div>
+    <div class="scenario-desc">A student feels caught between their family values and the lesson.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"My family is very traditional. My mom stays home, my dad works. I don't think there's anything wrong with that. Are you saying my family is a stereotype?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"Not at all — and I want to be very clear about that. There's nothing wrong with a traditional family structure if it's chosen freely and works for everyone. The problem isn't any single family's arrangement. The problem is when society tells us that's the ONLY valid arrangement — and judges families who look different. We're studying the system, not judging your family."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 3</div>
+    <div class="scenario-title">Explaining the Cycle of Oppression Step by Step</div>
+    <div class="scenario-desc">A student asks you to walk through the cycle with a new example.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Can you show me the cycle with an example from my daily life? Something simpler?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Use a relatable example: <em>"Sure. Let's take 'men don't cook.' Stereotype: cooking is women's work. Prejudice: a man who cooks is 'less masculine.' Discrimination: a father who cooks gets teased at work. Oppression: fewer men enter culinary education, workplaces don't offer paternity leave for domestic roles. Internalized oppression: the man feels embarrassed about his own hobby. See how a small stereotype can grow into a system?"</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 4</div>
+    <div class="scenario-title">Facilitating the "Do You Love Me?" Discussion</div>
+    <div class="scenario-desc">Practice leading a sensitive film-based discussion.</div>
+    <div class="scenario-body">
+      <div class="script-line tip"><div class="role">The challenge</div>
+        <p>Alinggo must set up the <em>Small Talk</em> discussion without spoiling or over-explaining. Practice this instruction sequence: (1) briefly describe the film's premise, (2) ask the first question ("Why do some families avoid talking about gender?"), (3) give students 60 seconds to think, (4) facilitate the share-back, (5) bridge to the deeper question ("If you were the director, how would you understand your mother?").</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- W6 CHECKLIST -->
+<div id="w6-checklist" class="panel">
+  <p class="section-intro">Track W6 progress.</p>
+  <div class="card">
+    <h2>Week 6 Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="w6-progressFill" style="width:0%"></div></div>
+    <div id="w6-progressText" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Vocabulary: all 5 terms practiced aloud</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Sentence frames: applied the Cycle of Oppression to an example</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 1: Established parenting as a social (not just personal) practice</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Walked through the full Cycle of Oppression</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Student mapped the cycle to a new example</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Led the Small Talk documentary discussion</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Discussed the cross-cultural parenting examples</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 4: Delivered closing — "from judgment to support"</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Handled the "child will be confused" moral panic</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="Notes on W6 session..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div>
+</div>
+
+<script>
+function switchWeek(week) {
+  document.querySelectorAll('.week-content').forEach(w => w.classList.remove('active'));
+  document.getElementById('week-' + week).classList.add('active');
+  document.querySelectorAll('.week-btn').forEach(b => { b.classList.remove('active-w4','active-w5','active-w6'); });
+  document.getElementById('weekBtn' + week.charAt(1)).classList.add('active-' + week);
+}
+function switchTab(week, tab) {
+  const container = document.getElementById('week-' + week);
+  container.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(week + '-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleReveal(btn) {
+  const c = btn.nextElementSibling;
+  if (c.classList.contains('show')) { c.classList.remove('show'); btn.textContent = 'Show definition + example'; }
+  else { c.classList.add('show'); btn.textContent = 'Hide'; }
+}
+function toggleScenario(card) { card.classList.toggle('expanded'); }
+function toggleCheck(item, week) {
+  item.querySelector('.check-box').classList.toggle('checked');
+  item.querySelector('.checklist-text').classList.toggle('checked-text');
+  updateProgress(week);
+}
+function updateProgress(week) {
+  const container = document.getElementById(week + '-checklist');
+  const total = container.querySelectorAll('.checklist-item').length;
+  const done = container.querySelectorAll('.check-box.checked').length;
+  document.getElementById(week + '-progressFill').style.width = Math.round((done/total)*100) + '%';
+  document.getElementById(week + '-progressText').textContent = done + ' of ' + total + ' completed';
+}
+</script>
+</body>
+</html>

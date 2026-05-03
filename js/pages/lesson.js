@@ -56,11 +56,14 @@ export async function renderLesson(container, lesson) {
             </div>
           </div>`;
   }
-  // Always render TEEMI
+  // Always render TEEMI and IGET
   bottomItems += `
           <div class="teami-block">
             <div>
               <a href="https://teemi.tw/" target="_blank" rel="noopener" class="teami-btn">TEEMI</a>
+            </div>
+            <div>
+              <a href="data/${lesson.id}/guide.html" target="_blank" rel="noopener" class="teami-btn">IGET</a>
             </div>
           </div>`;
 
@@ -74,10 +77,6 @@ export async function renderLesson(container, lesson) {
           </div>
           <div class="section-block-body" id="summary-objective">
             <div class="loading"></div>
-          </div>
-          <div class="objective-buttons">
-            ${lesson.presentation ? `<a href="${lesson.presentation}" target="_blank" rel="noopener" class="objective-btn">${getLang() === 'en' ? 'Presentation' : '簡報'}</a>` : ''}
-            <a href="data/${lesson.id}/guide.html" target="_blank" rel="noopener" class="objective-btn">${getLang() === 'en' ? 'Study Guide' : '學習指引'}</a>
           </div>
         </div>
       </div>

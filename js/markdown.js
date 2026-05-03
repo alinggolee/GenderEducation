@@ -7,7 +7,7 @@
 export function parseMarkdown(md) {
     if (!md) return '';
 
-    const lines = md.split('\n');
+    const lines = md.replace(/\r/g, '').split('\n');
     let html = '';
     let inList = false;
     let listType = '';

@@ -1,0 +1,910 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W3 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --card: #FFFFFF;
+    --accent: #C05746;
+    --accent-light: #F2DDD8;
+    --ink: #2C2420;
+    --muted: #8A7E76;
+    --border: #E8E0D8;
+    --green: #4A7C59;
+    --green-light: #E4F0E8;
+    --blue: #3E6B89;
+    --blue-light: #DCE9F0;
+    --yellow: #B8860B;
+    --yellow-light: #FDF4DC;
+    --purple: #6B5B8A;
+    --purple-light: #EDE8F4;
+    --shadow: 0 2px 12px rgba(44,36,32,0.08);
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 28px 24px 20px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+
+  header .subtitle {
+    font-size: 0.85rem;
+    color: #B8AFA6;
+    font-weight: 300;
+  }
+
+  /* Week selector */
+  .week-selector {
+    display: flex;
+    background: var(--card);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .week-btn {
+    flex: 1;
+    padding: 14px 8px;
+    border: none;
+    background: transparent;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .week-btn.active-w2 {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+    background: var(--blue-light);
+  }
+
+  .week-btn.active-w3 {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+    background: var(--purple-light);
+  }
+
+  .week-btn:hover:not([class*="active"]) {
+    color: var(--ink);
+    background: #F5F0EA;
+  }
+
+  /* Tab Nav */
+  .tabs {
+    display: flex;
+    gap: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 12px 8px;
+    border: none;
+    background: transparent;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .tab-btn:hover:not(.active) {
+    color: var(--ink);
+    background: #F5F0EA;
+  }
+
+  /* Content area */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+  }
+
+  .week-content { display: none; }
+  .week-content.active { display: block; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .badge-teacher { background: var(--accent-light); color: var(--accent); }
+  .badge-student { background: var(--blue-light); color: var(--blue); }
+  .badge-tip { background: var(--yellow-light); color: var(--yellow); }
+
+  /* Script lines */
+  .script-line {
+    padding: 14px 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .script-line.teacher {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+  }
+
+  .script-line.student {
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue);
+  }
+
+  .script-line.tip {
+    background: var(--yellow-light);
+    border-left: 4px solid var(--yellow);
+  }
+
+  .script-line .role {
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .script-line.teacher .role { color: var(--accent); }
+  .script-line.student .role { color: var(--blue); }
+  .script-line.tip .role { color: var(--yellow); }
+
+  .script-line p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .script-line .chinese {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* Vocab drill */
+  .vocab-item {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  .vocab-item:last-child { border-bottom: none; }
+
+  .vocab-word {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+
+  .vocab-pos {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-left: 6px;
+  }
+
+  .vocab-def {
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+
+  .vocab-example {
+    margin-top: 6px;
+    padding: 8px 12px;
+    background: #F5F0EA;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  .vocab-example em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  .reveal-btn {
+    margin-top: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .reveal-btn:hover {
+    background: var(--accent-light);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .hidden-content {
+    display: none;
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: var(--green-light);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--green);
+  }
+
+  .hidden-content.show { display: block; }
+
+  /* Scenario cards */
+  .scenario-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .scenario-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(192,87,70,0.12);
+  }
+
+  .scenario-card.expanded { border-color: var(--accent); }
+
+  .scenario-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .scenario-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+
+  .scenario-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .scenario-body {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .scenario-card.expanded .scenario-body { display: block; }
+
+  /* Checklist */
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .checklist-item:last-child { border-bottom: none; }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 14px;
+    color: transparent;
+  }
+
+  .check-box.checked {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .checklist-text { font-size: 0.92rem; }
+
+  .checklist-text.checked-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin: 12px 0 20px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* Utility */
+  .section-intro {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .timer-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+  }
+
+  .timer-bar .time {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-left: auto;
+  }
+
+  .frame-box {
+    background: #F5F0EA;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 10px 0;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--blue);
+  }
+
+  .frame-box code {
+    background: var(--blue-light);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    color: var(--blue);
+    font-size: 0.88rem;
+  }
+
+  .note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .tab-btn { font-size: 0.68rem; padding: 12px 4px; }
+    header h1 { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 3 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee</div>
+</header>
+
+<!-- Week Selector -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 2 -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 3 -->
+<!-- ================================================================ -->
+<div id="week-w3" class="week-content active">
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('w3','warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('w3','teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('w3','roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('w3','checklist')">Checklist</button>
+</div>
+
+<div class="content">
+
+  <!-- W3 WARM-UP -->
+  <div id="w3-warmup" class="panel active">
+    <p class="section-intro">Week 3 is about <strong>gender expression as performance</strong> — what we show the world, and the social rules behind those choices. This is the most personal week so far.</p>
+
+    <div class="card">
+      <h2>Vocabulary Quick-Fire</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">Tap to reveal. Practice explaining each term as if a B1-level student just asked "What does that mean?"</p>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Gender Expression <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> The external presentation of gender through clothing, hairstyle, behavior, voice, and body language.</div>
+          <div class="vocab-example">Try saying: <em>"Gender expression is what you show the world — it's different from identity, which is what you feel inside."</em></div>
+          <div class="chinese" style="color:var(--muted)">性別表達 — 透過穿著、髮型、行為等外在方式向世界展現你的性別。</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Androgynous <span class="vocab-pos">(adj.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> Having a combination of both masculine and feminine characteristics in appearance or behavior.</div>
+          <div class="vocab-example">Try saying: <em>"An androgynous style might include short hair with a flowy shirt — blending what society calls 'masculine' and 'feminine.'"</em></div>
+          <div class="chinese" style="color:var(--muted)">中性的 — 同時結合男性化和女性化的特徵。</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Social Reinforcement <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> Using praise, criticism, or social pressure to encourage behavior that matches expected gender norms.</div>
+          <div class="vocab-example">Try saying: <em>"When someone says 'boys don't cry,' that's social reinforcement — it's teaching boys to hide certain emotions."</em></div>
+          <div class="chinese" style="color:var(--muted)">社會增強 — 用讚美或批評來鼓勵「正確」的性別行為。</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Tomboy / Gentleboy <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> Historically reclaimed terms for non-traditional gender expression. "Tomboy" originally meant a rude boy, but is now reclaimed as bold, sporty femininity.</div>
+          <div class="vocab-example">Try saying: <em>"The word 'tomboy' has shifted from an insult to an identity — it's an example of how language evolves with social norms."</em></div>
+          <div class="chinese" style="color:var(--muted)">男人婆 / 暖男 — 這些詞彙的含義隨著社會而改變。</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Social Construction <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> An idea or concept that was created and developed by society, rather than being natural or biological.</div>
+          <div class="vocab-example">Try saying: <em>"What counts as 'masculine' or 'feminine' is a social construction — it changes across cultures and across time."</em></div>
+          <div class="chinese" style="color:var(--muted)">社會建構 — 由社會創造的概念，而非天生或生物性的。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Sentence Frame Drill</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">Martin gives a prompt (e.g., "a boy wearing nail polish," "David Bowie's style," "Lin Yu-Ting"), and Alinggo builds a response using these analysis frames.</p>
+
+      <div class="frame-box">
+        <strong>Frame 1 — Making a Claim:</strong><br>
+        <code>"I believe gender expression is a social construction because..."</code><br>
+        <div class="note">Example: "...what's considered 'feminine' clothing in one culture is completely normal for men in another."</div>
+      </div>
+
+      <div class="frame-box">
+        <strong>Frame 2 — Describing a Style:</strong><br>
+        <code>"They express _____ through _____ , which challenges the traditional expectation that..."</code><br>
+        <div class="note">Example: "They express masculinity through softness and empathy, which challenges the expectation that men must be tough."</div>
+      </div>
+
+      <div class="frame-box">
+        <strong>Frame 3 — Explaining the Difference:</strong><br>
+        <code>"It's important to remember that gender expression is external, whereas identity is..."</code><br>
+        <div class="note">Example: "...an internal feeling. A person's clothing doesn't tell you who they are inside."</div>
+      </div>
+
+      <div class="divider"></div>
+      <p style="font-size:0.85rem;color:var(--muted);">💡 <strong>Drill idea:</strong> Martin shows an example (real or hypothetical — "a man in a skirt in Scotland," "a woman boxer," "a K-pop idol") → Alinggo uses all 3 frames for a 90-second analysis. Challenge: can she do it without pausing for more than 3 seconds?</p>
+    </div>
+  </div>
+
+  <!-- W3 TEACH IT -->
+  <div id="w3-teach" class="panel">
+    <p class="section-intro">Alinggo delivers the W3 lesson: <strong>Gender Expression as Performance</strong>. This is the most discussion-heavy week — lots of student interaction.</p>
+
+    <div class="timer-bar">
+      <span>⏱ Suggested total time</span>
+      <span class="time">30 min</span>
+    </div>
+
+    <!-- SEGMENT 1 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 1 — Opening</span>
+      <h2>What Did You Put On This Morning?</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo (Teacher)</div>
+        <p>"Good morning. I want to start with a simple question: <strong>What did you put on this morning?</strong> Not just your clothes — your hairstyle, your posture, your way of speaking. All of that is your <strong>gender expression</strong>."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Last week, we talked about how names carry expectations. This week, we go further. We're going to talk about how we <strong>perform</strong> those expectations — every single day, through our bodies and our presentation."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Here's the key idea for today: gender expression is not about who you <em>are</em>. It's about what you <em>show</em>. And what counts as 'masculine' or 'feminine' is not biology — it's culture."</p>
+        <div class="chinese">性別表達不是「你是誰」，而是「你展現什麼」。什麼是「男性化」或「女性化」不是生物學，而是文化。</div>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Teaching tip</div>
+        <p>The opening question is casual and disarming. Gesture at your own outfit as you say it. It breaks the formality and makes the concept immediately concrete.</p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 2 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 2 — Core Concept</span>
+      <h2>Expression ≠ Identity + The Genderbread Model</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~8 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Let me introduce an important model: the <strong>Genderbread Person</strong>. It shows us that gender has several independent components — identity, expression, sex, and orientation. They're all separate."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Today we're focusing on <strong>expression</strong>. Expression is external — it's your clothing, your hairstyle, your posture, your speech. <strong>Identity</strong> is internal — it's how you feel. A person can express femininity but identify as male. These are independent."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"And here's the critical point: what society considers 'masculine' or 'feminine' expression is a <strong>social construction</strong>. It changes across cultures. It changes across time. High heels were originally invented for men. Pink was once a boy's color."</p>
+        <div class="chinese">高跟鞋最初是為男性設計的，粉紅色曾被認為是男孩的顏色。「男性化」和「女性化」不是固定的。</div>
+      </div>
+
+      <div class="script-line student">
+        <div class="role">Martin (Student) — prompt</div>
+        <p>Ask: "Wait, high heels were for men? Are you serious?" Let Alinggo elaborate — this is always a great attention-grabber.</p>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Comprehension check</div>
+        <p>Ask: "So — can someone tell me: if a woman has short hair and wears a suit, what does that tell us about her gender identity?" The answer is: nothing, necessarily. Expression ≠ identity.</p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 3 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 3 — Discussion</span>
+      <h2>Icons, Anxiety &amp; the Imaginary Gender Police</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~12 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Let's look at some real examples. Think about <strong>David Bowie</strong> — his glam rock style in the 1970s mixed 'masculine' rock performance with makeup and dresses. Or think about <strong>Lin Yu-Ting</strong>, whose powerful presence challenged what people expected a female athlete to look like."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Now I want to ask you something personal — and you don't have to share if you don't want to. <strong>Have you ever felt a spark of anxiety when wearing something that didn't match other people's expectations?</strong>"</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"If yes — where did that anxiety come from? Was it from <em>you</em>? Or was it from the <strong>'imaginary gender police'</strong> in the room — the feeling that someone is watching and judging?"</p>
+        <div class="chinese">那個焦慮來自你自己，還是來自房間裡「想像中的性別警察」——那種被人注視和評判的感覺？</div>
+      </div>
+
+      <div class="script-line student">
+        <div class="role">Martin (Student) — response prompts</div>
+        <p>Try different student types:<br>
+        • Open: "Actually, I once wore a pink shirt and my friends teased me all day."<br>
+        • Resistant: "I just wear whatever. I don't think about gender when I get dressed."<br>
+        • Curious: "What about K-pop idols? They wear makeup but nobody calls them feminine."</p>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Discussion bridge — Tomboy / Gentleboy</div>
+        <p>After the personal discussion, transition to language: <em>"Let's talk about labels. Words like 'tomboy' have changed meaning over time. Originally it meant a 'rude boy' — but now it's reclaimed as bold, sporty femininity. In your social circle, is it 'braver' for a girl to be masculine, or for a boy to be feminine?"</em></p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 4 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 4 — Closing</span>
+      <h2>Your Body Is Your Canvas</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Let me leave you with this thought. Gender expression is <strong>not a binary choice</strong>. It's not 'masculine OR feminine.' It's a flowing spectrum."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"You don't have to shrink yourself to fit someone else's script. <strong>Your body is your canvas. And your expression is the first story you tell the world — every single day.</strong>"</p>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Closing tip</div>
+        <p>This is a powerful final image. Say it slowly. Make eye contact. Let the last sentence ("every single day") hang in the air for a beat. That's how good teachers land a closing.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- W3 ROLE-PLAY -->
+  <div id="w3-roleplay" class="panel">
+    <p class="section-intro">Week 3 gets personal. These scenarios practice the trickiest moments in a gender expression discussion.</p>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 1</div>
+      <div class="scenario-title">"Isn't That Just Being Gay?"</div>
+      <div class="scenario-desc">A student conflates expression with orientation.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"So if a boy wears makeup and dresses femininely, doesn't that mean he's gay?"</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>This is common and must be handled calmly. Try: <em>"That's a very common assumption, and it's good that you're asking. But actually — no. Gender expression is about how you present yourself. Sexual orientation is about who you're attracted to. They're separate. A man who wears makeup might be straight, gay, bisexual, or anything else. The clothes don't tell us about attraction."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 2</div>
+      <div class="scenario-title">The "I Don't Care" Student</div>
+      <div class="scenario-desc">A student says they never think about gender expression.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"Honestly, I just wear whatever is comfortable. I don't think about gender when I get dressed. This topic doesn't apply to me."</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Flip the perspective: <em>"That's interesting — and I actually think it proves the point. The fact that you can 'not think about it' might be because your expression already matches what society expects. For people whose natural expression doesn't match expectations, they can't 'not think about it.' That's what we call privilege — and I don't mean that as an insult. It's just a pattern worth noticing."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 3</div>
+      <div class="scenario-title">Explaining "Social Construction" Simply</div>
+      <div class="scenario-desc">A student looks confused by the term.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"You keep saying 'social construction.' Can you explain that in simple English?"</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Use a concrete example: <em>"Sure! Think about it this way. In Scotland, men wear kilts — which look like skirts. In Korea, men wear BB cream — which is like makeup. Are they less 'masculine'? No — because what counts as masculine is different in different places. That's what 'social construction' means: society built these rules, not nature. And different societies built different rules."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 4</div>
+      <div class="scenario-title">The Double Standard Question</div>
+      <div class="scenario-desc">A student notices the asymmetry in how expression is policed.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"It seems like girls can wear pants and no one cares, but if a boy wears a skirt, everyone freaks out. Why is that?"</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>This is an excellent observation to affirm and build on: <em>"That's a really sharp observation! You've noticed an asymmetry. In many societies, it's more accepted for girls to express masculinity than for boys to express femininity. Why? Because historically, masculine traits are valued more highly. So a girl 'moving up' toward masculinity is acceptable, but a boy 'moving down' toward femininity feels threatening. This tells us something about power, not just about clothes."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 5</div>
+      <div class="scenario-title">Handling a Personal Disclosure</div>
+      <div class="scenario-desc">A student shares something vulnerable about their own expression.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"Actually, I've always wanted to try wearing more colorful or 'feminine' clothes, but I'm afraid of what my family would say."</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Honor the courage, don't give advice. Try: <em>"Thank you for sharing that. It takes real courage to say that out loud. And what you're describing — that gap between what you want to express and what you feel safe expressing — is exactly what we're studying in this class. You're not alone in that experience. Many people feel it. And noticing that gap is the first step."</em> Don't probe further. Move on naturally.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- W3 CHECKLIST -->
+  <div id="w3-checklist" class="panel">
+    <p class="section-intro">Track your W3 session progress.</p>
+    <div class="card">
+      <h2>Week 3 Session Progress</h2>
+      <div class="progress-bar"><div class="progress-fill" id="w3-progressFill" style="width:0%"></div></div>
+      <div id="w3-progressText" style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Vocabulary: all 5 terms practiced aloud</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Sentence frames: 3+ completions with real examples</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 1: Opened with "What did you put on this morning?"</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 2: Explained expression ≠ identity clearly</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 2: Used the high heels / pink examples</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 3: Facilitated the "imaginary gender police" discussion</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 3: Discussed Tomboy/Gentleboy language evolution</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 4: Delivered "your body is your canvas" closing</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Role-play: Completed at least 2 scenarios</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w3')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Role-play: Handled expression ≠ orientation confusion</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Session Notes</h2>
+      <textarea id="w3-notes" placeholder="Jot down words/phrases Alinggo struggled with, or areas to revisit..." style="width:100%;min-height:140px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:0.92rem;resize:vertical;background:var(--bg);"></textarea>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function switchWeek(week) {
+  document.querySelectorAll('.week-content').forEach(w => w.classList.remove('active'));
+  document.getElementById('week-' + week).classList.add('active');
+
+  document.querySelectorAll('.week-btn').forEach(b => {
+    b.classList.remove('active-w2', 'active-w3');
+  });
+
+  if (week === 'w2') {
+    document.getElementById('weekBtn2').classList.add('active-w2');
+  } else {
+    document.getElementById('weekBtn3').classList.add('active-w3');
+  }
+}
+
+function switchTab(week, tab) {
+  const container = document.getElementById('week-' + week);
+  container.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(week + '-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleReveal(btn) {
+  const content = btn.nextElementSibling;
+  if (content.classList.contains('show')) {
+    content.classList.remove('show');
+    btn.textContent = btn.textContent.includes('breakdown') ? 'Show breakdown' : 'Show definition + example';
+  } else {
+    content.classList.add('show');
+    btn.textContent = 'Hide';
+  }
+}
+
+function toggleScenario(card) {
+  card.classList.toggle('expanded');
+}
+
+function toggleCheck(item, week) {
+  const box = item.querySelector('.check-box');
+  const text = item.querySelector('.checklist-text');
+  box.classList.toggle('checked');
+  text.classList.toggle('checked-text');
+  updateProgress(week);
+}
+
+function updateProgress(week) {
+  const container = document.getElementById(week + '-checklist');
+  const total = container.querySelectorAll('.checklist-item').length;
+  const done = container.querySelectorAll('.check-box.checked').length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById(week + '-progressFill').style.width = pct + '%';
+  document.getElementById(week + '-progressText').textContent = done + ' of ' + total + ' completed';
+}
+</script>
+
+
+
+</body></html>

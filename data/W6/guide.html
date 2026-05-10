@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W6 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2; --card: #FFFFFF; --accent: #C05746; --accent-light: #F2DDD8;
+    --ink: #2C2420; --muted: #8A7E76; --border: #E8E0D8;
+    --green: #4A7C59; --green-light: #E4F0E8;
+    --blue: #3E6B89; --blue-light: #DCE9F0;
+    --yellow: #B8860B; --yellow-light: #FDF4DC;
+    --purple: #6B5B8A; --purple-light: #EDE8F4;
+    --teal: #3D7A7A; --teal-light: #DDF0EF;
+    --shadow: 0 2px 12px rgba(44,36,32,0.08); --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Source Sans 3',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; min-height:100vh; }
+  header { background:var(--ink); color:var(--bg); padding:28px 24px 20px; text-align:center; }
+  header h1 { font-family:'DM Serif Display',serif; font-size:1.6rem; font-weight:400; letter-spacing:.02em; margin-bottom:4px; }
+  header .subtitle { font-size:.85rem; color:#B8AFA6; font-weight:300; }
+  .week-selector { display:flex; background:var(--card); border-bottom:2px solid var(--border); }
+  .week-btn { flex:1; padding:14px 6px; border:none; background:transparent; font-family:'Source Sans 3',sans-serif; font-size:.82rem; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:4px solid transparent; transition:all .2s; }
+  .week-btn.active-w4 { color:var(--blue); border-bottom-color:var(--blue); background:var(--blue-light); }
+  .week-btn.active-w5 { color:var(--purple); border-bottom-color:var(--purple); background:var(--purple-light); }
+  .week-btn.active-w6 { color:var(--teal); border-bottom-color:var(--teal); background:var(--teal-light); }
+  .week-btn:hover:not([class*="active"]) { color:var(--ink); background:#F5F0EA; }
+  .tabs { display:flex; background:var(--card); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+  .tab-btn { flex:1; padding:12px 8px; border:none; background:transparent; font-family:'Source Sans 3',sans-serif; font-size:.76rem; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; transition:all .2s; text-transform:uppercase; letter-spacing:.08em; }
+  .tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); background:var(--accent-light); }
+  .tab-btn:hover:not(.active) { color:var(--ink); background:#F5F0EA; }
+  .content { max-width:720px; margin:0 auto; padding:24px 16px 80px; }
+  .week-content { display:none; }
+  .week-content.active { display:block; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:20px; border:1px solid var(--border); }
+  .card h2 { font-family:'DM Serif Display',serif; font-size:1.25rem; font-weight:400; margin-bottom:12px; }
+  .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+  .badge-teacher { background:var(--accent-light); color:var(--accent); }
+  .badge-student { background:var(--blue-light); color:var(--blue); }
+  .badge-tip { background:var(--yellow-light); color:var(--yellow); }
+  .script-line { padding:14px 16px; margin:10px 0; border-radius:8px; }
+  .script-line.teacher { background:var(--accent-light); border-left:4px solid var(--accent); }
+  .script-line.student { background:var(--blue-light); border-left:4px solid var(--blue); }
+  .script-line.tip { background:var(--yellow-light); border-left:4px solid var(--yellow); }
+  .script-line .role { font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+  .script-line.teacher .role { color:var(--accent); }
+  .script-line.student .role { color:var(--blue); }
+  .script-line.tip .role { color:var(--yellow); }
+  .script-line p { font-size:.95rem; line-height:1.55; }
+  .script-line .chinese { font-size:.82rem; color:var(--muted); margin-top:4px; font-style:italic; }
+  .vocab-item { border-bottom:1px solid var(--border); padding:16px 0; }
+  .vocab-item:last-child { border-bottom:none; }
+  .vocab-word { font-family:'DM Serif Display',serif; font-size:1.15rem; }
+  .vocab-pos { font-size:.78rem; color:var(--muted); font-style:italic; margin-left:6px; }
+  .vocab-example { margin-top:6px; padding:8px 12px; background:#F5F0EA; border-radius:6px; font-size:.88rem; color:var(--muted); }
+  .vocab-example em { color:var(--accent); font-style:normal; font-weight:600; }
+  .reveal-btn { margin-top:8px; padding:6px 14px; border:1px solid var(--border); background:var(--card); border-radius:6px; font-size:.8rem; cursor:pointer; color:var(--muted); font-family:'Source Sans 3',sans-serif; transition:all .15s; }
+  .reveal-btn:hover { background:var(--accent-light); color:var(--accent); border-color:var(--accent); }
+  .hidden-content { display:none; margin-top:10px; padding:12px 16px; background:var(--green-light); border-radius:8px; font-size:.9rem; border-left:3px solid var(--green); }
+  .hidden-content.show { display:block; }
+  .scenario-card { background:var(--card); border:2px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:16px; cursor:pointer; transition:all .2s; }
+  .scenario-card:hover { border-color:var(--accent); box-shadow:0 4px 16px rgba(192,87,70,.12); }
+  .scenario-card.expanded { border-color:var(--accent); }
+  .scenario-num { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin-bottom:6px; }
+  .scenario-title { font-family:'DM Serif Display',serif; font-size:1.05rem; margin-bottom:6px; }
+  .scenario-desc { font-size:.88rem; color:var(--muted); margin-bottom:8px; }
+  .scenario-body { display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+  .scenario-card.expanded .scenario-body { display:block; }
+  .checklist-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); cursor:pointer; }
+  .checklist-item:last-child { border-bottom:none; }
+  .check-box { width:22px; height:22px; border:2px solid var(--border); border-radius:5px; cursor:pointer; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:all .15s; font-size:14px; color:transparent; }
+  .check-box.checked { background:var(--green); border-color:var(--green); color:white; }
+  .checklist-text { font-size:.92rem; }
+  .checklist-text.checked-text { text-decoration:line-through; color:var(--muted); }
+  .progress-bar { height:6px; background:var(--border); border-radius:3px; margin:12px 0 20px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--green); border-radius:3px; transition:width .4s ease; }
+  .section-intro { font-size:.92rem; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+  .divider { height:1px; background:var(--border); margin:20px 0; }
+  .timer-bar { display:flex; align-items:center; gap:10px; padding:12px 16px; background:var(--ink); color:var(--bg); border-radius:8px; margin-bottom:20px; font-size:.85rem; }
+  .timer-bar .time { font-family:'DM Serif Display',serif; font-size:1.3rem; margin-left:auto; }
+  .frame-box { background:#F5F0EA; border-radius:8px; padding:14px 16px; margin:10px 0; font-size:.92rem; border-left:3px solid var(--blue); }
+  .frame-box code { background:var(--blue-light); padding:2px 6px; border-radius:3px; font-family:'Source Sans 3',sans-serif; font-weight:600; color:var(--blue); font-size:.88rem; }
+  .note { font-size:.82rem; color:var(--muted); font-style:italic; margin-top:8px; }
+  @media(max-width:480px) { .tab-btn{font-size:.66rem;padding:11px 3px;} header h1{font-size:1.3rem;} .week-btn{font-size:.74rem;padding:12px 4px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 6 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee</div>
+</header>
+
+
+
+<!-- ================================================================ -->
+<!-- WEEK 4: MEDIA, GENDER & CRITICAL THINKING -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 5: SEXUAL ORIENTATION -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 6: DIVERSITY, GENDER & PARENTING -->
+<!-- ================================================================ -->
+<div id="week-w6" class="week-content active">
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('w6','warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('w6','teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('w6','roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('w6','checklist')">Checklist</button>
+</div>
+<div class="content">
+
+<!-- W6 WARM-UP -->
+<div id="w6-warmup" class="panel active">
+  <p class="section-intro">Week 6 tackles <strong>parenting as social regulation</strong> — how family structures are judged, and how the "Cycle of Oppression" works from stereotype → prejudice → discrimination → oppression → internalized oppression.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Gender Policing <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> When society criticizes or punishes people for not following traditional gender roles — especially visible in parenting.</div>
+        <div class="vocab-example">Try saying: <em>"Society sometimes practices gender policing by criticizing parents who don't follow traditional gender roles — like a father who stays home."</em></div>
+        <div class="chinese">性別管控 — 當社會批評或懲罰不遵循傳統性別角色的人，特別是在親職領域。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Moral Panic <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> Widespread fear — often irrational — that something threatens society's values. Often targets non-traditional families.</div>
+        <div class="vocab-example">Try saying: <em>"The idea that 'children of same-sex parents will be confused' is a form of moral panic — it sounds logical but has no evidence."</em></div>
+        <div class="chinese">道德恐慌 — 廣泛但通常不理性的恐懼，認為某事威脅到社會價值觀。常針對非傳統家庭。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Protective Factors <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> Resources and conditions that help shield individuals or families from harm — like community support, education, or inclusive policies.</div>
+        <div class="vocab-example">Try saying: <em>"Community support can act as an important protective factor for marginalized families."</em></div>
+        <div class="chinese">保護因子 — 幫助個人或家庭抵禦傷害的資源和條件，如社區支持、教育或包容性政策。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Internalized Oppression <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> When a person from a marginalized group starts believing the negative messages society tells about them — turning outside pressure inward.</div>
+        <div class="vocab-example">Try saying: <em>"Internalized oppression is when someone begins to believe they are 'wrong' for being who they are — not because of evidence, but because society repeated it enough."</em></div>
+        <div class="chinese">內化壓迫 — 當被邊緣化的人開始相信社會對他們的負面訊息，把外在壓力轉向內在。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Family Silence <span class="vocab-pos">(n. phrase)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The unspoken agreement within families to avoid discussing certain topics — especially gender, sexuality, or trauma.</div>
+        <div class="vocab-example">Try saying: <em>"Family silence about gender and sexuality doesn't make the issues disappear — it just makes them harder to process."</em></div>
+        <div class="chinese">家庭沉默 — 家庭中對某些話題（尤其是性別、性向或創傷）的不成文迴避協議。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <div class="frame-box">
+      <strong>Frame 1 — Identifying Expectations:</strong><br>
+      <code>"The stereotype that _____ creates prejudice toward families who..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 2 — Analyzing the Cycle:</strong><br>
+      <code>"This is an example of how stereotypes lead to discrimination because..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 3 — Proposing Support:</strong><br>
+      <code>"One protective factor we could implement in schools is..."</code>
+    </div>
+  </div>
+</div>
+
+<!-- W6 TEACH IT -->
+<div id="w6-teach" class="panel">
+  <p class="section-intro">W6: <strong>Diversity, Gender &amp; Parenting</strong>. This week uses two documentaries as anchors: <em>Small Talk</em> (日常對話) and <em>Love Together</em> (同愛一家). The lesson moves from parenting as regulation → the Cycle of Oppression → cross-cultural examples → closing.</p>
+
+  <div class="timer-bar"><span>⏱ Suggested total time</span><span class="time">35 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Opening</span>
+    <h2>Parenting Is Not Just Personal</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Parenting is often seen as a personal choice. But in fact, it is strongly influenced by society, social systems, and cultural expectations. Today we ask: <strong>who gets to define what a 'good family' looks like?</strong>"</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Society usually has an idea of what a 'normal family' looks like. There are also unwritten gender rules — for example, the belief that 'good parents' should raise 'normal' children. These social expectations can sometimes be <strong>stronger than the law</strong>."</p>
+      <div class="chinese">社會對「正常家庭」有既定想像。這些社會期待有時比法律更有力量。</div></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — The Cycle of Oppression</span>
+    <h2>Stereotype → Prejudice → Discrimination</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Let me introduce a framework: the <strong>Cycle of Oppression</strong>. It works like this: a <strong>stereotype</strong> creates a <strong>prejudice</strong>, which leads to <strong>discrimination</strong>, which becomes <strong>oppression</strong>, which the oppressed person may <strong>internalize</strong>. And then the cycle continues."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Let's apply this to parenting. The stereotype might be: 'mothers should follow traditional roles.' The prejudice: 'a lesbian mother can't raise a healthy child.' The discrimination: denying custody or social support. The oppression: systemic exclusion. And internalized oppression: the mother herself starts believing she's not good enough."</p></div>
+    <div class="script-line tip"><div class="role">💡 Activity</div>
+      <p>Ask Martin (as student) to map the cycle for a different stereotype — e.g., "stay-at-home fathers are lazy" or "single mothers are irresponsible." Walk through each stage together.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — Documentary Discussion</span>
+    <h2>Small Talk &amp; The Silent Judgment</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~12 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"In the documentary <em>Small Talk</em>, director Huang Hui-chen explores her relationship with her mother — a woman who has lived as a lesbian in a society of silence. The daughter eventually asks her mother: <strong>'Do you love me?'</strong>"</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo — discussion prompts</div>
+      <p>"Why do some families avoid talking about gender or sexuality? How does silence affect family relationships? And if you were the director — how would you try to understand your mother?"</p>
+      <div class="chinese">為什麼有些家庭迴避談論性別或性向？沉默如何影響家庭關係？如果你是導演，你會如何理解你的母親？</div></div>
+    <div class="script-line teacher"><div class="role">Alinggo — cross-cultural bridge</div>
+      <p>"Now let's look at parenting across cultures. In some traditional societies, girls must return home before sunset — not for safety, but because staying out late puts her at 'risk' of being seen as immoral. And in the digital age, parents worry not about children being outside, but about children never going outside at all. Gender and generation intersect."</p></div>
+    <div class="script-line student"><div class="role">Martin (Student) — prompts</div>
+      <p>• "In my family, we never talked about these things. Does that make my parents bad?"<br>• "What's the difference between protecting your child and controlling them?"<br>• "When you become a parent, would YOU ask your daughter to return home before sunset?"</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>From Judgment to Support</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Parenting is a social practice. When diversity is treated as a problem, families carry the heavy burden of judgment. Our role is to shift the perspective — <strong>from judgment to support, and from structure to action</strong>."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Think of one 'small win' — one action we can implement in our schools today to support diverse families. That's your homework for next week."</p></div>
+  </div>
+</div>
+
+<!-- W6 ROLE-PLAY -->
+<div id="w6-roleplay" class="panel">
+  <p class="section-intro">Parenting is deeply personal. These scenarios practice empathy under pressure.</p>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 1</div>
+    <div class="scenario-title">"But the Child Will Be Confused!"</div>
+    <div class="scenario-desc">A student repeats a common moral panic argument.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Studies show that children need a mother AND a father. A same-sex couple can't provide that."</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Don't argue with feelings — respond with evidence and framework: <em>"That's a common concern, and I understand where it comes from. But let's apply our critical framework. First — what does 'studies show' actually mean? Who conducted those studies, and who did they study? Second — the overwhelming consensus in developmental psychology is that children thrive based on the quality of parenting, not the gender of the parents. What children need is love, stability, and safety. Those aren't gendered."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 2</div>
+    <div class="scenario-title">"My Parents Are Traditional — Am I Wrong?"</div>
+    <div class="scenario-desc">A student feels caught between their family values and the lesson.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"My family is very traditional. My mom stays home, my dad works. I don't think there's anything wrong with that. Are you saying my family is a stereotype?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"Not at all — and I want to be very clear about that. There's nothing wrong with a traditional family structure if it's chosen freely and works for everyone. The problem isn't any single family's arrangement. The problem is when society tells us that's the ONLY valid arrangement — and judges families who look different. We're studying the system, not judging your family."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 3</div>
+    <div class="scenario-title">Explaining the Cycle of Oppression Step by Step</div>
+    <div class="scenario-desc">A student asks you to walk through the cycle with a new example.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Can you show me the cycle with an example from my daily life? Something simpler?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Use a relatable example: <em>"Sure. Let's take 'men don't cook.' Stereotype: cooking is women's work. Prejudice: a man who cooks is 'less masculine.' Discrimination: a father who cooks gets teased at work. Oppression: fewer men enter culinary education, workplaces don't offer paternity leave for domestic roles. Internalized oppression: the man feels embarrassed about his own hobby. See how a small stereotype can grow into a system?"</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 4</div>
+    <div class="scenario-title">Facilitating the "Do You Love Me?" Discussion</div>
+    <div class="scenario-desc">Practice leading a sensitive film-based discussion.</div>
+    <div class="scenario-body">
+      <div class="script-line tip"><div class="role">The challenge</div>
+        <p>Alinggo must set up the <em>Small Talk</em> discussion without spoiling or over-explaining. Practice this instruction sequence: (1) briefly describe the film's premise, (2) ask the first question ("Why do some families avoid talking about gender?"), (3) give students 60 seconds to think, (4) facilitate the share-back, (5) bridge to the deeper question ("If you were the director, how would you understand your mother?").</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- W6 CHECKLIST -->
+<div id="w6-checklist" class="panel">
+  <p class="section-intro">Track W6 progress.</p>
+  <div class="card">
+    <h2>Week 6 Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="w6-progressFill" style="width:0%"></div></div>
+    <div id="w6-progressText" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Vocabulary: all 5 terms practiced aloud</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Sentence frames: applied the Cycle of Oppression to an example</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 1: Established parenting as a social (not just personal) practice</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Walked through the full Cycle of Oppression</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Student mapped the cycle to a new example</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Led the Small Talk documentary discussion</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Discussed the cross-cultural parenting examples</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Segment 4: Delivered closing — "from judgment to support"</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w6')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Handled the "child will be confused" moral panic</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="Notes on W6 session..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div>
+</div>
+
+<script>
+function switchWeek(week) {
+  document.querySelectorAll('.week-content').forEach(w => w.classList.remove('active'));
+  document.getElementById('week-' + week).classList.add('active');
+  document.querySelectorAll('.week-btn').forEach(b => { b.classList.remove('active-w4','active-w5','active-w6'); });
+  document.getElementById('weekBtn' + week.charAt(1)).classList.add('active-' + week);
+}
+function switchTab(week, tab) {
+  const container = document.getElementById('week-' + week);
+  container.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(week + '-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleReveal(btn) {
+  const c = btn.nextElementSibling;
+  if (c.classList.contains('show')) { c.classList.remove('show'); btn.textContent = 'Show definition + example'; }
+  else { c.classList.add('show'); btn.textContent = 'Hide'; }
+}
+function toggleScenario(card) { card.classList.toggle('expanded'); }
+function toggleCheck(item, week) {
+  item.querySelector('.check-box').classList.toggle('checked');
+  item.querySelector('.checklist-text').classList.toggle('checked-text');
+  updateProgress(week);
+}
+function updateProgress(week) {
+  const container = document.getElementById(week + '-checklist');
+  const total = container.querySelectorAll('.checklist-item').length;
+  const done = container.querySelectorAll('.check-box.checked').length;
+  document.getElementById(week + '-progressFill').style.width = Math.round((done/total)*100) + '%';
+  document.getElementById(week + '-progressText').textContent = done + ' of ' + total + ' completed';
+}
+</script>
+
+
+</body></html>

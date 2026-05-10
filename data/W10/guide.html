@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W10 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAF7F2;--card:#FFFFFF;--accent:#C05746;--accent-light:#F2DDD8;
+    --ink:#2C2420;--muted:#8A7E76;--border:#E8E0D8;
+    --green:#4A7C59;--green-light:#E4F0E8;
+    --blue:#3E6B89;--blue-light:#DCE9F0;
+    --yellow:#B8860B;--yellow-light:#FDF4DC;
+    --purple:#6B5B8A;--purple-light:#EDE8F4;
+    --teal:#3D7A7A;--teal-light:#DDF0EF;
+    --crimson:#8B2252;--crimson-light:#F4DDE6;
+    --shadow:0 2px 12px rgba(44,36,32,.08);--radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100vh;}
+  header{background:var(--ink);color:var(--bg);padding:28px 24px 20px;text-align:center;}
+  header h1{font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;letter-spacing:.02em;margin-bottom:4px;}
+  header .subtitle{font-size:.85rem;color:#B8AFA6;font-weight:300;}
+  .week-selector{display:flex;background:var(--card);border-bottom:2px solid var(--border);}
+  .week-btn{flex:1;padding:14px 6px;border:none;background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:4px solid transparent;transition:all .2s;}
+  .week-btn.active-w10{color:var(--crimson);border-bottom-color:var(--crimson);background:var(--crimson-light);}
+  .week-btn.active-w11{color:var(--purple);border-bottom-color:var(--purple);background:var(--purple-light);}
+  .week-btn.active-w12{color:var(--teal);border-bottom-color:var(--teal);background:var(--teal-light);}
+  .week-btn:hover:not([class*="active"]){color:var(--ink);background:#F5F0EA;}
+  .tabs{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .tab-btn{flex:1;padding:12px 8px;border:none;background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light);}
+  .tab-btn:hover:not(.active){color:var(--ink);background:#F5F0EA;}
+  .content{max-width:720px;margin:0 auto;padding:24px 16px 80px;}
+  .week-content{display:none;}.week-content.active{display:block;}
+  .panel{display:none;}.panel.active{display:block;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;border:1px solid var(--border);}
+  .card h2{font-family:'DM Serif Display',serif;font-size:1.25rem;font-weight:400;margin-bottom:12px;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
+  .badge-teacher{background:var(--accent-light);color:var(--accent);}
+  .badge-tip{background:var(--yellow-light);color:var(--yellow);}
+  .sl{padding:14px 16px;margin:10px 0;border-radius:8px;}
+  .sl.t{background:var(--accent-light);border-left:4px solid var(--accent);}
+  .sl.s{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .sl.tip{background:var(--yellow-light);border-left:4px solid var(--yellow);}
+  .sl .role{font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  .sl.t .role{color:var(--accent);}.sl.s .role{color:var(--blue);}.sl.tip .role{color:var(--yellow);}
+  .sl p{font-size:.95rem;line-height:1.55;}
+  .sl .zh{font-size:.82rem;color:var(--muted);margin-top:4px;font-style:italic;}
+  .vi{border-bottom:1px solid var(--border);padding:16px 0;}.vi:last-child{border-bottom:none;}
+  .vw{font-family:'DM Serif Display',serif;font-size:1.15rem;}
+  .vp{font-size:.78rem;color:var(--muted);font-style:italic;margin-left:6px;}
+  .vex{margin-top:6px;padding:8px 12px;background:#F5F0EA;border-radius:6px;font-size:.88rem;color:var(--muted);}
+  .vex em{color:var(--accent);font-style:normal;font-weight:600;}
+  .rb{margin-top:8px;padding:6px 14px;border:1px solid var(--border);background:var(--card);border-radius:6px;font-size:.8rem;cursor:pointer;color:var(--muted);font-family:'Source Sans 3',sans-serif;transition:all .15s;}
+  .rb:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent);}
+  .hc{display:none;margin-top:10px;padding:12px 16px;background:var(--green-light);border-radius:8px;font-size:.9rem;border-left:3px solid var(--green);}
+  .hc.show{display:block;}
+  .sc{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;cursor:pointer;transition:all .2s;}
+  .sc:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(192,87,70,.12);}
+  .sc.expanded{border-color:var(--accent);}
+  .sn{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:6px;}
+  .st{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:6px;}
+  .sd{font-size:.88rem;color:var(--muted);margin-bottom:8px;}
+  .sb{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+  .sc.expanded .sb{display:block;}
+  .ci{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;}.ci:last-child{border-bottom:none;}
+  .cb{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:14px;color:transparent;}
+  .cb.checked{background:var(--green);border-color:var(--green);color:white;}
+  .ct{font-size:.92rem;}.ct.done{text-decoration:line-through;color:var(--muted);}
+  .pb{height:6px;background:var(--border);border-radius:3px;margin:12px 0 20px;overflow:hidden;}
+  .pf{height:100%;background:var(--green);border-radius:3px;transition:width .4s ease;}
+  .si{font-size:.92rem;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+  .dv{height:1px;background:var(--border);margin:20px 0;}
+  .tb{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--ink);color:var(--bg);border-radius:8px;margin-bottom:20px;font-size:.85rem;}
+  .tb .time{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-left:auto;}
+  .fb{background:#F5F0EA;border-radius:8px;padding:14px 16px;margin:10px 0;font-size:.92rem;border-left:3px solid var(--blue);}
+  .fb code{background:var(--blue-light);padding:2px 6px;border-radius:3px;font-family:'Source Sans 3',sans-serif;font-weight:600;color:var(--blue);font-size:.88rem;}
+  .note{font-size:.82rem;color:var(--muted);font-style:italic;margin-top:8px;}
+  @media(max-width:480px){.tab-btn{font-size:.66rem;padding:11px 3px;}header h1{font-size:1.3rem;}.week-btn{font-size:.72rem;padding:12px 4px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 10 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee</div>
+</header>
+
+
+
+<!-- ================================================================ -->
+<!-- WEEK 10: SEXUAL HARASSMENT -->
+<!-- ================================================================ -->
+<div id="week-w10" class="week-content active">
+<div class="tabs">
+  <button class="tab-btn active" onclick="st('w10','wu')">Warm-Up</button>
+  <button class="tab-btn" onclick="st('w10','ti')">Teach It</button>
+  <button class="tab-btn" onclick="st('w10','rp')">Role-Play</button>
+  <button class="tab-btn" onclick="st('w10','cl')">Checklist</button>
+</div>
+<div class="content">
+
+<div id="w10-wu" class="panel active">
+  <p class="si">Week 10 tackles the most serious topic so far: <strong>sexual harassment as a boundary crossing within unequal systems</strong>. The Three-Part Frame (Physical → Emotional → Power) is the analytical backbone. Teaching tone: compassionate, precise, never sensational.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vi"><div class="vw">Consent <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Permission or agreement for something to happen — must be free, informed, and ongoing.</div>
+        <div class="vex">Try saying: <em>"Consent is not just the absence of 'no.' It is the presence of a clear, enthusiastic 'yes.'"</em></div>
+        <div class="zh" style="color:var(--muted)">同意 — 必須是自由的、知情的、持續的。不是沒有說「不」就算同意。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Power Imbalance <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> A situation where one person has significantly more power or influence than another — making true consent difficult.</div>
+        <div class="vex">Try saying: <em>"In this case, the power imbalance between a professor and a student made real consent very difficult."</em></div>
+        <div class="zh" style="color:var(--muted)">權力不對等 — 當一方擁有顯著更多的權力或影響力，真正的同意變得困難。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Boundary <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> A personal limit — physical, emotional, or digital — that defines what is acceptable to you.</div>
+        <div class="vex">Try saying: <em>"Sexual harassment is not a misunderstanding. It is a boundary crossing within an unequal system."</em></div>
+        <div class="zh" style="color:var(--muted)">界線 — 身體、情感或數位上的個人底線，定義了什麼對你來說是可接受的。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Accountability <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Being responsible for your actions and their consequences — applies to individuals AND institutions.</div>
+        <div class="vex">Try saying: <em>"We must ask institutions to take more accountability — not just punish individuals, but change the systems that allow harm."</em></div>
+        <div class="zh" style="color:var(--muted)">問責 — 為自己的行為及其後果負責。適用於個人和制度。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Harassment <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Unwanted behavior that violates a person's dignity or creates an intimidating, hostile, or degrading environment.</div>
+        <div class="vex">Try saying: <em>"Harassment is not a minor dispute. It is a systemic issue sustained by power, silence, and social norms."</em></div>
+        <div class="zh" style="color:var(--muted)">騷擾 — 侵犯個人尊嚴或製造恐嚇、敵意、貶低環境的不受歡迎行為。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <div class="fb"><strong>Frame 1 — Making a Claim:</strong><br><code>"I believe institutional responsibility is important to prevent harm because..."</code></div>
+    <div class="fb"><strong>Frame 2 — Describing a Case:</strong><br><code>"In this case, the power imbalance made real consent difficult because..."</code></div>
+    <div class="fb"><strong>Frame 3 — Proposing Action:</strong><br><code>"If we focus on power, not self-blame, we can build a safer culture by..."</code></div>
+    <div class="dv"></div>
+    <p style="font-size:.85rem;color:var(--muted);">💡 <strong>Three-Part Frame drill:</strong> Martin describes a scenario. Alinggo must analyze it through: (1) Physical — what happened? (2) Emotional — how did it feel? (3) Power — who holds authority? Practice 3 rounds.</p>
+  </div>
+</div>
+
+<div id="w10-ti" class="panel">
+  <p class="si">W10: <strong>Sexual Harassment — Deconstructing the System of Harm</strong>. This lesson requires the most careful facilitation. Ground rules first, Tea Consent video as anchor, then the paradigm shift from "why didn't you say no?" to "what was the power gap?"</p>
+
+  <div class="tb"><span>⏱ Suggested total time</span><span class="time">30 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Opening &amp; Ground Rules</span>
+    <h2>This Topic Requires Extra Care</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Today's topic is sexual harassment. Before we begin, I want to set some ground rules. <strong>This is an academic discussion.</strong> We will use precise language. We will not share personal stories unless you choose to. And we will focus on <strong>systems</strong>, not on judging individuals."</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Here is the key idea for today: sexual harassment is <strong>not a minor personal dispute</strong>. It is a <strong>boundary crossing within an unequal system</strong>. To understand it, we need to look at three things: <strong>what happened physically, how it felt emotionally, and who holds the power.</strong>"</p>
+      <div class="zh">性騷擾不是小小的個人糾紛，而是不平等系統中的越界行為。我們用三個層面分析：身體、情感、權力。</div></div>
+    <div class="sl tip"><div class="role">💡 Teaching tip</div>
+      <p>Remind students: "If at any point this discussion feels too heavy, you are welcome to step out. Your wellbeing comes first." This isn't just polite — it's ethical facilitation.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — Tea Consent</span>
+    <h2>The Choice in the Cup of Tea</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~8 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Let's start with a simple analogy. Imagine I offer you a cup of tea. If you say 'yes, please!' — great, I'll make you tea. If you say 'no thanks' — I should <strong>not</strong> pour tea down your throat. If you say 'maybe' — I should not force you to drink. And if you fall asleep — I <strong>definitely</strong> should not pour tea into your unconscious mouth."</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"This is the concept of <strong>consent</strong>. It sounds simple with tea, right? But in real life, when your body gives you a 'bad vibe' — a chill, a tightness in your stomach — do you trust that feeling? Or do you talk yourself out of it?"</p></div>
+    <div class="sl s"><div class="role">Martin (Student)</div>
+      <p>• "But what if someone says yes at first and then changes their mind?"<br>• "What if you're not sure if the other person is uncomfortable?"<br>• Ask: "Can consent be given if one person has much more power?"</p></div>
+    <div class="sl tip"><div class="role">💡 Key point</div>
+      <p>Consent can be withdrawn at any time. It must be ongoing, not a one-time checkbox. Link back to the "power imbalance" concept: when one person holds authority, "yes" might not be freely given.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — The Paradigm Shift</span>
+    <h2>From "Why Didn't You Say No?" to "What Was the Power Gap?"</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Here is the most important shift in this entire lesson. When someone is harassed, people often ask: <strong>'Why didn't you say no? Why didn't you fight back?'</strong> This puts the responsibility on the <em>victim</em>."</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"But what if we ask different questions? What if we ask: <strong>'What was the power gap between these two people?'</strong> And: <strong>'What kind of environment allowed this person to feel they could cross a boundary?'</strong>"</p>
+      <div class="zh">不要問「你為什麼不說不？」要問「這兩個人之間的權力差距是什麼？」「什麼樣的環境讓這個人覺得可以越界？」</div></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"<strong>This shift changes everything.</strong> It moves from blaming the individual to examining the system. And that's where real prevention begins."</p></div>
+    <div class="sl s"><div class="role">Martin (Student)</div>
+      <p>Challenge: "But don't people have a responsibility to protect themselves?" — This gives Alinggo practice holding the structural frame without dismissing personal agency.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>Boundaries, Not Misunderstandings</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Sexual harassment is not about misunderstanding. It is about <strong>boundaries crossing within unequal systems</strong>. When we understand the system, we can change it."</p></div>
+    <div class="sl tip"><div class="role">💡 Padlet activity</div>
+      <p>In a real class, Alinggo would direct students to a Padlet for reflection. In practice, Martin can simply write a one-sentence reflection and share it aloud. Alinggo responds with a brief, respectful acknowledgment.</p></div>
+  </div>
+</div>
+
+<div id="w10-rp" class="panel">
+  <p class="si">These scenarios practice the hardest facilitation moments in a harassment discussion. The key skill: redirecting victim-blame toward structural analysis without shaming the student who asks.</p>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 1</div><div class="st">"But She Was Wearing..."</div>
+    <div class="sd">A student implies clothing plays a role.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"But if someone dresses provocatively, aren't they partly responsible for what happens?"</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p>Stay calm, redirect to structure: <em>"I understand why that feels logical. But let me ask: does what someone wears give another person permission to touch them? The answer is no. Clothing is expression — we covered that in Week 3. Harassment is about power and boundaries. No outfit is an invitation. The responsibility lies with the person who crosses the boundary, and the system that allows it."</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 2</div><div class="st">"It Was Just a Joke"</div>
+    <div class="sd">A student normalizes a common excuse.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"Sometimes people just say things as a joke. Not everything is harassment. We're being too sensitive."</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p><em>"That's a very common perspective, and I appreciate you raising it. But remember our three-part frame. What matters isn't the intention — it's the impact. 'Just a joke' is actually one of the key social norms that allows harassment to persist. When we excuse behavior with humor, we normalize boundary crossing. The question isn't 'did they mean it?' — it's 'did it cross a boundary?'"</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 3</div><div class="st">Walking Through the Three-Part Frame</div>
+    <div class="sd">Practice applying the framework to a hypothetical case.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"A senior colleague keeps putting their hand on a junior colleague's shoulder and calling them 'sweetie.' The junior feels uncomfortable but doesn't say anything. Can you analyze this?"</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p>Walk through each lens:<br><em>"Physical: unwanted touching and an overly familiar nickname. Emotional: the junior feels uncomfortable but stays silent — why? Because of the third lens: Power. The senior has authority — career influence, seniority, social capital. The junior's silence isn't consent — it's a survival response in an unequal system. This is why we must ask 'what's the power gap?' instead of 'why didn't you say no?'"</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 4</div><div class="st">A Student Gets Emotional</div>
+    <div class="sd">Someone is clearly affected by the discussion.</div>
+    <div class="sb">
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p>Don't probe, don't draw attention. Possible response: <em>"I can see this topic resonates with some of you. That's completely normal — these are real issues that affect real people. Remember, you don't have to share anything personal. If you need a moment, that's absolutely fine."</em> Then continue the lesson naturally. After class, offer: "If you'd like to talk or need support, I'm here." Don't push.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="w10-cl" class="panel">
+  <p class="si">Track W10 progress.</p>
+  <div class="card">
+    <h2>Week 10 Progress</h2>
+    <div class="pb"><div class="pf" id="w10-pf" style="width:0%"></div></div>
+    <div id="w10-pt" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 / 10</div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Vocabulary: all 5 terms practiced aloud</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Three-Part Frame drill: 3+ scenarios analyzed</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Segment 1: Set ground rules and ethical frame</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Segment 2: Delivered Tea Consent analogy clearly</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Segment 2: Explained ongoing consent and withdrawal</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Segment 3: Delivered the paradigm shift</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Segment 3: Handled "personal responsibility" pushback</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Segment 4: Delivered closing — boundaries, not misunderstandings</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="ci" onclick="tc(this,'w10')"><div class="cb">✓</div><div class="ct">Role-play: Redirected victim-blaming to structural analysis</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="W10 notes..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div></div>
+
+<!-- ================================================================ -->
+<!-- WEEK 11: BODY & BEAUTY STANDARDS -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 12: DIGITAL GENDER-BASED VIOLENCE -->
+<!-- ================================================================ -->
+
+
+<script>
+function sw(w){document.querySelectorAll('.week-content').forEach(e=>e.classList.remove('active'));document.getElementById('week-'+w).classList.add('active');document.querySelectorAll('.week-btn').forEach(b=>{b.classList.remove('active-w10','active-w11','active-w12');});document.getElementById('wB'+w.slice(1)).classList.add('active-'+w);}
+function st(w,t){const c=document.getElementById('week-'+w);c.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));c.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(w+'-'+t).classList.add('active');event.target.classList.add('active');}
+function toggleReveal(b){const c=b.nextElementSibling;if(c.classList.contains('show')){c.classList.remove('show');b.textContent='Show definition + example';}else{c.classList.add('show');b.textContent='Hide';}}
+function toggleScenario(c){c.classList.toggle('expanded');}
+function tc(i,w){i.querySelector('.cb').classList.toggle('checked');i.querySelector('.ct').classList.toggle('done');up(w);}
+function up(w){const c=document.getElementById(w+'-cl');const t=c.querySelectorAll('.ci').length;const d=c.querySelectorAll('.cb.checked').length;document.getElementById(w+'-pf').style.width=Math.round((d/t)*100)+'%';document.getElementById(w+'-pt').textContent=d+' / '+t;}
+</script>
+
+
+</body></html>

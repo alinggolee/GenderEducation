@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W12 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAF7F2;--card:#FFFFFF;--accent:#C05746;--accent-light:#F2DDD8;
+    --ink:#2C2420;--muted:#8A7E76;--border:#E8E0D8;
+    --green:#4A7C59;--green-light:#E4F0E8;
+    --blue:#3E6B89;--blue-light:#DCE9F0;
+    --yellow:#B8860B;--yellow-light:#FDF4DC;
+    --purple:#6B5B8A;--purple-light:#EDE8F4;
+    --teal:#3D7A7A;--teal-light:#DDF0EF;
+    --crimson:#8B2252;--crimson-light:#F4DDE6;
+    --shadow:0 2px 12px rgba(44,36,32,.08);--radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100vh;}
+  header{background:var(--ink);color:var(--bg);padding:28px 24px 20px;text-align:center;}
+  header h1{font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;letter-spacing:.02em;margin-bottom:4px;}
+  header .subtitle{font-size:.85rem;color:#B8AFA6;font-weight:300;}
+  .week-selector{display:flex;background:var(--card);border-bottom:2px solid var(--border);}
+  .week-btn{flex:1;padding:14px 6px;border:none;background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:4px solid transparent;transition:all .2s;}
+  .week-btn.active-w10{color:var(--crimson);border-bottom-color:var(--crimson);background:var(--crimson-light);}
+  .week-btn.active-w11{color:var(--purple);border-bottom-color:var(--purple);background:var(--purple-light);}
+  .week-btn.active-w12{color:var(--teal);border-bottom-color:var(--teal);background:var(--teal-light);}
+  .week-btn:hover:not([class*="active"]){color:var(--ink);background:#F5F0EA;}
+  .tabs{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .tab-btn{flex:1;padding:12px 8px;border:none;background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light);}
+  .tab-btn:hover:not(.active){color:var(--ink);background:#F5F0EA;}
+  .content{max-width:720px;margin:0 auto;padding:24px 16px 80px;}
+  .week-content{display:none;}.week-content.active{display:block;}
+  .panel{display:none;}.panel.active{display:block;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;border:1px solid var(--border);}
+  .card h2{font-family:'DM Serif Display',serif;font-size:1.25rem;font-weight:400;margin-bottom:12px;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
+  .badge-teacher{background:var(--accent-light);color:var(--accent);}
+  .badge-tip{background:var(--yellow-light);color:var(--yellow);}
+  .sl{padding:14px 16px;margin:10px 0;border-radius:8px;}
+  .sl.t{background:var(--accent-light);border-left:4px solid var(--accent);}
+  .sl.s{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .sl.tip{background:var(--yellow-light);border-left:4px solid var(--yellow);}
+  .sl .role{font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  .sl.t .role{color:var(--accent);}.sl.s .role{color:var(--blue);}.sl.tip .role{color:var(--yellow);}
+  .sl p{font-size:.95rem;line-height:1.55;}
+  .sl .zh{font-size:.82rem;color:var(--muted);margin-top:4px;font-style:italic;}
+  .vi{border-bottom:1px solid var(--border);padding:16px 0;}.vi:last-child{border-bottom:none;}
+  .vw{font-family:'DM Serif Display',serif;font-size:1.15rem;}
+  .vp{font-size:.78rem;color:var(--muted);font-style:italic;margin-left:6px;}
+  .vex{margin-top:6px;padding:8px 12px;background:#F5F0EA;border-radius:6px;font-size:.88rem;color:var(--muted);}
+  .vex em{color:var(--accent);font-style:normal;font-weight:600;}
+  .rb{margin-top:8px;padding:6px 14px;border:1px solid var(--border);background:var(--card);border-radius:6px;font-size:.8rem;cursor:pointer;color:var(--muted);font-family:'Source Sans 3',sans-serif;transition:all .15s;}
+  .rb:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent);}
+  .hc{display:none;margin-top:10px;padding:12px 16px;background:var(--green-light);border-radius:8px;font-size:.9rem;border-left:3px solid var(--green);}
+  .hc.show{display:block;}
+  .sc{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;cursor:pointer;transition:all .2s;}
+  .sc:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(192,87,70,.12);}
+  .sc.expanded{border-color:var(--accent);}
+  .sn{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:6px;}
+  .st{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:6px;}
+  .sd{font-size:.88rem;color:var(--muted);margin-bottom:8px;}
+  .sb{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+  .sc.expanded .sb{display:block;}
+  .ci{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;}.ci:last-child{border-bottom:none;}
+  .cb{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:14px;color:transparent;}
+  .cb.checked{background:var(--green);border-color:var(--green);color:white;}
+  .ct{font-size:.92rem;}.ct.done{text-decoration:line-through;color:var(--muted);}
+  .pb{height:6px;background:var(--border);border-radius:3px;margin:12px 0 20px;overflow:hidden;}
+  .pf{height:100%;background:var(--green);border-radius:3px;transition:width .4s ease;}
+  .si{font-size:.92rem;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+  .dv{height:1px;background:var(--border);margin:20px 0;}
+  .tb{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--ink);color:var(--bg);border-radius:8px;margin-bottom:20px;font-size:.85rem;}
+  .tb .time{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-left:auto;}
+  .fb{background:#F5F0EA;border-radius:8px;padding:14px 16px;margin:10px 0;font-size:.92rem;border-left:3px solid var(--blue);}
+  .fb code{background:var(--blue-light);padding:2px 6px;border-radius:3px;font-family:'Source Sans 3',sans-serif;font-weight:600;color:var(--blue);font-size:.88rem;}
+  .note{font-size:.82rem;color:var(--muted);font-style:italic;margin-top:8px;}
+  @media(max-width:480px){.tab-btn{font-size:.66rem;padding:11px 3px;}header h1{font-size:1.3rem;}.week-btn{font-size:.72rem;padding:12px 4px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 12 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee</div>
+</header>
+
+
+
+<!-- ================================================================ -->
+<!-- WEEK 10: SEXUAL HARASSMENT -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 11: BODY & BEAUTY STANDARDS -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 12: DIGITAL GENDER-BASED VIOLENCE -->
+<!-- ================================================================ -->
+<div id="week-w12" class="week-content active">
+<div class="tabs">
+  <button class="tab-btn active" onclick="st('w12','wu')">Warm-Up</button>
+  <button class="tab-btn" onclick="st('w12','ti')">Teach It</button>
+  <button class="tab-btn" onclick="st('w12','rp')">Role-Play</button>
+  <button class="tab-btn" onclick="st('w12','cl')">Checklist</button>
+</div>
+<div class="content">
+
+<div id="w12-wu" class="panel active">
+  <p class="si">Week 12 shifts from bodies to <strong>digital systems</strong> — how platforms and algorithms amplify gendered harm. The key insight: digital harm is not only caused by bad people; it is caused by <strong>how platforms are designed</strong>.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vi"><div class="vw">Algorithm <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> A set of rules a computer follows to decide what you see online — designed to maximize engagement, not safety.</div>
+        <div class="vex">Try saying: <em>"The algorithm prioritized content that got many likes, even if it was harmful — because harmful content drives engagement."</em></div>
+        <div class="zh" style="color:var(--muted)">演算法 — 電腦用來決定你看到什麼內容的規則，設計目標是最大化互動，而非安全。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Platform Accountability <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> The responsibility of digital platforms for the content they amplify and the harm their systems enable.</div>
+        <div class="vex">Try saying: <em>"We need more platform accountability — it's not enough to tell users to 'block and report.'"</em></div>
+        <div class="zh" style="color:var(--muted)">平台問責 — 數位平台對其放大的內容和系統造成的傷害所應承擔的責任。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Engagement <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Interaction on social media — likes, shares, comments. Platforms prioritize engagement because it generates data and profit.</div>
+        <div class="vex">Try saying: <em>"Platforms care about engagement because it generates profit — even when that engagement comes from harmful content."</em></div>
+        <div class="zh" style="color:var(--muted)">互動 — 社群媒體上的按讚、分享、留言。平台優先追求互動，因為互動產生利潤。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Amplification <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> When a platform's algorithm shows harmful content to more people, making the problem bigger than it would be naturally.</div>
+        <div class="vex">Try saying: <em>"A video that makes fun of girls may get many likes. Then the algorithm amplifies it — showing it to thousands more people."</em></div>
+        <div class="zh" style="color:var(--muted)">放大效應 — 演算法將有害內容推送給更多人，使問題規模遠超自然傳播。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Systemic Change <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Changing the system itself — not just telling individuals to protect themselves, but redesigning how the system works.</div>
+        <div class="vex">Try saying: <em>"We need systemic change, not just personal protection. The question is: why does the system keep allowing this to happen?"</em></div>
+        <div class="zh" style="color:var(--muted)">系統性改變 — 不只告訴個人要自我保護，而是改變系統本身的運作方式。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <div class="fb"><strong>Frame 1 — Opening:</strong><br><code>"I want to focus on how algorithmic systems affect..."</code></div>
+    <div class="fb"><strong>Frame 2 — Impact:</strong><br><code>"Online harm has a disproportionate impact on _____ because..."</code></div>
+    <div class="fb"><strong>Frame 3 — Solution:</strong><br><code>"A better strategy would involve structural reform of..."</code></div>
+  </div>
+</div>
+
+<div id="w12-ti" class="panel">
+  <p class="si">W12: <strong>Digital Gender-Based Violence — How Systems Shape Harm</strong>. The lesson moves from platform design → the "digital mirror" → user vs. platform accountability → systemic change.</p>
+
+  <div class="tb"><span>⏱ Suggested total time</span><span class="time">30 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Opening</span>
+    <h2>It's Not Just Bad People — It's Bad Design</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Digital harm is not only caused by bad people. It is also caused by <strong>how digital platforms are designed</strong>. Platforms want you to keep scrolling. Their algorithms show content that gets many likes, comments, and shares. And because of this, <strong>shocking or harmful gender content often gets more views.</strong>"</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Example: a video that makes fun of girls may get many likes. Then the platform shows it to more people. The algorithm <strong>amplifies</strong> the harm. So the problem becomes bigger — not because more people are bad, but because the system is designed to spread what's engaging, not what's safe."</p>
+      <div class="zh">問題不在於更多人是壞人，而在於系統被設計來傳播有互動的內容，而非安全的內容。</div></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — Discussion</span>
+    <h2>The Digital Mirror &amp; Unequal Impact</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Have you noticed that your 'For You' page can change how you think about gender? If you often see videos showing girls caring about beauty, you may start thinking that's what girls 'should' do. If you see boys always being strong and not showing feelings, you think that's 'normal.' The algorithm creates a <strong>digital mirror</strong> that reflects social norms back at you — and reinforces them."</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"And digital violence doesn't affect everyone equally. Girls, LGBTQ+ people, and people who look 'different' receive <strong>more</strong> online attacks. Online problems come from <strong>real-life inequality</strong>."</p></div>
+    <div class="sl s"><div class="role">Martin (Student)</div>
+      <p>• "But I choose what I follow. Isn't it my responsibility?"<br>• "What about people who post hateful content anonymously?"<br>• "Doesn't blocking and reporting solve the problem?"</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — The Big Question</span>
+    <h2>User vs. Platform: Who Is Responsible?</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"This is the central debate: <strong>who is more responsible for online safety?</strong> The user who needs to be careful? Or the platform that shows the content in the first place?"</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Right now, we mostly tell users: 'Block the person. Report the content.' But we can also ask: <strong>Why does harmful content appear again and again? Why doesn't the platform stop it earlier?</strong> That's the shift from personal protection to systemic change."</p></div>
+    <div class="sl tip"><div class="role">💡 Padlet activity simulation</div>
+      <p>In practice: Martin picks a side ("I think the user is more responsible because..." or "I think the platform is more responsible because...") and defends it. Alinggo facilitates, asking probing questions without taking a side. Practice managing a debate, not winning it.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>Change the System, Not Just the User</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"<strong>We need systemic change, not just personal protection.</strong> Don't just fix the problem — change the system. Ask: why is the system allowing this to happen?"</p></div>
+  </div>
+</div>
+
+<div id="w12-rp" class="panel">
+  <p class="si">Digital literacy debates get opinionated. These scenarios practice staying structural.</p>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 1</div><div class="st">"It's the Internet — You Should Expect It"</div>
+    <div class="sd">A student normalizes online harassment.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"The internet has always been like this. If you can't handle it, just log off."</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p><em>"That's a common perspective. But think about it this way: if a building keeps collapsing, do we tell people 'don't go inside' — or do we fix the building? 'Just log off' puts all the responsibility on the victim and none on the platform that profits from the content. The internet isn't a natural phenomenon — it's designed by people. And what's designed can be redesigned."</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 2</div><div class="st">"But Free Speech!"</div>
+    <div class="sd">A student invokes free expression against content moderation.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"If platforms start removing content, that's censorship. What about free speech?"</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p><em>"Important question. But here's the distinction: we're not asking platforms to silence opinions. We're asking them to stop amplifying harm. There's a difference between allowing someone to post something and actively pushing it to millions of feeds. Free speech doesn't mean free amplification. The algorithm is an editorial choice — and editorial choices should come with accountability."</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 3</div><div class="st">Explaining "Algorithm" to a Non-Technical Student</div>
+    <div class="sd">A student needs a simple explanation.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"What exactly is an 'algorithm'? I hear the word everywhere but I don't get it."</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p><em>"Think of the algorithm as an invisible DJ at a party. You didn't choose the music — the DJ did. But the DJ watches which songs make you dance, and plays more songs like those. The problem is: if you 'dance' to a shocking video — even by watching it for just 5 seconds longer — the DJ plays you more shocking videos. The algorithm doesn't care if the content is good for you. It only cares if you stay at the party."</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 4</div><div class="st">Facilitating the User vs. Platform Debate</div>
+    <div class="sd">Practice managing a classroom debate without taking a side.</div>
+    <div class="sb">
+      <div class="sl tip"><div class="role">The challenge</div>
+        <p>Martin argues "the user is responsible." Alinggo must: (1) paraphrase his argument fairly, (2) present the counter-argument without dismissing his point, (3) ask a deepening question, and (4) invite other perspectives. Practice this facilitation sequence. The goal is not to win — it's to make both sides think harder.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="w12-cl" class="panel">
+  <p class="si">Track W12 progress.</p>
+  <div class="card">
+    <h2>Week 12 Progress</h2>
+    <div class="pb"><div class="pf" id="w12-pf" style="width:0%"></div></div>
+    <div id="w12-pt" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 / 10</div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Vocabulary: all 5 terms practiced</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Sentence frames: 3+ digital scenarios analyzed</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Segment 1: Explained "bad design, not just bad people"</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Segment 2: Led the "digital mirror" discussion</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Segment 2: Explained unequal impact with examples</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Segment 3: Facilitated user vs. platform debate</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Segment 3: Distinguished free speech from free amplification</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Segment 4: Delivered closing — systemic change, not just protection</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="ci" onclick="tc(this,'w12')"><div class="cb">✓</div><div class="ct">Role-play: Explained "algorithm" in simple, vivid language</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="W12 notes..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div></div>
+
+<script>
+function sw(w){document.querySelectorAll('.week-content').forEach(e=>e.classList.remove('active'));document.getElementById('week-'+w).classList.add('active');document.querySelectorAll('.week-btn').forEach(b=>{b.classList.remove('active-w10','active-w11','active-w12');});document.getElementById('wB'+w.slice(1)).classList.add('active-'+w);}
+function st(w,t){const c=document.getElementById('week-'+w);c.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));c.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(w+'-'+t).classList.add('active');event.target.classList.add('active');}
+function toggleReveal(b){const c=b.nextElementSibling;if(c.classList.contains('show')){c.classList.remove('show');b.textContent='Show definition + example';}else{c.classList.add('show');b.textContent='Hide';}}
+function toggleScenario(c){c.classList.toggle('expanded');}
+function tc(i,w){i.querySelector('.cb').classList.toggle('checked');i.querySelector('.ct').classList.toggle('done');up(w);}
+function up(w){const c=document.getElementById(w+'-cl');const t=c.querySelectorAll('.ci').length;const d=c.querySelectorAll('.cb.checked').length;document.getElementById(w+'-pf').style.width=Math.round((d/t)*100)+'%';document.getElementById(w+'-pt').textContent=d+' / '+t;}
+</script>
+
+
+</body></html>

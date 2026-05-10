@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W5 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2; --card: #FFFFFF; --accent: #C05746; --accent-light: #F2DDD8;
+    --ink: #2C2420; --muted: #8A7E76; --border: #E8E0D8;
+    --green: #4A7C59; --green-light: #E4F0E8;
+    --blue: #3E6B89; --blue-light: #DCE9F0;
+    --yellow: #B8860B; --yellow-light: #FDF4DC;
+    --purple: #6B5B8A; --purple-light: #EDE8F4;
+    --teal: #3D7A7A; --teal-light: #DDF0EF;
+    --shadow: 0 2px 12px rgba(44,36,32,0.08); --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Source Sans 3',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; min-height:100vh; }
+  header { background:var(--ink); color:var(--bg); padding:28px 24px 20px; text-align:center; }
+  header h1 { font-family:'DM Serif Display',serif; font-size:1.6rem; font-weight:400; letter-spacing:.02em; margin-bottom:4px; }
+  header .subtitle { font-size:.85rem; color:#B8AFA6; font-weight:300; }
+  .week-selector { display:flex; background:var(--card); border-bottom:2px solid var(--border); }
+  .week-btn { flex:1; padding:14px 6px; border:none; background:transparent; font-family:'Source Sans 3',sans-serif; font-size:.82rem; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:4px solid transparent; transition:all .2s; }
+  .week-btn.active-w4 { color:var(--blue); border-bottom-color:var(--blue); background:var(--blue-light); }
+  .week-btn.active-w5 { color:var(--purple); border-bottom-color:var(--purple); background:var(--purple-light); }
+  .week-btn.active-w6 { color:var(--teal); border-bottom-color:var(--teal); background:var(--teal-light); }
+  .week-btn:hover:not([class*="active"]) { color:var(--ink); background:#F5F0EA; }
+  .tabs { display:flex; background:var(--card); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+  .tab-btn { flex:1; padding:12px 8px; border:none; background:transparent; font-family:'Source Sans 3',sans-serif; font-size:.76rem; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; transition:all .2s; text-transform:uppercase; letter-spacing:.08em; }
+  .tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); background:var(--accent-light); }
+  .tab-btn:hover:not(.active) { color:var(--ink); background:#F5F0EA; }
+  .content { max-width:720px; margin:0 auto; padding:24px 16px 80px; }
+  .week-content { display:none; }
+  .week-content.active { display:block; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:20px; border:1px solid var(--border); }
+  .card h2 { font-family:'DM Serif Display',serif; font-size:1.25rem; font-weight:400; margin-bottom:12px; }
+  .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+  .badge-teacher { background:var(--accent-light); color:var(--accent); }
+  .badge-student { background:var(--blue-light); color:var(--blue); }
+  .badge-tip { background:var(--yellow-light); color:var(--yellow); }
+  .script-line { padding:14px 16px; margin:10px 0; border-radius:8px; }
+  .script-line.teacher { background:var(--accent-light); border-left:4px solid var(--accent); }
+  .script-line.student { background:var(--blue-light); border-left:4px solid var(--blue); }
+  .script-line.tip { background:var(--yellow-light); border-left:4px solid var(--yellow); }
+  .script-line .role { font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+  .script-line.teacher .role { color:var(--accent); }
+  .script-line.student .role { color:var(--blue); }
+  .script-line.tip .role { color:var(--yellow); }
+  .script-line p { font-size:.95rem; line-height:1.55; }
+  .script-line .chinese { font-size:.82rem; color:var(--muted); margin-top:4px; font-style:italic; }
+  .vocab-item { border-bottom:1px solid var(--border); padding:16px 0; }
+  .vocab-item:last-child { border-bottom:none; }
+  .vocab-word { font-family:'DM Serif Display',serif; font-size:1.15rem; }
+  .vocab-pos { font-size:.78rem; color:var(--muted); font-style:italic; margin-left:6px; }
+  .vocab-example { margin-top:6px; padding:8px 12px; background:#F5F0EA; border-radius:6px; font-size:.88rem; color:var(--muted); }
+  .vocab-example em { color:var(--accent); font-style:normal; font-weight:600; }
+  .reveal-btn { margin-top:8px; padding:6px 14px; border:1px solid var(--border); background:var(--card); border-radius:6px; font-size:.8rem; cursor:pointer; color:var(--muted); font-family:'Source Sans 3',sans-serif; transition:all .15s; }
+  .reveal-btn:hover { background:var(--accent-light); color:var(--accent); border-color:var(--accent); }
+  .hidden-content { display:none; margin-top:10px; padding:12px 16px; background:var(--green-light); border-radius:8px; font-size:.9rem; border-left:3px solid var(--green); }
+  .hidden-content.show { display:block; }
+  .scenario-card { background:var(--card); border:2px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:16px; cursor:pointer; transition:all .2s; }
+  .scenario-card:hover { border-color:var(--accent); box-shadow:0 4px 16px rgba(192,87,70,.12); }
+  .scenario-card.expanded { border-color:var(--accent); }
+  .scenario-num { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin-bottom:6px; }
+  .scenario-title { font-family:'DM Serif Display',serif; font-size:1.05rem; margin-bottom:6px; }
+  .scenario-desc { font-size:.88rem; color:var(--muted); margin-bottom:8px; }
+  .scenario-body { display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+  .scenario-card.expanded .scenario-body { display:block; }
+  .checklist-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); cursor:pointer; }
+  .checklist-item:last-child { border-bottom:none; }
+  .check-box { width:22px; height:22px; border:2px solid var(--border); border-radius:5px; cursor:pointer; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:all .15s; font-size:14px; color:transparent; }
+  .check-box.checked { background:var(--green); border-color:var(--green); color:white; }
+  .checklist-text { font-size:.92rem; }
+  .checklist-text.checked-text { text-decoration:line-through; color:var(--muted); }
+  .progress-bar { height:6px; background:var(--border); border-radius:3px; margin:12px 0 20px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--green); border-radius:3px; transition:width .4s ease; }
+  .section-intro { font-size:.92rem; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+  .divider { height:1px; background:var(--border); margin:20px 0; }
+  .timer-bar { display:flex; align-items:center; gap:10px; padding:12px 16px; background:var(--ink); color:var(--bg); border-radius:8px; margin-bottom:20px; font-size:.85rem; }
+  .timer-bar .time { font-family:'DM Serif Display',serif; font-size:1.3rem; margin-left:auto; }
+  .frame-box { background:#F5F0EA; border-radius:8px; padding:14px 16px; margin:10px 0; font-size:.92rem; border-left:3px solid var(--blue); }
+  .frame-box code { background:var(--blue-light); padding:2px 6px; border-radius:3px; font-family:'Source Sans 3',sans-serif; font-weight:600; color:var(--blue); font-size:.88rem; }
+  .note { font-size:.82rem; color:var(--muted); font-style:italic; margin-top:8px; }
+  @media(max-width:480px) { .tab-btn{font-size:.66rem;padding:11px 3px;} header h1{font-size:1.3rem;} .week-btn{font-size:.74rem;padding:12px 4px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 5 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee</div>
+</header>
+
+
+
+<!-- ================================================================ -->
+<!-- WEEK 4: MEDIA, GENDER & CRITICAL THINKING -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 5: SEXUAL ORIENTATION -->
+<!-- ================================================================ -->
+<div id="week-w5" class="week-content active">
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('w5','warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('w5','teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('w5','roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('w5','checklist')">Checklist</button>
+</div>
+<div class="content">
+
+<!-- W5 WARM-UP -->
+<div id="w5-warmup" class="panel active">
+  <p class="section-intro">Week 5 is the most sensitive topic so far: <strong>sexual orientation as a social construct, not just a label</strong>. The teaching tone should be academic and respectful — informed, never preachy.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Heteronormativity <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The assumption that heterosexuality is the only normal mode of sexual orientation — the invisible "default setting" of society.</div>
+        <div class="vocab-example">Try saying: <em>"The traditional wedding industry is often built on heteronormativity — it assumes the couple is one man and one woman."</em></div>
+        <div class="chinese">異性戀常規 — 認為異性戀是唯一「正常」性取向的社會預設。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Split Attraction Model <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> A framework that separates romantic attraction from sexual attraction — they don't always point the same direction.</div>
+        <div class="vocab-example">Try saying: <em>"The split attraction model helps us understand that someone can be biromantic but asexual — attracted romantically to multiple genders, but not sexually."</em></div>
+        <div class="chinese">分裂吸引力模型 — 將浪漫吸引與性吸引區分開來，兩者不一定一致。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Marginalization <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The treatment of a person or group as insignificant or peripheral — pushed to the edges of society.</div>
+        <div class="vocab-example">Try saying: <em>"Historical records often lead to the marginalization of LGBTQ+ stories — they are erased or ignored."</em></div>
+        <div class="chinese">邊緣化 — 將某人或某群體視為不重要或邊緣的對待方式。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Erasure <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The systematic removal or denial of a group's existence, history, or significance.</div>
+        <div class="vocab-example">Try saying: <em>"Bisexual erasure happens when people say you 'must be' either gay or straight — denying bisexuality as a real identity."</em></div>
+        <div class="chinese">抹除 — 系統性地否認或移除某群體的存在、歷史或重要性。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Conceptual Clarity <span class="vocab-pos">(n. phrase)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The ability to distinguish clearly between related but distinct concepts — essential for academic discourse.</div>
+        <div class="vocab-example">Try saying: <em>"Conceptual clarity is vital here: who you are — your identity — and who you love — your orientation — are distinct and independent."</em></div>
+        <div class="chinese">概念清晰度 — 清楚區分相關但不同概念的能力。身分≠取向。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px;">Martin gives a scenario (a dating app profile, a wedding ad, a coming-out scene in a drama) → Alinggo responds using these frames.</p>
+
+    <div class="frame-box">
+      <strong>Frame 1 — Identifying a Bias:</strong><br>
+      <code>"This reinforces heteronormativity by assuming the default couple is..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 2 — Applying a Model:</strong><br>
+      <code>"Using the split attraction model, we can see that this character experiences _____ attraction but not..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 3 — Reflecting on Change:</strong><br>
+      <code>"One assumption I used to have about orientation was _____, but now I recognize..."</code>
+    </div>
+  </div>
+</div>
+
+<!-- W5 TEACH IT -->
+<div id="w5-teach" class="panel">
+  <p class="section-intro">W5: <strong>Sexual Orientation — Beyond Identity Labels</strong>. Academic tone throughout. The lesson moves from theory → the Split Attraction Model → discussion via film/music → closing.</p>
+
+  <div class="timer-bar"><span>⏱ Suggested total time</span><span class="time">30 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Opening</span>
+    <h2>More Than a Label</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Welcome to Week 5. This topic requires extra care, so let me set the frame. In academic discourse, sexual orientation is more than just a label. It is a <strong>complex social construct</strong> — shaped by culture, language, and power."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Today we're going to separate two things that many people combine: <strong>identity</strong> — who you are — and <strong>orientation</strong> — who you are attracted to. These are distinct and independent."</p>
+      <div class="chinese">今天我們要區分兩件常被混為一談的事：身分（你是誰）和性傾向（你被誰吸引）。這是兩個獨立的變數。</div></div>
+    <div class="script-line tip"><div class="role">💡 Teaching tip</div>
+      <p>Establish ground rules: "In this class, we use academic language. We describe, we analyze, we reflect. We don't judge. Everyone's experience is valid data." This creates safety for the discussion ahead.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — Core Concepts</span>
+    <h2>Heteronormativity &amp; the Split Attraction Model</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"First concept: <strong>Heteronormativity</strong>. This is the social belief that heterosexuality is the default — the 'normal' state. It's so deeply embedded that we often don't even notice it. Think about forms that ask for 'husband' and 'wife' instead of 'partner.' That's heteronormativity in action."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Second concept: the <strong>Split Attraction Model</strong>. This framework says that romantic attraction and sexual attraction are separate. You can be aromantic but sexual. You can be biromantic but asexual. The point is: attraction is not a single switch — it has multiple dimensions."</p></div>
+    <div class="script-line student"><div class="role">Martin (Student)</div>
+      <p>Ask: "Wait — you can be romantically attracted to someone but not sexually? How does that work?" Let Alinggo explain with a concrete example.</p></div>
+    <div class="script-line tip"><div class="role">💡 Comprehension check</div>
+      <p>"Can someone give me an example of heteronormativity in daily life? Think about advertisements, school policies, or family gatherings."</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — Discussion via Media</span>
+    <h2>The Landscape of Desire &amp; Unlabeled Youth</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Let's think about dating apps. When you scroll through profiles, are you looking for a <strong>label</strong> — 'straight,' 'gay,' 'bi' — or a <strong>human connection</strong>? If we removed all the bio tags, how would you describe being 'drawn' to someone?"</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"And here's the deeper question: is that feeling purely yours? Or is it guided by what society calls an <strong>'ideal type'</strong>?"</p>
+      <div class="chinese">那種被吸引的感覺真的完全是你自己的嗎？還是被社會所謂的「理想型」引導的？</div></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Have you ever felt that society is in a hurry to <strong>categorize</strong> your feelings? If we chose to remain 'unlabeled' for a while, would that feel like a scary lack of direction — or like a total, beautiful freedom?"</p></div>
+    <div class="script-line student"><div class="role">Martin (Student) — prompts</div>
+      <p>• "I think labels are useful — they help people find community."<br>• "What if someone doesn't want a label at all? Is that OK?"<br>• Challenge: "In my culture, you're either straight or you're not. This 'spectrum' idea feels very Western."</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>Desire Exists Within Society</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Sexual orientation is not merely a personal preference. It is socially <strong>interpreted, regulated, and politicized</strong>. Understanding attraction academically allows us to <strong>reduce harm and erasure</strong>."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Remember this: <strong>Desire exists within society. To understand desire, we must first understand power.</strong>"</p></div>
+    <div class="script-line tip"><div class="role">💡 Closing tip</div>
+      <p>The final line is the thesis. Say it like a conclusion to a lecture — measured, clear, with weight. This is not a slogan; it's an analytical statement.</p></div>
+  </div>
+</div>
+
+<!-- W5 ROLE-PLAY -->
+<div id="w5-roleplay" class="panel">
+  <p class="section-intro">These scenarios practice navigating the most sensitive questions with academic precision and human warmth.</p>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 1</div>
+    <div class="scenario-title">"Is This Class Trying to Make Us Gay?"</div>
+    <div class="scenario-desc">A student is suspicious of the topic's agenda.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Why are we studying this? Are you trying to change our orientation or something?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Stay calm, stay academic: <em>"No — and that's an important thing to address. This class doesn't tell you what to feel or who to love. It gives you vocabulary and frameworks to understand the world around you. Just like studying history doesn't make you a historian — studying orientation doesn't change yours. It builds understanding."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 2</div>
+    <div class="scenario-title">"This Is a Western Concept"</div>
+    <div class="scenario-desc">A student challenges the cultural applicability.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"All these terms — asexual, biromantic — they sound like Western labels. In my culture we don't use these words."</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"That's a valid observation. The labels are indeed from Western academic frameworks. But the experiences they describe — feeling attraction in different ways, or not feeling it at all — those exist in every culture. The question isn't whether these labels are universal, but whether having language for these experiences helps people feel less alone. What do you think?"</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 3</div>
+    <div class="scenario-title">Explaining the Split Attraction Model Simply</div>
+    <div class="scenario-desc">A student is genuinely confused.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"I really don't understand how you can be romantically attracted but not sexually attracted. Can you give a simple example?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"Sure. Think about it this way: have you ever had a very close friend who you loved spending time with, sharing secrets with, and felt emotionally bonded to — but you never felt physically attracted to them? That's a separation between emotional and physical connection. The split attraction model extends that to romantic and sexual feelings. Some people experience strong romantic feelings — wanting dates, cuddles, partnership — without feeling sexual attraction. And vice versa."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 4</div>
+    <div class="scenario-title">A Student Shares Something Personal</div>
+    <div class="scenario-desc">Someone comes out or shares a personal struggle in class.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Actually... I've been questioning my own orientation recently. I never had a word for what I feel until today."</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p>Honor it, don't spotlight it: <em>"Thank you for trusting us with that. And I'm glad the vocabulary is helpful. That's exactly why we study these concepts — not to label people, but to give people the language to understand their own experiences. You don't need to have all the answers right now. This is a process."</em> Then naturally move on — don't make the student a spectacle.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- W5 CHECKLIST -->
+<div id="w5-checklist" class="panel">
+  <p class="section-intro">Track W5 progress.</p>
+  <div class="card">
+    <h2>Week 5 Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="w5-progressFill" style="width:0%"></div></div>
+    <div id="w5-progressText" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Vocabulary: all 5 terms practiced aloud</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Sentence frames: 3+ scenarios analyzed</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 1: Set the academic tone and ground rules</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Explained heteronormativity with daily-life examples</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Explained the Split Attraction Model clearly</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Led the "labels vs. connection" dating app discussion</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Explored "unlabeled" as freedom vs. anxiety</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Segment 4: Delivered closing — "desire exists within society"</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w5')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Handled a "Western concept" cultural challenge</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="Notes on W5 session..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- WEEK 6: DIVERSITY, GENDER & PARENTING -->
+<!-- ================================================================ -->
+
+
+<script>
+function switchWeek(week) {
+  document.querySelectorAll('.week-content').forEach(w => w.classList.remove('active'));
+  document.getElementById('week-' + week).classList.add('active');
+  document.querySelectorAll('.week-btn').forEach(b => { b.classList.remove('active-w4','active-w5','active-w6'); });
+  document.getElementById('weekBtn' + week.charAt(1)).classList.add('active-' + week);
+}
+function switchTab(week, tab) {
+  const container = document.getElementById('week-' + week);
+  container.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(week + '-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleReveal(btn) {
+  const c = btn.nextElementSibling;
+  if (c.classList.contains('show')) { c.classList.remove('show'); btn.textContent = 'Show definition + example'; }
+  else { c.classList.add('show'); btn.textContent = 'Hide'; }
+}
+function toggleScenario(card) { card.classList.toggle('expanded'); }
+function toggleCheck(item, week) {
+  item.querySelector('.check-box').classList.toggle('checked');
+  item.querySelector('.checklist-text').classList.toggle('checked-text');
+  updateProgress(week);
+}
+function updateProgress(week) {
+  const container = document.getElementById(week + '-checklist');
+  const total = container.querySelectorAll('.checklist-item').length;
+  const done = container.querySelectorAll('.check-box.checked').length;
+  document.getElementById(week + '-progressFill').style.width = Math.round((done/total)*100) + '%';
+  document.getElementById(week + '-progressText').textContent = done + ' of ' + total + ' completed';
+}
+</script>
+
+
+</body></html>

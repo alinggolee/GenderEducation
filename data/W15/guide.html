@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W15 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAF7F2;--card:#FFFFFF;--accent:#C05746;--accent-light:#F2DDD8;
+    --ink:#2C2420;--muted:#8A7E76;--border:#E8E0D8;
+    --green:#4A7C59;--green-light:#E4F0E8;
+    --blue:#3E6B89;--blue-light:#DCE9F0;
+    --yellow:#B8860B;--yellow-light:#FDF4DC;
+    --purple:#6B5B8A;--purple-light:#EDE8F4;
+    --teal:#3D7A7A;--teal-light:#DDF0EF;
+    --gold:#8B6914;--gold-light:#F8F0D8;
+    --shadow:0 2px 12px rgba(44,36,32,.08);--radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100vh;}
+  header{background:var(--ink);color:var(--bg);padding:28px 24px 20px;text-align:center;}
+  header h1{font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;letter-spacing:.02em;margin-bottom:4px;}
+  header .subtitle{font-size:.85rem;color:#B8AFA6;font-weight:300;}
+  .week-selector{display:flex;background:var(--card);border-bottom:2px solid var(--border);}
+  .week-btn{flex:1;padding:14px 6px;border:none;background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:4px solid transparent;transition:all .2s;}
+  .week-btn.active-w13{color:var(--purple);border-bottom-color:var(--purple);background:var(--purple-light);}
+  .week-btn.active-w14{color:var(--teal);border-bottom-color:var(--teal);background:var(--teal-light);}
+  .week-btn.active-w15{color:var(--gold);border-bottom-color:var(--gold);background:var(--gold-light);}
+  .week-btn:hover:not([class*="active"]){color:var(--ink);background:#F5F0EA;}
+  .tabs{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .tab-btn{flex:1;padding:12px 8px;border:none;background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light);}
+  .tab-btn:hover:not(.active){color:var(--ink);background:#F5F0EA;}
+  .content{max-width:720px;margin:0 auto;padding:24px 16px 80px;}
+  .week-content{display:none;}.week-content.active{display:block;}
+  .panel{display:none;}.panel.active{display:block;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;border:1px solid var(--border);}
+  .card h2{font-family:'DM Serif Display',serif;font-size:1.25rem;font-weight:400;margin-bottom:12px;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
+  .badge-teacher{background:var(--accent-light);color:var(--accent);}
+  .badge-tip{background:var(--yellow-light);color:var(--yellow);}
+  .sl{padding:14px 16px;margin:10px 0;border-radius:8px;}
+  .sl.t{background:var(--accent-light);border-left:4px solid var(--accent);}
+  .sl.s{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .sl.tip{background:var(--yellow-light);border-left:4px solid var(--yellow);}
+  .sl .role{font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  .sl.t .role{color:var(--accent);}.sl.s .role{color:var(--blue);}.sl.tip .role{color:var(--yellow);}
+  .sl p{font-size:.95rem;line-height:1.55;}
+  .sl .zh{font-size:.82rem;color:var(--muted);margin-top:4px;font-style:italic;}
+  .vi{border-bottom:1px solid var(--border);padding:16px 0;}.vi:last-child{border-bottom:none;}
+  .vw{font-family:'DM Serif Display',serif;font-size:1.15rem;}
+  .vp{font-size:.78rem;color:var(--muted);font-style:italic;margin-left:6px;}
+  .vex{margin-top:6px;padding:8px 12px;background:#F5F0EA;border-radius:6px;font-size:.88rem;color:var(--muted);}
+  .vex em{color:var(--accent);font-style:normal;font-weight:600;}
+  .rb{margin-top:8px;padding:6px 14px;border:1px solid var(--border);background:var(--card);border-radius:6px;font-size:.8rem;cursor:pointer;color:var(--muted);font-family:'Source Sans 3',sans-serif;transition:all .15s;}
+  .rb:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent);}
+  .hc{display:none;margin-top:10px;padding:12px 16px;background:var(--green-light);border-radius:8px;font-size:.9rem;border-left:3px solid var(--green);}
+  .hc.show{display:block;}
+  .sc{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;cursor:pointer;transition:all .2s;}
+  .sc:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(192,87,70,.12);}
+  .sc.expanded{border-color:var(--accent);}
+  .sn{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:6px;}
+  .st{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:6px;}
+  .sd{font-size:.88rem;color:var(--muted);margin-bottom:8px;}
+  .sb{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+  .sc.expanded .sb{display:block;}
+  .ci{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;}.ci:last-child{border-bottom:none;}
+  .cb{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:14px;color:transparent;}
+  .cb.checked{background:var(--green);border-color:var(--green);color:white;}
+  .ct{font-size:.92rem;}.ct.done{text-decoration:line-through;color:var(--muted);}
+  .pb{height:6px;background:var(--border);border-radius:3px;margin:12px 0 20px;overflow:hidden;}
+  .pf{height:100%;background:var(--green);border-radius:3px;transition:width .4s ease;}
+  .si{font-size:.92rem;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+  .dv{height:1px;background:var(--border);margin:20px 0;}
+  .tb{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--ink);color:var(--bg);border-radius:8px;margin-bottom:20px;font-size:.85rem;}
+  .tb .time{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-left:auto;}
+  .fb{background:#F5F0EA;border-radius:8px;padding:14px 16px;margin:10px 0;font-size:.92rem;border-left:3px solid var(--blue);}
+  .fb code{background:var(--blue-light);padding:2px 6px;border-radius:3px;font-family:'Source Sans 3',sans-serif;font-weight:600;color:var(--blue);font-size:.88rem;}
+  .note{font-size:.82rem;color:var(--muted);font-style:italic;margin-top:8px;}
+  .highlight-box{background:var(--gold-light);border:2px solid var(--gold);border-radius:var(--radius);padding:20px;margin:16px 0;}
+  .highlight-box h3{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:8px;}
+  @media(max-width:480px){.tab-btn{font-size:.66rem;padding:11px 3px;}header h1{font-size:1.3rem;}.week-btn{font-size:.72rem;padding:12px 4px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 15 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee · Final Arc</div>
+</header>
+
+
+
+<!-- ================================================================ -->
+<!-- WEEK 13: DGBV CRITICAL REFLECTION -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 14: ADVOCACY & BOARD GAME -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 15: FINAL STRUCTURAL INTEGRATION -->
+<!-- ================================================================ -->
+<div id="week-w15" class="week-content active">
+<div class="tabs">
+  <button class="tab-btn active" onclick="st('w15','wu')">Warm-Up</button>
+  <button class="tab-btn" onclick="st('w15','ti')">Teach It</button>
+  <button class="tab-btn" onclick="st('w15','rp')">Role-Play</button>
+  <button class="tab-btn" onclick="st('w15','cl')">Checklist</button>
+</div>
+<div class="content">
+
+<div id="w15-wu" class="panel active">
+  <p class="si">The final week. This is not a new lesson — it's a <strong>synthesis</strong>. Alinggo must pull together 14 weeks of concepts into a coherent arc and deliver a closing that honors the journey. The Cycle of Liberation is the framework: Awareness → Reflection → Action → Transformation.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vi"><div class="vw">Synthesize <span class="vp">(v.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> To combine various concepts into a unified whole — seeing the connections between ideas.</div>
+        <div class="vex">Try saying: <em>"In our final presentation, we synthesized theory and practice through our board game design."</em></div>
+        <div class="zh" style="color:var(--muted)">綜合 — 將各種概念結合成統一的整體。看見想法之間的連結。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Structural Literacy <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> The ability to see and analyze systemic patterns of power — the core skill of this entire course.</div>
+        <div class="vex">Try saying: <em>"This course has significantly improved my structural literacy — I can now see the systems behind everyday interactions."</em></div>
+        <div class="zh" style="color:var(--muted)">結構識讀 — 看見和分析權力系統性模式的能力。整門課的核心技能。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Advocacy <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Public support for a cause — using knowledge, empathy, and accountability to drive structural change.</div>
+        <div class="vex">Try saying: <em>"Effective advocacy requires a balance of empathy and accountability."</em></div>
+        <div class="zh" style="color:var(--muted)">倡議 — 運用知識、同理心和問責來推動結構性改變。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Transformation <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> A fundamental shift in perspective that inspires new behavior and inspires others toward justice.</div>
+        <div class="vex">Try saying: <em>"You are not leaving this course as the same person who entered. That's transformation."</em></div>
+        <div class="zh" style="color:var(--muted)">轉化 — 根本性的觀點轉變，激發新行為並啟發他人追求正義。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Cycle of Liberation <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> The growth cycle: Awareness → Reflection → Action → Transformation. Not a line — a cycle that continues.</div>
+        <div class="vex">Try saying: <em>"Our 15-week journey is not a line — it is a cycle. Awareness leads to reflection, reflection leads to action, and action leads to transformation."</em></div>
+        <div class="zh" style="color:var(--muted)">解放循環 — 覺察→反思→行動→轉化。不是直線，是持續的循環。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <div class="fb"><strong>Frame 1 — Summarizing:</strong><br><code>"In this final presentation, our group focused on synthesizing _____ with a core mission of..."</code></div>
+    <div class="fb"><strong>Frame 2 — Describing Growth:</strong><br><code>"I have moved from simple vocabulary to a deeper..."</code></div>
+    <div class="fb"><strong>Frame 3 — Future Intent:</strong><br><code>"I will carry these advocacy skills into my future career to promote..."</code></div>
+  </div>
+</div>
+
+<div id="w15-ti" class="panel">
+  <p class="si">W15: <strong>Final Structural Integration</strong>. This is the capstone — Alinggo delivers the semester review, the Cycle of Liberation, and the course's closing statement. This should feel like a graduation speech, not a lecture.</p>
+
+  <div class="tb"><span>⏱ Suggested total time</span><span class="time">30 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — The Arc</span>
+    <h2>15 Weeks, One Journey</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~8 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Welcome to our final session. Let's look back at the architecture of what we built together."</p></div>
+    <div class="sl t"><div class="role">Alinggo — the four arcs</div>
+      <p>"<strong>Weeks 1–4:</strong> Concepts &amp; Critical Thinking. We learned to see patterns — in names, stories, media, and expression.<br><br>
+      <strong>Weeks 5–9:</strong> Identity, Diversity &amp; Structure. We went deeper — into orientation, family, cultural norms, privilege, and tradition.<br><br>
+      <strong>Weeks 10–13:</strong> Violence, Digital Harm &amp; Reflection. We faced the hardest topics — harassment, body discipline, digital violence, and bystander responsibility.<br><br>
+      <strong>Week 14:</strong> Advocacy. We turned knowledge into action through facilitation.<br><br>
+      <strong>Week 15:</strong> Today. Integration, celebration, and responsibility."</p></div>
+    <div class="sl tip"><div class="role">💡 Teaching tip</div>
+      <p>Don't rush this review. Each arc should get a beat. Let students feel the weight of what they've accomplished. This is not a summary — it's a celebration of intellectual growth.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — The Cycle of Liberation</span>
+    <h2>Awareness → Reflection → Action → Transformation</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~8 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Our journey is not a straight line. It's a <strong>cycle of growth</strong>:<br><br>
+      <strong>Awareness:</strong> Spotting the gendered patterns hidden in daily life.<br>
+      <strong>Reflection:</strong> Understanding how those patterns shape our identity and choices.<br>
+      <strong>Action:</strong> Transforming reflection into advocacy — through the board game, through your voice.<br>
+      <strong>Transformation:</strong> A shift that inspires others and moves toward social justice."</p>
+      <div class="zh">覺察→反思→行動→轉化。這不是終點——是持續的循環。</div></div>
+    <div class="sl t"><div class="role">Alinggo — the "aha" moment</div>
+      <p>"I want to ask you: looking back, <strong>when did you first feel your structural literacy develop?</strong> When was your 'aha' moment? How has it changed the way you see the world?"</p></div>
+    <div class="sl s"><div class="role">Martin (Student)</div>
+      <p>Share a genuine reflection as a student would. This gives Alinggo practice receiving and honoring a student's growth moment.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — Reflection Questions</span>
+    <h2>Ethics, Action &amp; Future Commitment</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~8 minutes</p>
+    <div class="sl t"><div class="role">Alinggo — facilitated discussion</div>
+      <p>Ask these three questions, one at a time, with space for responses:<br><br>
+      "Which of the Digital Gender Ethics Cards did you rely on most during your facilitation practice?"<br><br>
+      "As you step out of this classroom, how will you use structural thinking in your future professional decisions?"<br><br>
+      "What is ONE thing you want to carry forward from this course?"</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — The Closing Statement</span>
+    <h2>And That Is How Justice Lives</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~6 minutes</p>
+
+    <div class="highlight-box">
+      <h3>The Final Words</h3>
+      <p style="font-size:.95rem;line-height:1.7;">This is the speech Alinggo should practice delivering with conviction, eye contact, and measured pacing. Not reading — <em>speaking</em>.</p>
+    </div>
+
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"In these 15 weeks, you have moved from basic gender concepts to <strong>awareness</strong>. From awareness to <strong>structure</strong>. And from structure to <strong>responsibility</strong>."</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"You are not leaving this course as the same person who entered. You now carry <strong>ethical awareness, structural thinking, and advocacy skills</strong>."</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"We do not need to change the entire world. But we can change: <strong>how we speak. How we listen. How we intervene. How we facilitate. And how we stand with others.</strong>"</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"<strong>And that is how justice lives.</strong>"</p></div>
+    <div class="sl tip"><div class="role">💡 Delivery note</div>
+      <p>The final line is the thesis of the entire course. Say it slowly. Let the room go quiet. Hold eye contact. Then: a genuine smile. And: "Thank you." That's the last word.</p></div>
+  </div>
+</div>
+
+<div id="w15-rp" class="panel">
+  <p class="si">Week 15 role-plays are about <strong>presentation and synthesis</strong> — the culminating performance skills.</p>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 1</div><div class="st">The Final Presentation Practice</div>
+    <div class="sd">Alinggo delivers a 3-minute semester synthesis.</div>
+    <div class="sb">
+      <div class="sl tip"><div class="role">The challenge</div>
+        <p>Alinggo picks THREE concepts from across the 15 weeks and synthesizes them into a coherent 3-minute presentation. Structure:<br><br>
+        (1) <strong>Open:</strong> "Our course began with a simple question..." (1 sentence)<br>
+        (2) <strong>Three connected concepts:</strong> Name them, link them, show how they build on each other (90 seconds)<br>
+        (3) <strong>Personal growth:</strong> "What I learned is..." (30 seconds)<br>
+        (4) <strong>Future commitment:</strong> "I will carry this into..." (30 seconds)<br><br>
+        Martin gives feedback on clarity, fluency, and emotional impact.</p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 2</div><div class="st">Handling a Q&amp;A Challenge</div>
+    <div class="sd">After the presentation, a "professor" asks a tough question.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Professor (Martin)</div><p>"You mentioned structural literacy. Can you give a specific example of how this course changed the way you analyze a real-world situation?"</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p>Alinggo must think on her feet and give a concrete, specific example — not a generic answer. Practice being precise under pressure. The best answers connect a course concept (e.g., media amplification, gender policing) to a real-life observation.</p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 3</div><div class="st">"What Will You Actually Do Differently?"</div>
+    <div class="sd">A skeptical listener challenges the practical value.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Listener (Martin)</div><p>"This all sounds nice. But what will you actually do differently tomorrow? What's the concrete action?"</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p>Be specific and honest: <em>"Tomorrow I'll do something small but real. When I see a gendered joke online, I won't share it — and I'll notice why it got amplified. When a student in my class uses victim-blaming language, I'll redirect — not with shame, but with a structural question. And when I facilitate the board game in a community setting, I'll carry Do No Harm as my first principle. Structural change starts with daily choices."</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 4</div><div class="st">Delivering the Closing Statement</div>
+    <div class="sd">The final practice: deliver Alinggo's closing with conviction.</div>
+    <div class="sb">
+      <div class="sl tip"><div class="role">The challenge</div>
+        <p>Alinggo stands (yes, physically stands up from the chair) and delivers the full closing statement from Segment 4 — from memory, not reading. Martin rates three things:<br><br>
+        (1) <strong>Pacing:</strong> Was each phrase given enough space?<br>
+        (2) <strong>Eye contact:</strong> Did Alinggo look at the "audience"?<br>
+        (3) <strong>Landing:</strong> Did the final line — "And that is how justice lives" — land with weight?<br><br>
+        Repeat until it feels natural. This is the moment that defines the course.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="w15-cl" class="panel">
+  <p class="si">The final checklist. Complete this, and you've practiced the entire 15-week course.</p>
+  <div class="card">
+    <h2>Week 15 — Final Progress</h2>
+    <div class="pb"><div class="pf" id="w15-pf" style="width:0%"></div></div>
+    <div id="w15-pt" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 / 10</div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Vocabulary: all 5 terms practiced</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Synthesis frames: connected 3+ concepts across weeks</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Segment 1: Reviewed all four arcs with impact</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Segment 2: Explained the Cycle of Liberation</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Segment 2: Facilitated the "aha moment" discussion</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Segment 3: Asked all three reflection questions</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Segment 3: Honored student responses warmly</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Segment 4: Delivered the closing statement from memory</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Role-play: Delivered 3-minute synthesis presentation</div></div>
+    <div class="ci" onclick="tc(this,'w15')"><div class="cb">✓</div><div class="ct">Role-play: "And that is how justice lives" landed with impact</div></div>
+  </div>
+
+  <div class="highlight-box">
+    <h3>Full Course Completion</h3>
+    <p style="font-size:.95rem;">If you've worked through all five practice files (W1, W2–3, W4–6, W7–9, W10–12, W13–15), Alinggo has practiced delivering an entire 15-week university-level Gender Education course in English. That's 75 vocabulary terms, 45 sentence frames, 60+ teaching segments, and 60 role-play scenarios. Incredible work.</p>
+  </div>
+
+  <div class="card"><h2>Final Session Notes</h2><textarea placeholder="Final reflections on the entire practice journey..." style="width:100%;min-height:160px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div></div>
+
+<script>
+function sw(w){document.querySelectorAll('.week-content').forEach(e=>e.classList.remove('active'));document.getElementById('week-'+w).classList.add('active');document.querySelectorAll('.week-btn').forEach(b=>{b.classList.remove('active-w13','active-w14','active-w15');});document.getElementById('wB'+w.slice(1)).classList.add('active-'+w);}
+function st(w,t){const c=document.getElementById('week-'+w);c.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));c.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(w+'-'+t).classList.add('active');event.target.classList.add('active');}
+function toggleReveal(b){const c=b.nextElementSibling;if(c.classList.contains('show')){c.classList.remove('show');b.textContent='Show definition + example';}else{c.classList.add('show');b.textContent='Hide';}}
+function toggleScenario(c){c.classList.toggle('expanded');}
+function tc(i,w){i.querySelector('.cb').classList.toggle('checked');i.querySelector('.ct').classList.toggle('done');up(w);}
+function up(w){const c=document.getElementById(w+'-cl');const t=c.querySelectorAll('.ci').length;const d=c.querySelectorAll('.cb.checked').length;document.getElementById(w+'-pf').style.width=Math.round((d/t)*100)+'%';document.getElementById(w+'-pt').textContent=d+' / '+t;}
+</script>
+
+
+</body></html>

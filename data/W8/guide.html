@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W8 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2; --card: #FFFFFF; --accent: #C05746; --accent-light: #F2DDD8;
+    --ink: #2C2420; --muted: #8A7E76; --border: #E8E0D8;
+    --green: #4A7C59; --green-light: #E4F0E8;
+    --blue: #3E6B89; --blue-light: #DCE9F0;
+    --yellow: #B8860B; --yellow-light: #FDF4DC;
+    --purple: #6B5B8A; --purple-light: #EDE8F4;
+    --teal: #3D7A7A; --teal-light: #DDF0EF;
+    --rust: #8B5E3C; --rust-light: #F0E6DB;
+    --shadow: 0 2px 12px rgba(44,36,32,0.08); --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Source Sans 3',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; min-height:100vh; }
+  header { background:var(--ink); color:var(--bg); padding:28px 24px 20px; text-align:center; }
+  header h1 { font-family:'DM Serif Display',serif; font-size:1.6rem; font-weight:400; letter-spacing:.02em; margin-bottom:4px; }
+  header .subtitle { font-size:.85rem; color:#B8AFA6; font-weight:300; }
+  .week-selector { display:flex; background:var(--card); border-bottom:2px solid var(--border); }
+  .week-btn { flex:1; padding:14px 6px; border:none; background:transparent; font-family:'Source Sans 3',sans-serif; font-size:.82rem; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:4px solid transparent; transition:all .2s; }
+  .week-btn.active-w7 { color:var(--purple); border-bottom-color:var(--purple); background:var(--purple-light); }
+  .week-btn.active-w8 { color:var(--teal); border-bottom-color:var(--teal); background:var(--teal-light); }
+  .week-btn.active-w9 { color:var(--rust); border-bottom-color:var(--rust); background:var(--rust-light); }
+  .week-btn:hover:not([class*="active"]) { color:var(--ink); background:#F5F0EA; }
+  .tabs { display:flex; background:var(--card); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+  .tab-btn { flex:1; padding:12px 8px; border:none; background:transparent; font-family:'Source Sans 3',sans-serif; font-size:.76rem; font-weight:600; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; transition:all .2s; text-transform:uppercase; letter-spacing:.08em; }
+  .tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); background:var(--accent-light); }
+  .tab-btn:hover:not(.active) { color:var(--ink); background:#F5F0EA; }
+  .content { max-width:720px; margin:0 auto; padding:24px 16px 80px; }
+  .week-content { display:none; }
+  .week-content.active { display:block; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:20px; border:1px solid var(--border); }
+  .card h2 { font-family:'DM Serif Display',serif; font-size:1.25rem; font-weight:400; margin-bottom:12px; }
+  .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+  .badge-teacher { background:var(--accent-light); color:var(--accent); }
+  .badge-student { background:var(--blue-light); color:var(--blue); }
+  .badge-tip { background:var(--yellow-light); color:var(--yellow); }
+  .script-line { padding:14px 16px; margin:10px 0; border-radius:8px; }
+  .script-line.teacher { background:var(--accent-light); border-left:4px solid var(--accent); }
+  .script-line.student { background:var(--blue-light); border-left:4px solid var(--blue); }
+  .script-line.tip { background:var(--yellow-light); border-left:4px solid var(--yellow); }
+  .script-line .role { font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+  .script-line.teacher .role { color:var(--accent); }
+  .script-line.student .role { color:var(--blue); }
+  .script-line.tip .role { color:var(--yellow); }
+  .script-line p { font-size:.95rem; line-height:1.55; }
+  .script-line .chinese { font-size:.82rem; color:var(--muted); margin-top:4px; font-style:italic; }
+  .vocab-item { border-bottom:1px solid var(--border); padding:16px 0; }
+  .vocab-item:last-child { border-bottom:none; }
+  .vocab-word { font-family:'DM Serif Display',serif; font-size:1.15rem; }
+  .vocab-pos { font-size:.78rem; color:var(--muted); font-style:italic; margin-left:6px; }
+  .vocab-example { margin-top:6px; padding:8px 12px; background:#F5F0EA; border-radius:6px; font-size:.88rem; color:var(--muted); }
+  .vocab-example em { color:var(--accent); font-style:normal; font-weight:600; }
+  .reveal-btn { margin-top:8px; padding:6px 14px; border:1px solid var(--border); background:var(--card); border-radius:6px; font-size:.8rem; cursor:pointer; color:var(--muted); font-family:'Source Sans 3',sans-serif; transition:all .15s; }
+  .reveal-btn:hover { background:var(--accent-light); color:var(--accent); border-color:var(--accent); }
+  .hidden-content { display:none; margin-top:10px; padding:12px 16px; background:var(--green-light); border-radius:8px; font-size:.9rem; border-left:3px solid var(--green); }
+  .hidden-content.show { display:block; }
+  .scenario-card { background:var(--card); border:2px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:16px; cursor:pointer; transition:all .2s; }
+  .scenario-card:hover { border-color:var(--accent); box-shadow:0 4px 16px rgba(192,87,70,.12); }
+  .scenario-card.expanded { border-color:var(--accent); }
+  .scenario-num { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin-bottom:6px; }
+  .scenario-title { font-family:'DM Serif Display',serif; font-size:1.05rem; margin-bottom:6px; }
+  .scenario-desc { font-size:.88rem; color:var(--muted); margin-bottom:8px; }
+  .scenario-body { display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+  .scenario-card.expanded .scenario-body { display:block; }
+  .checklist-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); cursor:pointer; }
+  .checklist-item:last-child { border-bottom:none; }
+  .check-box { width:22px; height:22px; border:2px solid var(--border); border-radius:5px; cursor:pointer; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:all .15s; font-size:14px; color:transparent; }
+  .check-box.checked { background:var(--green); border-color:var(--green); color:white; }
+  .checklist-text { font-size:.92rem; }
+  .checklist-text.checked-text { text-decoration:line-through; color:var(--muted); }
+  .progress-bar { height:6px; background:var(--border); border-radius:3px; margin:12px 0 20px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--green); border-radius:3px; transition:width .4s ease; }
+  .section-intro { font-size:.92rem; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+  .divider { height:1px; background:var(--border); margin:20px 0; }
+  .timer-bar { display:flex; align-items:center; gap:10px; padding:12px 16px; background:var(--ink); color:var(--bg); border-radius:8px; margin-bottom:20px; font-size:.85rem; }
+  .timer-bar .time { font-family:'DM Serif Display',serif; font-size:1.3rem; margin-left:auto; }
+  .frame-box { background:#F5F0EA; border-radius:8px; padding:14px 16px; margin:10px 0; font-size:.92rem; border-left:3px solid var(--blue); }
+  .frame-box code { background:var(--blue-light); padding:2px 6px; border-radius:3px; font-family:'Source Sans 3',sans-serif; font-weight:600; color:var(--blue); font-size:.88rem; }
+  .note { font-size:.82rem; color:var(--muted); font-style:italic; margin-top:8px; }
+  @media(max-width:480px) { .tab-btn{font-size:.66rem;padding:11px 3px;} header h1{font-size:1.3rem;} .week-btn{font-size:.74rem;padding:12px 4px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 8 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee</div>
+</header>
+
+
+
+<!-- ================================================================ -->
+<!-- WEEK 7: GBP, TRANS EXPERIENCE & PRIVILEGE -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 8: DIVERSITY & STRUCTURAL INEQUALITY (TRUKU) -->
+<!-- ================================================================ -->
+<div id="week-w8" class="week-content active">
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('w8','warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('w8','teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('w8','roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('w8','checklist')">Checklist</button>
+</div>
+<div class="content">
+
+<div id="w8-warmup" class="panel active">
+  <p class="section-intro">Week 8 uses <strong>Truku (太魯閣族) Gaya</strong> as a lens to understand how every society has invisible regulatory frameworks — the shift is from "viewing interesting cultures" to "performing structural analysis."</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Gender Norm <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> An informal rule about how men and women should behave — enforced by social expectations, not law.</div>
+        <div class="vocab-example">Try saying: <em>"It is a norm in Truku culture for men to hunt and women to weave — but this tells us about social expectations, not biology."</em></div>
+        <div class="chinese">性別規範 — 關於男女應如何行為的非正式規則，由社會期待而非法律執行。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Social Control <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The mechanisms a community uses to regulate behavior — through surveillance, praise, punishment, or shame.</div>
+        <div class="vocab-example">Try saying: <em>"Gaya acts as a form of social control through community surveillance — the ancestors are watching."</em></div>
+        <div class="chinese">社會控制 — 社群用來規範行為的機制，透過監視、讚美、懲罰或羞恥。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Authority <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The power to define what is legitimate, right, or normal — and who gets to decide.</div>
+        <div class="vocab-example">Try saying: <em>"Certain leaders have the authority to define what is legitimate behavior — but who gave them that authority?"</em></div>
+        <div class="chinese">權威 — 定義什麼是正當、正確或正常的權力——以及誰有權決定。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Gaya <span class="vocab-pos">(n., Truku)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> The Truku ancestral code — a regulatory system of social, moral, and spiritual rules. Not just tradition — it's structure.</div>
+        <div class="vocab-example">Try saying: <em>"Gaya is more than tradition — it is a regulatory system that shapes social expectations, gender roles, and moral judgment."</em></div>
+        <div class="chinese">Gaya（太魯閣族祖訓）— 不只是傳統，而是一套規範社會期待、性別角色和道德判斷的制度體系。</div>
+      </div>
+    </div>
+
+    <div class="vocab-item">
+      <div class="vocab-word">Regulatory Framework <span class="vocab-pos">(n.)</span></div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hidden-content">
+        <div class="vocab-def"><strong>Definition:</strong> A system of rules — written or unwritten — that governs behavior in a society. Every culture has one.</div>
+        <div class="vocab-example">Try saying: <em>"Every society has its own regulatory framework — some are written law, some are religious, and some are invisible family rules."</em></div>
+        <div class="chinese">規範架構 — 治理社會行為的規則系統，成文或不成文。每個文化都有。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <div class="frame-box">
+      <strong>Frame 1 — Analyzing a System:</strong><br>
+      <code>"Gaya is more than tradition; it is a regulatory system that shapes..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 2 — Linking to Theory:</strong><br>
+      <code>"This reflects structural inequality because the power to define morality is held by..."</code>
+    </div>
+    <div class="frame-box">
+      <strong>Frame 3 — Comparing Experiences:</strong><br>
+      <code>"Similar to the Truku culture, my own family has invisible norms that..."</code>
+    </div>
+    <div class="divider"></div>
+    <p style="font-size:.85rem;color:var(--muted);">💡 <strong>Concept Ladder drill:</strong> Martin gives a cultural rule. Alinggo must classify it: is it a <strong>norm</strong> (Level 1), <strong>social control</strong> (Level 2), or <strong>authority</strong> (Level 3)? Then connect to Gaya. Do 4 rounds with examples from different cultures.</p>
+  </div>
+</div>
+
+<div id="w8-teach" class="panel">
+  <p class="section-intro">W8: <strong>Gaya as Regulatory Framework</strong>. The key shift: from tourism ("look at this interesting culture") to structural analysis ("every society has a Gaya").</p>
+
+  <div class="timer-bar"><span>⏱ Suggested total time</span><span class="time">30 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Opening</span>
+    <h2>From "Interesting Culture" to Structural Analysis</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Today we study the Truku people of Taiwan and their concept of <strong>Gaya</strong>. But I want to be clear: we are NOT doing cultural tourism. We're not here to say 'how interesting!' and move on. We are here to <strong>perform structural analysis</strong>."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Because here's the key insight: <strong>every society has its Gaya</strong>. Some are written law. Some are religious texts. Some are invisible family rules. When we analyze Truku culture, we are learning to see our own structure."</p>
+      <div class="chinese">每個社會都有自己的 Gaya。分析太魯閣文化時，我們其實在學習看見自己的結構。</div></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — Core Concept</span>
+    <h2>Norm → Role → Expectation → Regulation</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"In Truku culture, Gaya is the ancestral code — a system of social, moral, and spiritual rules. The traditional requirement that <strong>'men must hunt and women must weave'</strong> shows us how gender norms cluster into fixed roles."</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo — walk through the chain</div>
+      <p>"The process works like this: A <strong>norm</strong> ('men provide food') becomes a <strong>role</strong> ('men are hunters'). The role creates an <strong>expectation</strong> ('a real man hunts'). And the expectation is enforced through <strong>regulation</strong> — social pressure, community judgment, ancestral consequence."</p></div>
+    <div class="script-line tip"><div class="role">💡 Activity</div>
+      <p>Ask Martin (as student) to map this chain for a rule from HIS culture. E.g.: "In my family, women cook the holiday meal." → Norm → Role → Expectation → Regulation (what happens if you break it?).</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — Discussion</span>
+    <h2>The Ancestors Are Watching (The Invisible CCTV)</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Gaya is often framed as ancestral protection. But it can also feel like a <strong>surveillance camera</strong>. Imagine if every choice you made — what you wore, who you ate with — was being watched by the 'eyes of the ancestors.' Does that feel like a warm hug? Or a heavy camera?"</p></div>
+    <div class="script-line teacher"><div class="role">Alinggo — cross-cultural bridge</div>
+      <p>"Does your culture have an 'invisible Gaya'? In Taiwan, parents tell children: 'Don't waste food or the God of Thunder will punish you.' In Malawian and Christian contexts, children are taught: 'Don't steal because God is watching.' These are all regulatory systems — different names, same function."</p>
+      <div class="chinese">你的文化有「隱形的Gaya」嗎？台灣的雷公、基督教的上帝——不同名稱，相同功能。</div></div>
+    <div class="script-line student"><div class="role">Martin (Student) — prompts</div>
+      <p>• Share a family rule: "In my family, my grandmother always said..."<br>• Challenge: "But isn't Gaya just religion? How is it different?"<br>• "Who decides what's sacred and what's shameful in your community?"</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>Structure Is Everywhere</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="script-line teacher"><div class="role">Alinggo</div>
+      <p>"Gaya is not just tradition — it is a regulatory system. When we remove the word 'Gaya,' what remains? <strong>Family rules, gender expectations, and privilege distribution.</strong> Week 8 teaches us: <strong>structure is everywhere.</strong>"</p></div>
+    <div class="script-line tip"><div class="role">💡 Closing tip</div>
+      <p>The power of this closing is in the "removal" move: strip away the cultural specificity and the universal structure appears. Pause after "structure is everywhere."</p></div>
+  </div>
+</div>
+
+<div id="w8-roleplay" class="panel">
+  <p class="section-intro">Cultural analysis requires care. These scenarios practice respecting the culture while maintaining analytical rigor.</p>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 1</div>
+    <div class="scenario-title">"Are You Saying Indigenous Culture Is Sexist?"</div>
+    <div class="scenario-desc">A student thinks you're criticizing Truku culture.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"It sounds like you're saying Truku culture is sexist because they have fixed roles for men and women."</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"I can see why it might sound that way, but that's not the point. Every culture has gender norms — Truku, Taiwanese, American, European. The question isn't 'is this culture sexist?' The question is: 'how does this system work, and who holds the power within it?' We're analyzing structure, not judging a culture. And the same analysis applies to our own culture."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 2</div>
+    <div class="scenario-title">"My Grandmother's Rule" — Making It Personal</div>
+    <div class="scenario-desc">Help a student connect Gaya to their own family.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"My grandmother used to say 'a good girl doesn't go out after dark.' Is that like Gaya?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"Exactly! That's a perfect example. Your grandmother's rule is a norm. If you followed it, you were a 'good girl' — that's the role. The expectation is that girls should be home and safe. And the regulation? Social judgment — if you broke the rule, people would talk. Now — who decided what 'good' means in that context? That's the authority question. Same structure as Gaya, different wrapping."</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 3</div>
+    <div class="scenario-title">"But Tradition Protects Us"</div>
+    <div class="scenario-desc">A student defends traditional norms as beneficial.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"Without rules and traditions, society would have no order. Gaya protects the community. What's wrong with that?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"Nothing is inherently wrong with structure — we all need it. The question is: who benefits and who is constrained? Protection and control can look very similar. Gaya might protect community harmony, but it also determines who gets to define harmony. That's where the power analysis comes in. We're not asking 'is Gaya good or bad?' We're asking 'who holds the authority, and what happens to those who don't fit?'"</em></p></div>
+    </div>
+  </div>
+
+  <div class="scenario-card" onclick="toggleScenario(this)">
+    <div class="scenario-num">Scenario 4</div>
+    <div class="scenario-title">Explaining "Regulatory Framework" Simply</div>
+    <div class="scenario-desc">A student finds the term too academic.</div>
+    <div class="scenario-body">
+      <div class="script-line student"><div class="role">Student (Martin)</div>
+        <p>"What do you mean by 'regulatory framework'? Can you say it in simple English?"</p></div>
+      <div class="script-line tip"><div class="role">What to practice</div>
+        <p><em>"Think of it as 'the rulebook of your community' — except it's not written down. It's the set of expectations that tells you how to behave, what to wear, who to marry, how to be a 'good' man or woman. In Truku culture, it's called Gaya. In your family, it might be 'what Mom and Dad always said.' In society, it might be 'what everyone just knows.' The name changes — the function is the same."</em></p></div>
+    </div>
+  </div>
+</div>
+
+<div id="w8-checklist" class="panel">
+  <p class="section-intro">Track W8 progress.</p>
+  <div class="card">
+    <h2>Week 8 Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="w8-progressFill" style="width:0%"></div></div>
+    <div id="w8-progressText" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Vocabulary: all 5 terms including Gaya practiced aloud</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Concept Ladder drill: classified examples across 3 levels</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Segment 1: Framed lesson as structural analysis, not tourism</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Walked through Norm→Role→Expectation→Regulation</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Segment 2: Student mapped the chain to their own culture</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Led "invisible CCTV" discussion with examples</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Segment 3: Connected Gaya to Taiwan/Malawian/Christian examples</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Segment 4: Delivered closing — "structure is everywhere"</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="checklist-item" onclick="toggleCheck(this,'w8')"><div class="check-box">✓</div><div class="checklist-text">Role-play: Analyzed culture without judging it</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="Notes on W8..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- WEEK 9: TRADITION, CHANGE & GENDERED IDENTITY -->
+<!-- ================================================================ -->
+
+
+<script>
+function switchWeek(week) {
+  document.querySelectorAll('.week-content').forEach(w => w.classList.remove('active'));
+  document.getElementById('week-' + week).classList.add('active');
+  document.querySelectorAll('.week-btn').forEach(b => { b.classList.remove('active-w7','active-w8','active-w9'); });
+  document.getElementById('weekBtn' + week.charAt(1)).classList.add('active-' + week);
+}
+function switchTab(week, tab) {
+  const container = document.getElementById('week-' + week);
+  container.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(week + '-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+function toggleReveal(btn) {
+  const c = btn.nextElementSibling;
+  if (c.classList.contains('show')) { c.classList.remove('show'); btn.textContent = 'Show definition + example'; }
+  else { c.classList.add('show'); btn.textContent = 'Hide'; }
+}
+function toggleScenario(card) { card.classList.toggle('expanded'); }
+function toggleCheck(item, week) {
+  item.querySelector('.check-box').classList.toggle('checked');
+  item.querySelector('.checklist-text').classList.toggle('checked-text');
+  updateProgress(week);
+}
+function updateProgress(week) {
+  const container = document.getElementById(week + '-checklist');
+  const total = container.querySelectorAll('.checklist-item').length;
+  const done = container.querySelectorAll('.check-box.checked').length;
+  document.getElementById(week + '-progressFill').style.width = Math.round((done/total)*100) + '%';
+  document.getElementById(week + '-progressText').textContent = done + ' of ' + total + ' completed';
+}
+</script>
+
+
+</body></html>

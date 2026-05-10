@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W13 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAF7F2;--card:#FFFFFF;--accent:#C05746;--accent-light:#F2DDD8;
+    --ink:#2C2420;--muted:#8A7E76;--border:#E8E0D8;
+    --green:#4A7C59;--green-light:#E4F0E8;
+    --blue:#3E6B89;--blue-light:#DCE9F0;
+    --yellow:#B8860B;--yellow-light:#FDF4DC;
+    --purple:#6B5B8A;--purple-light:#EDE8F4;
+    --teal:#3D7A7A;--teal-light:#DDF0EF;
+    --gold:#8B6914;--gold-light:#F8F0D8;
+    --shadow:0 2px 12px rgba(44,36,32,.08);--radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100vh;}
+  header{background:var(--ink);color:var(--bg);padding:28px 24px 20px;text-align:center;}
+  header h1{font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;letter-spacing:.02em;margin-bottom:4px;}
+  header .subtitle{font-size:.85rem;color:#B8AFA6;font-weight:300;}
+  .week-selector{display:flex;background:var(--card);border-bottom:2px solid var(--border);}
+  .week-btn{flex:1;padding:14px 6px;border:none;background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:4px solid transparent;transition:all .2s;}
+  .week-btn.active-w13{color:var(--purple);border-bottom-color:var(--purple);background:var(--purple-light);}
+  .week-btn.active-w14{color:var(--teal);border-bottom-color:var(--teal);background:var(--teal-light);}
+  .week-btn.active-w15{color:var(--gold);border-bottom-color:var(--gold);background:var(--gold-light);}
+  .week-btn:hover:not([class*="active"]){color:var(--ink);background:#F5F0EA;}
+  .tabs{display:flex;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .tab-btn{flex:1;padding:12px 8px;border:none;background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light);}
+  .tab-btn:hover:not(.active){color:var(--ink);background:#F5F0EA;}
+  .content{max-width:720px;margin:0 auto;padding:24px 16px 80px;}
+  .week-content{display:none;}.week-content.active{display:block;}
+  .panel{display:none;}.panel.active{display:block;}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;border:1px solid var(--border);}
+  .card h2{font-family:'DM Serif Display',serif;font-size:1.25rem;font-weight:400;margin-bottom:12px;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
+  .badge-teacher{background:var(--accent-light);color:var(--accent);}
+  .badge-tip{background:var(--yellow-light);color:var(--yellow);}
+  .sl{padding:14px 16px;margin:10px 0;border-radius:8px;}
+  .sl.t{background:var(--accent-light);border-left:4px solid var(--accent);}
+  .sl.s{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .sl.tip{background:var(--yellow-light);border-left:4px solid var(--yellow);}
+  .sl .role{font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  .sl.t .role{color:var(--accent);}.sl.s .role{color:var(--blue);}.sl.tip .role{color:var(--yellow);}
+  .sl p{font-size:.95rem;line-height:1.55;}
+  .sl .zh{font-size:.82rem;color:var(--muted);margin-top:4px;font-style:italic;}
+  .vi{border-bottom:1px solid var(--border);padding:16px 0;}.vi:last-child{border-bottom:none;}
+  .vw{font-family:'DM Serif Display',serif;font-size:1.15rem;}
+  .vp{font-size:.78rem;color:var(--muted);font-style:italic;margin-left:6px;}
+  .vex{margin-top:6px;padding:8px 12px;background:#F5F0EA;border-radius:6px;font-size:.88rem;color:var(--muted);}
+  .vex em{color:var(--accent);font-style:normal;font-weight:600;}
+  .rb{margin-top:8px;padding:6px 14px;border:1px solid var(--border);background:var(--card);border-radius:6px;font-size:.8rem;cursor:pointer;color:var(--muted);font-family:'Source Sans 3',sans-serif;transition:all .15s;}
+  .rb:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent);}
+  .hc{display:none;margin-top:10px;padding:12px 16px;background:var(--green-light);border-radius:8px;font-size:.9rem;border-left:3px solid var(--green);}
+  .hc.show{display:block;}
+  .sc{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;cursor:pointer;transition:all .2s;}
+  .sc:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(192,87,70,.12);}
+  .sc.expanded{border-color:var(--accent);}
+  .sn{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:6px;}
+  .st{font-family:'DM Serif Display',serif;font-size:1.05rem;margin-bottom:6px;}
+  .sd{font-size:.88rem;color:var(--muted);margin-bottom:8px;}
+  .sb{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+  .sc.expanded .sb{display:block;}
+  .ci{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;}.ci:last-child{border-bottom:none;}
+  .cb{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:14px;color:transparent;}
+  .cb.checked{background:var(--green);border-color:var(--green);color:white;}
+  .ct{font-size:.92rem;}.ct.done{text-decoration:line-through;color:var(--muted);}
+  .pb{height:6px;background:var(--border);border-radius:3px;margin:12px 0 20px;overflow:hidden;}
+  .pf{height:100%;background:var(--green);border-radius:3px;transition:width .4s ease;}
+  .si{font-size:.92rem;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+  .dv{height:1px;background:var(--border);margin:20px 0;}
+  .tb{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--ink);color:var(--bg);border-radius:8px;margin-bottom:20px;font-size:.85rem;}
+  .tb .time{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-left:auto;}
+  .fb{background:#F5F0EA;border-radius:8px;padding:14px 16px;margin:10px 0;font-size:.92rem;border-left:3px solid var(--blue);}
+  .fb code{background:var(--blue-light);padding:2px 6px;border-radius:3px;font-family:'Source Sans 3',sans-serif;font-weight:600;color:var(--blue);font-size:.88rem;}
+  .note{font-size:.82rem;color:var(--muted);font-style:italic;margin-top:8px;}
+  .highlight-box{background:var(--gold-light);border:2px solid var(--gold);border-radius:var(--radius);padding:20px;margin:16px 0;}
+  .highlight-box h3{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:8px;}
+  @media(max-width:480px){.tab-btn{font-size:.66rem;padding:11px 3px;}header h1{font-size:1.3rem;}.week-btn{font-size:.72rem;padding:12px 4px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 13 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee · Final Arc</div>
+</header>
+
+
+
+<!-- ================================================================ -->
+<!-- WEEK 13: DGBV CRITICAL REFLECTION -->
+<!-- ================================================================ -->
+<div id="week-w13" class="week-content active">
+<div class="tabs">
+  <button class="tab-btn active" onclick="st('w13','wu')">Warm-Up</button>
+  <button class="tab-btn" onclick="st('w13','ti')">Teach It</button>
+  <button class="tab-btn" onclick="st('w13','rp')">Role-Play</button>
+  <button class="tab-btn" onclick="st('w13','cl')">Checklist</button>
+</div>
+<div class="content">
+
+<div id="w13-wu" class="panel active">
+  <p class="si">Week 13 deepens the digital violence analysis with a <strong>real case study</strong> and the Body-Emotion-Power Triangle. This is the most case-based week — Alinggo must practice handling graphic themes with academic distance and human care.</p>
+
+  <div class="card">
+    <h2>Vocabulary Quick-Fire</h2>
+
+    <div class="vi"><div class="vw">Coercion <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Using pressure, threats, or manipulation to force someone to do something — even if they technically "agreed."</div>
+        <div class="vex">Try saying: <em>"When trust becomes leverage for a threat, it turns into coercion — it's not consent anymore."</em></div>
+        <div class="zh" style="color:var(--muted)">脅迫 — 利用壓力、威脅或操控迫使他人做某事，即使對方表面上「同意」了。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Manipulation <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Controlling someone by using emotional or psychological influence in a deceptive way.</div>
+        <div class="vex">Try saying: <em>"The main issue in this story is how manipulation turned trust into a weapon."</em></div>
+        <div class="zh" style="color:var(--muted)">操控 — 以欺騙性的情感或心理影響來控制他人。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Perpetuate <span class="vp">(v.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> To make something — usually harmful — continue for a long time.</div>
+        <div class="vex">Try saying: <em>"Bystander silence perpetuates a culture of victim-blaming — it keeps the harm going."</em></div>
+        <div class="zh" style="color:var(--muted)">使延續 — 讓某事（通常是有害的）持續很長時間。旁觀者的沉默使責怪受害者的文化延續。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Bystander <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> A person who witnesses harm but does not intervene — their silence is part of the system.</div>
+        <div class="vex">Try saying: <em>"If you saw this incident online, what would prevent you from acting? Bystander silence maintains the harmful system."</em></div>
+        <div class="zh" style="color:var(--muted)">旁觀者 — 目睹傷害但未介入的人。他們的沉默是系統的一部分。</div>
+      </div>
+    </div>
+
+    <div class="vi"><div class="vw">Victim-Blaming <span class="vp">(n.)</span></div>
+      <button class="rb" onclick="toggleReveal(this)">Show definition + example</button>
+      <div class="hc">
+        <div><strong>Definition:</strong> Holding the victim responsible for the harm done to them — often through questions like "why did you send it?"</div>
+        <div class="vex">Try saying: <em>"Asking 'why did she send the photo?' is victim-blaming. The structural question is: why did he feel entitled to share it?"</em></div>
+        <div class="zh" style="color:var(--muted)">責怪受害者 — 讓受害者為加害行為負責。結構性問題是：為什麼加害者覺得自己有權這麼做？</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Sentence Frame Drill</h2>
+    <div class="fb"><strong>Frame 1 — Identifying:</strong><br><code>"The main issue in this story is how manipulation turns trust into..."</code></div>
+    <div class="fb"><strong>Frame 2 — Evaluating Rules:</strong><br><code>"While the 'Five Don'ts' are helpful, they fail to address..."</code></div>
+    <div class="fb"><strong>Frame 3 — Proposing Action:</strong><br><code>"Real prevention requires both individual caution and..."</code></div>
+    <div class="dv"></div>
+    <p style="font-size:.85rem;color:var(--muted);">💡 <strong>Body-Emotion-Power Triangle drill:</strong> Martin describes a digital harm scenario. Alinggo must analyze through: (1) Body — how was the body exposed or controlled? (2) Emotion — what shame/fear was used? (3) Power — what structural inequality enabled this? Practice 3 rounds with increasing complexity.</p>
+  </div>
+</div>
+
+<div id="w13-ti" class="panel">
+  <p class="si">W13: <strong>DGBV Critical Reflection</strong>. This week uses a real privacy violation case as the teaching anchor. The lesson moves from the Body-Emotion-Power Triangle → case analysis → critiquing simple rules → bystander responsibility.</p>
+
+  <div class="tb"><span>⏱ Suggested total time</span><span class="time">30 min</span></div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 1 — Framework</span>
+    <h2>The Body-Emotion-Power Triangle</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Last week we looked at digital systems. This week we go deeper — using real cases. We analyze digital harm through three lenses: <strong>Body</strong> — how the body becomes a site of control through digital exposure. <strong>Emotion</strong> — how shame and fear are used to manipulate. <strong>Power</strong> — how unequal structures turn trust into control."</p>
+      <div class="zh">身體——如何透過數位曝露成為控制的場域。情感——如何利用羞恥和恐懼操控。權力——不平等結構如何將信任轉化為控制。</div></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 2 — Case Analysis</span>
+    <h2>The Privacy Violation Story</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Here's the case: A female student sent a private photo to a male student she met on a dating app — someone she trusted. After a conflict, he shared her private images along with her personal identity online as revenge."</p></div>
+    <div class="sl t"><div class="role">Alinggo — apply the triangle</div>
+      <p>"Let's apply our framework. <strong>Body:</strong> Her body was exposed without consent — turned from something private into something public. <strong>Emotion:</strong> Shame and fear are now weapons — she fears public judgment. <strong>Power:</strong> He had control over the images, and he used that control after a conflict. Trust became leverage."</p></div>
+    <div class="sl t"><div class="role">Alinggo — the paradigm shift</div>
+      <p>"Now — the common reaction is: 'She shouldn't have sent the photo.' But let's pause. Is 'she sent it because she trusted him' too simple? How did power and fear operate? The structural question is not 'why did she send it?' but <strong>'what gave him the right to share it?'</strong>"</p></div>
+    <div class="sl s"><div class="role">Martin (Student)</div>
+      <p>• "But she did choose to send it..."<br>• "What about the Five Don'ts? Aren't those useful?"<br>• "Would people react differently if the genders were reversed?"</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 3 — Beyond "Don'ts" &amp; Bystander Silence</span>
+    <h2>Why Simple Rules Aren't Enough</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~10 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"The 'Five Don'ts and Four Do's' are important safety rules. But for university-level awareness, they're not enough. Why? Because they focus on what the <em>victim</em> should do — not on the <em>system</em> that allows the harm."</p></div>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"And let's talk about the <strong>silent majority</strong>. If you saw this incident online — someone's private images being shared — what would prevent you from acting? Fear of being involved? Not knowing how to help? <strong>Bystander silence maintains the harmful system.</strong>"</p></div>
+    <div class="sl tip"><div class="role">💡 Discussion: Gender reversal</div>
+      <p>"Would the social judgment change if the genders were reversed — if it were a man's photos being shared by a woman? Why or why not?" This question reveals the gendered double standard in victim-blaming.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="badge badge-teacher">Segment 4 — Closing</span>
+    <h2>From Individual Rules to Structural Transformation</h2>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+    <div class="sl t"><div class="role">Alinggo</div>
+      <p>"Prevention is not only about avoiding risk. It is about building <strong>collective knowledge, responsibility, and care</strong>. We must move from individual rules to structural transformation."</p></div>
+  </div>
+</div>
+
+<div id="w13-rp" class="panel">
+  <p class="si">These scenarios practice the hardest facilitation moments in a DGBV discussion — victim-blaming redirects, bystander engagement, and holding complexity.</p>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 1</div><div class="st">"She Shouldn't Have Sent It"</div>
+    <div class="sd">The most common victim-blaming response.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"I mean, I feel bad for her. But she chose to send the photo. She should have known the risk."</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p><em>"I understand that reaction — it's very common. But let me reframe it. If you lend someone your car and they crash it into a wall on purpose — did you 'choose' the crash? You chose to trust. Trust is not consent to betrayal. The question isn't 'why did she trust him?' — it's 'why did he feel entitled to weaponize that trust?' That's where the structural analysis begins."</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 2</div><div class="st">"I Wouldn't Get Involved"</div>
+    <div class="sd">A student admits they'd stay silent as a bystander.</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"Honestly? If I saw something like that online, I'd just scroll past. It's not my problem."</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p><em>"Thank you for being honest — and you're not alone. Most people feel that way. But let's think about what that silence does structurally. When nobody speaks up, the person who shared the images faces no social consequence. The victim carries all the shame. Silence isn't neutral — it's a choice that maintains the system. You don't have to be a hero. But even small actions — not sharing, not laughing, quietly reporting — can break the cycle."</em></p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 3</div><div class="st">"What If the Genders Were Reversed?"</div>
+    <div class="sd">Facilitating the gender reversal thought experiment.</div>
+    <div class="sb">
+      <div class="sl tip"><div class="role">The challenge</div>
+        <p>Alinggo poses the question: "What if a woman shared a man's private photos after a breakup? Would the reaction be the same?" Then Martin responds as a student. Practice facilitating this conversation — the goal is to reveal the gendered double standard without leading the student to a predetermined answer. Let the student discover the asymmetry themselves.</p></div>
+    </div>
+  </div>
+
+  <div class="sc" onclick="toggleScenario(this)">
+    <div class="sn">Scenario 4</div><div class="st">Critiquing Safety Rules Without Dismissing Them</div>
+    <div class="sd">Practice the nuance of "important but not enough."</div>
+    <div class="sb">
+      <div class="sl s"><div class="role">Student (Martin)</div><p>"But the Five Don'ts are there to protect people. Why are you criticizing them?"</p></div>
+      <div class="sl tip"><div class="role">What to practice</div>
+        <p><em>"I'm not criticizing them — they're important starting points. But at the university level, we need to go further. The Five Don'ts tell you how to protect yourself. That's necessary. But they don't ask: why does the system allow this harm? Why is it the victim's job to avoid danger, instead of the perpetrator's responsibility not to cause it? Both levels matter. Individual safety AND structural change."</em></p></div>
+    </div>
+  </div>
+</div>
+
+<div id="w13-cl" class="panel">
+  <p class="si">Track W13 progress.</p>
+  <div class="card">
+    <h2>Week 13 Progress</h2>
+    <div class="pb"><div class="pf" id="w13-pf" style="width:0%"></div></div>
+    <div id="w13-pt" style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 / 10</div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Vocabulary: all 5 terms practiced</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Body-Emotion-Power Triangle drill: 3+ scenarios</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Segment 1: Explained the triangle framework clearly</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Segment 2: Walked through the case using all 3 lenses</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Segment 2: Reframed "she chose to send it"</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Segment 3: Critiqued simple rules without dismissing them</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Segment 3: Discussed bystander silence structurally</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Segment 4: Delivered closing — collective responsibility</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Role-play: Completed at least 2 scenarios</div></div>
+    <div class="ci" onclick="tc(this,'w13')"><div class="cb">✓</div><div class="ct">Role-play: Facilitated gender reversal thought experiment</div></div>
+  </div>
+  <div class="card"><h2>Session Notes</h2><textarea placeholder="W13 notes..." style="width:100%;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:.92rem;resize:vertical;background:var(--bg);"></textarea></div>
+</div>
+
+</div></div>
+
+<!-- ================================================================ -->
+<!-- WEEK 14: ADVOCACY & BOARD GAME -->
+<!-- ================================================================ -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 15: FINAL STRUCTURAL INTEGRATION -->
+<!-- ================================================================ -->
+
+
+<script>
+function sw(w){document.querySelectorAll('.week-content').forEach(e=>e.classList.remove('active'));document.getElementById('week-'+w).classList.add('active');document.querySelectorAll('.week-btn').forEach(b=>{b.classList.remove('active-w13','active-w14','active-w15');});document.getElementById('wB'+w.slice(1)).classList.add('active-'+w);}
+function st(w,t){const c=document.getElementById('week-'+w);c.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));c.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(w+'-'+t).classList.add('active');event.target.classList.add('active');}
+function toggleReveal(b){const c=b.nextElementSibling;if(c.classList.contains('show')){c.classList.remove('show');b.textContent='Show definition + example';}else{c.classList.add('show');b.textContent='Hide';}}
+function toggleScenario(c){c.classList.toggle('expanded');}
+function tc(i,w){i.querySelector('.cb').classList.toggle('checked');i.querySelector('.ct').classList.toggle('done');up(w);}
+function up(w){const c=document.getElementById(w+'-cl');const t=c.querySelectorAll('.ci').length;const d=c.querySelectorAll('.cb.checked').length;document.getElementById(w+'-pf').style.width=Math.round((d/t)*100)+'%';document.getElementById(w+'-pt').textContent=d+' / '+t;}
+</script>
+
+
+</body></html>

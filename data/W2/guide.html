@@ -1,0 +1,897 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alinggo W2 Teaching Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Source+Sans+3:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --card: #FFFFFF;
+    --accent: #C05746;
+    --accent-light: #F2DDD8;
+    --ink: #2C2420;
+    --muted: #8A7E76;
+    --border: #E8E0D8;
+    --green: #4A7C59;
+    --green-light: #E4F0E8;
+    --blue: #3E6B89;
+    --blue-light: #DCE9F0;
+    --yellow: #B8860B;
+    --yellow-light: #FDF4DC;
+    --purple: #6B5B8A;
+    --purple-light: #EDE8F4;
+    --shadow: 0 2px 12px rgba(44,36,32,0.08);
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 28px 24px 20px;
+    text-align: center;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+
+  header .subtitle {
+    font-size: 0.85rem;
+    color: #B8AFA6;
+    font-weight: 300;
+  }
+
+  /* Week selector */
+  .week-selector {
+    display: flex;
+    background: var(--card);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .week-btn {
+    flex: 1;
+    padding: 14px 8px;
+    border: none;
+    background: transparent;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .week-btn.active-w2 {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+    background: var(--blue-light);
+  }
+
+  .week-btn.active-w3 {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+    background: var(--purple-light);
+  }
+
+  .week-btn:hover:not([class*="active"]) {
+    color: var(--ink);
+    background: #F5F0EA;
+  }
+
+  /* Tab Nav */
+  .tabs {
+    display: flex;
+    gap: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 12px 8px;
+    border: none;
+    background: transparent;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .tab-btn:hover:not(.active) {
+    color: var(--ink);
+    background: #F5F0EA;
+  }
+
+  /* Content area */
+  .content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+  }
+
+  .week-content { display: none; }
+  .week-content.active { display: block; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+
+  .badge-teacher { background: var(--accent-light); color: var(--accent); }
+  .badge-student { background: var(--blue-light); color: var(--blue); }
+  .badge-tip { background: var(--yellow-light); color: var(--yellow); }
+
+  /* Script lines */
+  .script-line {
+    padding: 14px 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .script-line.teacher {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+  }
+
+  .script-line.student {
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue);
+  }
+
+  .script-line.tip {
+    background: var(--yellow-light);
+    border-left: 4px solid var(--yellow);
+  }
+
+  .script-line .role {
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .script-line.teacher .role { color: var(--accent); }
+  .script-line.student .role { color: var(--blue); }
+  .script-line.tip .role { color: var(--yellow); }
+
+  .script-line p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .script-line .chinese {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* Vocab drill */
+  .vocab-item {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  .vocab-item:last-child { border-bottom: none; }
+
+  .vocab-word {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+
+  .vocab-pos {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-left: 6px;
+  }
+
+  .vocab-def {
+    margin-top: 4px;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+
+  .vocab-example {
+    margin-top: 6px;
+    padding: 8px 12px;
+    background: #F5F0EA;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  .vocab-example em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  .reveal-btn {
+    margin-top: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .reveal-btn:hover {
+    background: var(--accent-light);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .hidden-content {
+    display: none;
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: var(--green-light);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--green);
+  }
+
+  .hidden-content.show { display: block; }
+
+  /* Scenario cards */
+  .scenario-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .scenario-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(192,87,70,0.12);
+  }
+
+  .scenario-card.expanded { border-color: var(--accent); }
+
+  .scenario-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .scenario-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+
+  .scenario-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .scenario-body {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .scenario-card.expanded .scenario-body { display: block; }
+
+  /* Checklist */
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .checklist-item:last-child { border-bottom: none; }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 14px;
+    color: transparent;
+  }
+
+  .check-box.checked {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .checklist-text { font-size: 0.92rem; }
+
+  .checklist-text.checked-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin: 12px 0 20px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* Utility */
+  .section-intro {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .timer-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+  }
+
+  .timer-bar .time {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-left: auto;
+  }
+
+  .frame-box {
+    background: #F5F0EA;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 10px 0;
+    font-size: 0.92rem;
+    border-left: 3px solid var(--blue);
+  }
+
+  .frame-box code {
+    background: var(--blue-light);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    color: var(--blue);
+    font-size: 0.88rem;
+  }
+
+  .note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .tab-btn { font-size: 0.68rem; padding: 12px 4px; }
+    header h1 { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Week 2 Teaching Practice</h1>
+  <div class="subtitle">Gender Education · Alinggo S.L. Lee</div>
+</header>
+
+<!-- Week Selector -->
+
+
+<!-- ================================================================ -->
+<!-- WEEK 2 -->
+<!-- ================================================================ -->
+<div id="week-w2" class="week-content active">
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('w2','warmup')">Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('w2','teach')">Teach It</button>
+  <button class="tab-btn" onclick="switchTab('w2','roleplay')">Role-Play</button>
+  <button class="tab-btn" onclick="switchTab('w2','checklist')">Checklist</button>
+</div>
+
+<div class="content">
+
+  <!-- W2 WARM-UP -->
+  <div id="w2-warmup" class="panel active">
+    <p class="section-intro">Warm up the W2 vocabulary and sentence frames. This week's theme is <strong>naming as gendered politics</strong> — names carry expectations, and those expectations shape opportunity.</p>
+
+    <div class="card">
+      <h2>Vocabulary Quick-Fire</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">Tap each word to reveal. Practice saying the example aloud as if explaining to a student — don't just read it.</p>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Socialization <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> The process by which we learn the values, norms, and behaviors considered acceptable in society.</div>
+          <div class="vocab-example">Try saying: <em>"Naming is one of the earliest forms of gender socialization — it happens before a child can even speak."</em></div>
+          <div class="chinese" style="color:var(--muted)">社會化 — 學習社會規範和行為的過程。命名是最早期的性別社會化之一。</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Patrilineal <span class="vocab-pos">(adj.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> Relating to descent or inheritance traced through the father's line.</div>
+          <div class="vocab-example">Try saying: <em>"In the UK and US, surnames are typically inherited patrilineally — meaning children take the father's last name."</em></div>
+          <div class="chinese" style="color:var(--muted)">父系的 — 沿著父親一方傳承。台灣過去也以父姓為主。</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Symbolism <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> The use of symbols to represent ideas or qualities beyond their literal meaning.</div>
+          <div class="vocab-example">Try saying: <em>"Names carry cultural symbolism — for example, naming a girl '淑' suggests gentleness, while naming a boy '偉' implies greatness."</em></div>
+          <div class="chinese" style="color:var(--muted)">象徵主義 — 用符號來表達超越字面意義的想法或品質。</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Gendered Naming <span class="vocab-pos">(n. phrase)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> The practice of choosing names based on gender expectations — embedding assumptions about a child's role before they can choose for themselves.</div>
+          <div class="vocab-example">Try saying: <em>"Bi Heng-Da calls this 'gendered naming' — parents project their expectations onto children through the names they give."</em></div>
+          <div class="chinese" style="color:var(--muted)">性別化命名 — 畢恆達（2007）指出命名是「性別政治」的一環。</div>
+        </div>
+      </div>
+
+      <div class="vocab-item">
+        <div class="vocab-word">Social Perception <span class="vocab-pos">(n.)</span></div>
+        <button class="reveal-btn" onclick="toggleReveal(this)">Show definition + example</button>
+        <div class="hidden-content">
+          <div class="vocab-def"><strong>Definition:</strong> How other people see and evaluate you, often based on surface-level cues like appearance, accent, or name.</div>
+          <div class="vocab-example">Try saying: <em>"Names structure social perception — research shows that names can influence evaluations in contexts like hiring."</em></div>
+          <div class="chinese" style="color:var(--muted)">社會知覺 — 他人如何看待和評價你，通常基於表面線索。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Sentence Frame Drill</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">Martin gives a topic (e.g., "Taiwanese girl names with 淑 or 婷," "English surnames," "indigenous Paiwan names"), and Alinggo responds using these frames.</p>
+
+      <div class="frame-box">
+        <strong>Frame 1 — Making a Comparison:</strong><br>
+        <code>"While some cultures focus on _____, others emphasize _____ in their names."</code><br>
+        <div class="note">Example: "While some cultures focus on birth order, others emphasize patrilineal heritage in their names."</div>
+      </div>
+
+      <div class="frame-box">
+        <strong>Frame 2 — Analyzing a Pattern:</strong><br>
+        <code>"In this example, the name reinforces a gender stereotype by suggesting that..."</code><br>
+        <div class="note">Example: "...girls should be gentle and elegant, while boys should be strong and ambitious."</div>
+      </div>
+
+      <div class="frame-box">
+        <strong>Frame 3 — Synthesizing a Concept:</strong><br>
+        <code>"Therefore, naming is not just personal; it is a powerful tool of..."</code><br>
+        <div class="note">Example: "...gender socialization that shapes expectations before a child can even speak."</div>
+      </div>
+
+      <div class="divider"></div>
+      <p style="font-size:0.85rem;color:var(--muted);">💡 <strong>Drill idea:</strong> Martin names a naming tradition (Japanese names, Spanish double surnames, Islamic naming, Paiwan names) → Alinggo uses all 3 frames to build a 60-second comparison. Repeat 3–4 times.</p>
+    </div>
+  </div>
+
+  <!-- W2 TEACH IT -->
+  <div id="w2-teach" class="panel">
+    <p class="section-intro">Alinggo delivers the W2 lesson: <strong>Gender Concepts &amp; Naming</strong>. Martin plays the international student. The lesson moves from concept → personal reflection → cross-cultural analysis.</p>
+
+    <div class="timer-bar">
+      <span>⏱ Suggested total time</span>
+      <span class="time">30 min</span>
+    </div>
+
+    <!-- SEGMENT 1 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 1 — Opening Hook</span>
+      <h2>Your Name Is Not Neutral</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~5 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo (Teacher)</div>
+        <p>"Good morning. Before we begin — I want everyone to do something. <strong>Close your eyes and say your name quietly to yourself.</strong>"</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Now ask yourself: does it feel like a <strong>perfectly tailored suit</strong> that helps you move through the world? Or does it feel more like a <strong>tight label</strong> that was attached to you before you had a choice?"</p>
+        <div class="chinese">你的名字像是量身訂做的西裝，還是別人貼上的標籤？</div>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Names are not just sounds. Scholar Bi Heng-Da argues that naming is a form of <strong>gendered politics</strong>. Parents project their expectations onto children before those children can speak, walk, or choose for themselves."</p>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Teaching tip</div>
+        <p>The "close your eyes" moment creates intimacy. Give it a full 5-second pause. Don't rush into the theory — let the personal experience arrive first.</p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 2 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 2 — Core Concept</span>
+      <h2>Naming as Gendered Politics</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~8 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Let me give you some concrete examples. In English-speaking cultures, the name <strong>'Grace'</strong> implies elegance. <strong>'Edward'</strong> means 'guardian of wealth.' Even in English, names carry gendered expectations."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Here in Taiwan, we see similar patterns. Girls' names are often 'soft' — think of characters like 淑、婷、雅. Boys' names tend to be 'strong' — 偉、志、豪. These are not random choices. They are <strong>social signals.</strong>"</p>
+        <div class="chinese">台灣女生名字常用「淑、婷、雅」，男生常用「偉、志、豪」——這些都不是巧合。</div>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"And names don't just affect how you feel about yourself — they affect how <strong>others</strong> treat you. Research shows that names influence evaluations in hiring, education, and social settings."</p>
+      </div>
+
+      <div class="script-line student">
+        <div class="role">Martin (Student) — prompt</div>
+        <p>Try asking: "But isn't a name just a name? My parents just liked how it sounded." This gives Alinggo a chance to push back gently with the socialization argument.</p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 3 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 3 — Cross-Cultural Analysis</span>
+      <h2>Indigenous Names &amp; Naming Erasure</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~8 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Now, let's look at naming from a different angle. In Taiwan, indigenous naming traditions — for example, among the Paiwan people — work very differently. Names reflect connection to <strong>land, ancestry, and social role</strong>, not just biological traits."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"So here's an important question: when a culture's naming system is erased — for example, through colonization — do the gender roles within that culture change too? Is a name a <strong>'family resume'</strong>, or is it a <strong>'personal introduction'</strong>?"</p>
+        <div class="chinese">當一個文化的命名系統被消滅，該文化中的性別角色也會隨之改變嗎？</div>
+      </div>
+
+      <div class="script-line student">
+        <div class="role">Martin (Student) — prompt</div>
+        <p>Respond with a cross-cultural comparison: "In Japan, women traditionally change their surname at marriage. Does that count as naming politics too?" Let Alinggo connect this back to patrilineal systems.</p>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Teaching tip</div>
+        <p>This is the deepest section. If Alinggo gets stuck in English, switching to Chinese for one key sentence is fine — then rephrase it back in English. Model the 75/25 balance.</p>
+      </div>
+    </div>
+
+    <!-- SEGMENT 4 -->
+    <div class="card">
+      <span class="badge badge-teacher">Segment 4 — Closing</span>
+      <h2>Names → Signals → Expectations → Opportunity</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;">~4 minutes</p>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"So what have we learned? <strong>Names are not destiny.</strong> But they are social signals. And signals create expectations. And expectations... shape opportunity."</p>
+      </div>
+
+      <div class="script-line teacher">
+        <div class="role">Alinggo</div>
+        <p>"Next week, we'll go further. We'll ask: <strong>How do we 'perform' those expectations in our daily lives?</strong> That's Week 3 — gender expression."</p>
+      </div>
+
+      <div class="script-line tip">
+        <div class="role">💡 Closing tip</div>
+        <p>The chain "names → signals → expectations → opportunity" is the thesis. Say it slowly, with pauses between each word. Let the logic build. This is the sentence students should remember.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- W2 ROLE-PLAY -->
+  <div id="w2-roleplay" class="panel">
+    <p class="section-intro">Classroom scenarios specific to the naming topic. Martin plays the student — Alinggo responds as the teacher, in English.</p>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 1</div>
+      <div class="scenario-title">"My Name Means Nothing"</div>
+      <div class="scenario-desc">A student dismisses the idea that names carry meaning.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"I think you're overthinking this. My parents just picked a name they liked. There's no politics in my name."</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Don't argue — redirect with curiosity. Try: <em>"That's a fair point! But let me ask — if your parents 'just liked it,' why did they like it? What made that particular name sound right for a boy or for a girl? Sometimes the patterns are invisible precisely because they feel so natural."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 2</div>
+      <div class="scenario-title">The Sensitive Topic</div>
+      <div class="scenario-desc">A student reveals their name was changed and feels emotional.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"Actually... I changed my name when I was 20 because I hated the one my parents gave me. It always felt wrong."</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Acknowledge, don't probe. Try: <em>"Thank you for sharing that — it takes courage. And actually, your experience is exactly what we're talking about today. When a name doesn't fit, we can feel it. That gap between the name and the person is where we see the power of gendered naming."</em> Then move on — don't dwell.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 3</div>
+      <div class="scenario-title">The Cross-Cultural Challenge</div>
+      <div class="scenario-desc">A student from a different culture questions whether Taiwan-centric examples apply to them.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"These examples are all about Chinese and English names. In my culture, names work completely differently. How is this relevant to me?"</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Turn the challenge into a learning moment: <em>"Great question — and I'd love to hear about your naming tradition! That's exactly why we study this topic cross-culturally. Can you tell us: in your culture, who decides the name? Are there different expectations for boys' and girls' names? Let's compare."</em> This invites the student to become the expert.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 4</div>
+      <div class="scenario-title">Explaining "Patrilineal" Simply</div>
+      <div class="scenario-desc">A student doesn't understand the word.</div>
+      <div class="scenario-body">
+        <div class="script-line student">
+          <div class="role">Student (Martin)</div>
+          <p>"Sorry — what does 'patrilineal' mean? I've never heard that word."</p>
+        </div>
+        <div class="script-line tip">
+          <div class="role">What to practice</div>
+          <p>Break it into parts: <em>"Good question! Let's break it down. 'Patri-' comes from 'father' — like 'paternal.' And '-lineal' means 'line' or 'lineage.' So patrilineal means 'following the father's line.' For example, most children in Taiwan take their father's surname. That's a patrilineal system."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-card" onclick="toggleScenario(this)">
+      <div class="scenario-num">Scenario 5</div>
+      <div class="scenario-title">Facilitating the "Name Swap" Activity</div>
+      <div class="scenario-desc">Practice giving instructions for a discussion activity.</div>
+      <div class="scenario-body">
+        <div class="script-line tip">
+          <div class="role">The challenge</div>
+          <p>Alinggo must give clear instructions in English for this activity: "Imagine you swapped names with someone of a different gender today. How would the world treat you differently?" Practice giving the instruction, setting the time limit, and then facilitating the share-back.</p>
+        </div>
+        <div class="script-line teacher">
+          <div class="role">Example instruction</div>
+          <p><em>"OK, here's what I want you to do. Take one minute and think: if you woke up tomorrow with a name traditionally given to the opposite gender — how would people treat you differently? At work? On a date? In your family? ... OK, who wants to share what they thought?"</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- W2 CHECKLIST -->
+  <div id="w2-checklist" class="panel">
+    <p class="section-intro">Track your W2 session progress.</p>
+    <div class="card">
+      <h2>Week 2 Session Progress</h2>
+      <div class="progress-bar"><div class="progress-fill" id="w2-progressFill" style="width:0%"></div></div>
+      <div id="w2-progressText" style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:16px;">0 of 10 completed</div>
+
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Vocabulary: all 5 terms practiced aloud</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Sentence frames: at least 3 naming-tradition completions</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 1: Delivered the "close your eyes" opening</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 2: Explained gendered naming with English + Taiwan examples</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 2: Handled a student pushback naturally</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 3: Discussed indigenous naming / naming erasure</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 3: Connected a cross-cultural student response</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Segment 4: Delivered the closing chain (names→signals→expectations→opportunity)</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Role-play: Completed at least 2 scenarios</div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this,'w2')">
+        <div class="check-box">✓</div>
+        <div class="checklist-text">Role-play: Successfully facilitated the "name swap" activity</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Session Notes</h2>
+      <textarea id="w2-notes" placeholder="Jot down words/phrases Alinggo struggled with, or areas to revisit..." style="width:100%;min-height:140px;border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'Source Sans 3',sans-serif;font-size:0.92rem;resize:vertical;background:var(--bg);"></textarea>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- WEEK 3 -->
+<!-- ================================================================ -->
+
+
+<script>
+function switchWeek(week) {
+  document.querySelectorAll('.week-content').forEach(w => w.classList.remove('active'));
+  document.getElementById('week-' + week).classList.add('active');
+
+  document.querySelectorAll('.week-btn').forEach(b => {
+    b.classList.remove('active-w2', 'active-w3');
+  });
+
+  if (week === 'w2') {
+    document.getElementById('weekBtn2').classList.add('active-w2');
+  } else {
+    document.getElementById('weekBtn3').classList.add('active-w3');
+  }
+}
+
+function switchTab(week, tab) {
+  const container = document.getElementById('week-' + week);
+  container.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(week + '-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleReveal(btn) {
+  const content = btn.nextElementSibling;
+  if (content.classList.contains('show')) {
+    content.classList.remove('show');
+    btn.textContent = btn.textContent.includes('breakdown') ? 'Show breakdown' : 'Show definition + example';
+  } else {
+    content.classList.add('show');
+    btn.textContent = 'Hide';
+  }
+}
+
+function toggleScenario(card) {
+  card.classList.toggle('expanded');
+}
+
+function toggleCheck(item, week) {
+  const box = item.querySelector('.check-box');
+  const text = item.querySelector('.checklist-text');
+  box.classList.toggle('checked');
+  text.classList.toggle('checked-text');
+  updateProgress(week);
+}
+
+function updateProgress(week) {
+  const container = document.getElementById(week + '-checklist');
+  const total = container.querySelectorAll('.checklist-item').length;
+  const done = container.querySelectorAll('.check-box.checked').length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById(week + '-progressFill').style.width = pct + '%';
+  document.getElementById(week + '-progressText').textContent = done + ' of ' + total + ' completed';
+}
+</script>
+
+
+
+</body></html>

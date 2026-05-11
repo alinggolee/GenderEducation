@@ -10,7 +10,8 @@ const sections = [
     { key: 'lesson', label: 'Course Page', icon: '📋' },
     { key: 'content', label: 'Course Content', icon: '📖' },
     { key: 'esp', label: 'ESP', icon: '💡' },
-    { key: 'teemi', label: 'TEEMI', icon: '👥', external: true, url: 'https://teemi.tw/' }
+    { key: 'teemi', label: 'TEEMI', icon: '👥', external: true, url: 'https://teemi.tw/' },
+    { key: 'iget', label: 'IGET', icon: '📚', external: true }
 ];
 
 /**
@@ -77,7 +78,11 @@ export function renderNavbar(lessonId, activeSection, lessonData = null) {
         }
 
         if (s.external) {
-            return `<a href="${s.url}" target="_blank" rel="noopener" class="nav-btn">
+            let url = s.url;
+            if (s.key === 'iget') {
+                url = `data/${lessonId}/guide.html`;
+            }
+            return `<a href="${url}" target="_blank" rel="noopener" class="nav-btn">
                 ${label}
             </a>`;
         }

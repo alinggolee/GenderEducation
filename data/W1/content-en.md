@@ -1,5 +1,7 @@
 # Week 1 ｜Gender Education Introduction
 
+[Gender education introduction and review](https://drive.google.com/file/d/1GOKEEOG5Ys4jtepUcW37AJAHjA3LQ-JW/view?usp=drive_link)
+
 ## The SOGIESC Map
 
 To discuss diversity clearly and respectfully, we adopt the SOGIESC framework:

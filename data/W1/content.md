@@ -1,5 +1,7 @@
 # Week 1 ｜性別教育概論 (Gender Education Introduction)
 
+[Gender education introduction and review](https://drive.google.com/file/d/1GOKEEOG5Ys4jtepUcW37AJAHjA3LQ-JW/view?usp=drive_link)
+
 ## SOGIESC 導航 (Navigating SOGIESC)
 
 為了讓討論更精確且尊重多元，我們採用 SOGIESC 架構：
